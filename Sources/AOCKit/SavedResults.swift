@@ -9,6 +9,10 @@ struct SavedResults {
         var partTwoAnswer: String?
     }
 
+    private let encoder = configure(JSONEncoder()) {
+        $0.outputFormatting = .prettyPrinted
+    }
+
     private var resultsByDay: [UInt8 : Result]
     private var saveLocation: File?
 
@@ -57,7 +61,7 @@ struct SavedResults {
 
     func save() throws {
         guard let saveLocation = saveLocation else { return }
-        try saveLocation.write(self.encoded())
+        try saveLocation.write(self.encoded(using: encoder))
     }
 }
 
