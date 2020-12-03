@@ -1,0 +1,35 @@
+import AOCKit
+
+struct TobogganTrajectory: Puzzle {
+    func part1Solution(for input: String) throws -> Int {
+        let field = getLines(from: input).map { Array($0) }
+        return traverse(field, dx: 3, dy: 1)
+    }
+
+    func part2Solution(for input: String) throws -> Int {
+        let field = getLines(from: input).map(Array.init)
+        let slopes: [(dx: Int, dy: Int)] = [
+            (dx: 1, dy: 1),
+            (dx: 3, dy: 1),
+            (dx: 5, dy: 1),
+            (dx: 7, dy: 1),
+            (dx: 1, dy: 2),
+        ]
+        return slopes.reduce(1) { $0 * traverse(field, dx: $1.dx, dy: $1.dy) }
+    }
+
+    private func traverse(_ field: [[Character]], dx: Int, dy: Int) -> Int {
+        var x = 0, y = 0
+        var total = 0
+        while y < field.count {
+            let row = field[y]
+            let cell = row[x % row.count]
+            if cell == "#" {
+                total += 1
+            }
+            x += dx
+            y += dy
+        }
+        return total
+    }
+}

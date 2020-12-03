@@ -15,6 +15,14 @@
       "inputType" : {
         "file" : "Inputs\/2020\/day1"
       }
+    },
+    3,
+    {
+      "partOneAnswer" : "282",
+      "partTwoAnswer" : "958815792",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day3"
+      }
     }
   ]
 }
