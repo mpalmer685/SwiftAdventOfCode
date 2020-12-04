@@ -35,12 +35,12 @@ public extension Puzzle {
 }
 
 public extension Puzzle {
-    func split(_ input: String, on character: Character) -> [String] {
-        input.split(separator: character).map(String.init)
+    func split(_ input: String, on character: Character, omittingEmptySubsequences: Bool = true) -> [String] {
+        input.split(separator: character, omittingEmptySubsequences: omittingEmptySubsequences).map(String.init)
     }
 
-    func getLines(from input: String) -> [String] {
-        split(input, on: "\n")
+    func getLines(from input: String, omittingEmptyLines: Bool = true) -> [String] {
+        split(input, on: "\n", omittingEmptySubsequences: omittingEmptyLines)
     }
 }
 

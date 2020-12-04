@@ -1,5 +1,13 @@
 {
   "resultsByDay" : [
+    4,
+    {
+      "partOneAnswer" : "235",
+      "partTwoAnswer" : "194",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day4"
+      }
+    },
     2,
     {
       "partOneAnswer" : "548",
@@ -8,20 +16,20 @@
         "file" : "Inputs\/2020\/day2"
       }
     },
-    1,
-    {
-      "partOneAnswer" : "1018944",
-      "partTwoAnswer" : "8446464",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day1"
-      }
-    },
     3,
     {
       "partOneAnswer" : "282",
       "partTwoAnswer" : "958815792",
       "inputType" : {
         "file" : "Inputs\/2020\/day3"
+      }
+    },
+    1,
+    {
+      "partOneAnswer" : "1018944",
+      "partTwoAnswer" : "8446464",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day1"
       }
     }
   ]

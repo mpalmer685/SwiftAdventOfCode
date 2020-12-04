@@ -44,4 +44,8 @@ extension NSRegularExpression {
         let match = firstMatch(in: string, options: [], range: range)
         return RegexMatch(string: string, result: match)
     }
+
+    func matches(_ string: String) -> Bool {
+        match(string) != nil
+    }
 }
