@@ -8,10 +8,43 @@ struct BinaryBoarding: Puzzle {
 
     func part2Solution(for input: String) throws -> UInt {
         let seatIds = getLines(from: input).map(BoardingPass.init).map(\.seatId).sorted()
-        let min = seatIds.min()!
-        let max = seatIds.max()!
+        return binarySearchFindMissing(from: seatIds)
+    }
+
+    private func bruteForceFindMissing(from seats: [UInt]) -> UInt {
+        let (min, max) = extent(of: seats)
         let allSeats = Array(min...max)
-        return allSeats.first { !seatIds.contains($0) && seatIds.contains($0 + 1) && seatIds.contains($0 - 1) }!
+        return allSeats.first { !seats.contains($0) && seats.contains($0 + 1) && seats.contains($0 - 1) }!
+    }
+
+    private func offByOneFindMissing(from seats: [UInt]) -> UInt {
+        for (i, seatId) in seats.enumerated() where i > 0 && i < seats.endIndex - 1 {
+            if seats[i + 1] - seatId > 1 {
+                return seatId + 1
+            }
+        }
+        return 0
+    }
+
+    private func binarySearchFindMissing(from seats: [UInt]) -> UInt {
+        var low = 0,
+            high = seats.count - 1,
+            mid = 0
+        while high - low > 1 {
+            mid = (high + low) / 2
+            if (seats[low] - UInt(low)) != (seats[mid] - UInt(mid)) {
+                high = mid
+            } else if (seats[high] - UInt(high)) != (seats[mid] - UInt(mid)) {
+                low = mid
+            }
+        }
+        return seats[low] + 1
+    }
+
+    private func extent<T: Comparable>(of array: [T]) -> (min: T, max: T) {
+        let min = array.min()!
+        let max = array.max()!
+        return (min, max)
     }
 }
 
