@@ -40,7 +40,11 @@ public extension Puzzle {
     }
 
     func getLines(from input: String, omittingEmptyLines: Bool = true) -> [String] {
-        split(input, on: "\n", omittingEmptySubsequences: omittingEmptyLines)
+        split(
+            input.trimmingCharacters(in: .whitespacesAndNewlines),
+            on: "\n",
+            omittingEmptySubsequences: omittingEmptyLines
+        )
     }
 }
 
