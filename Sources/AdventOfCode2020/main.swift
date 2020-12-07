@@ -7,4 +7,5 @@ AOC.run(puzzles: [
     .day(4, PassportProcessing()),
     .day(5, BinaryBoarding()),
     .day(6, CustomCustoms()),
+    .day(7, HandyHaversacks()),
 ], resultsPath: "Results/2020.json")
