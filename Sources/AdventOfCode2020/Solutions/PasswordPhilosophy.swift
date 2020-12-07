@@ -38,7 +38,8 @@ struct Entry {
             .count == 1
     }
 
-    static let pattern = NSRegularExpression("(?<min>\\d+)-(?<max>\\d+)\\s+(?<char>[a-z]):\\s+(?<pw>[a-z]+)")
+    static let pattern =
+        NSRegularExpression("(?<min>\\d+)-(?<max>\\d+)\\s+(?<char>[a-z]):\\s+(?<pw>[a-z]+)")
 
     var requiredCharacter: Character
     var minimum: Int

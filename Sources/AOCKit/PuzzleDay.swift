@@ -11,7 +11,9 @@ public struct PuzzleDay {
         )
     }
 
-    private static func wrap<T: CustomStringConvertible>(_ solution: @escaping PuzzleSolution<T>) -> StringPuzzleSolution {
+    private static func wrap<T: CustomStringConvertible>(_ solution: @escaping PuzzleSolution<T>)
+        -> StringPuzzleSolution
+    {
         { try solution($0).description }
     }
 }

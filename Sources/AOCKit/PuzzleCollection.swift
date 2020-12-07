@@ -1,8 +1,8 @@
 public class PuzzleCollection {
-    private let puzzleDays: [UInt8 : PuzzleDay]
+    private let puzzleDays: [UInt8: PuzzleDay]
 
     public init(_ puzzles: [PuzzleDay]) {
-        self.puzzleDays = puzzles.reduce(into: [:]) { $0[$1.day] = $1 }
+        puzzleDays = puzzles.reduce(into: [:]) { $0[$1.day] = $1 }
     }
 
     func runPuzzle(day: UInt8, part: PuzzlePart, input: String) throws -> String {

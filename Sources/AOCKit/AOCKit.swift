@@ -5,7 +5,7 @@ import Foundation
 import Rainbow
 
 private var puzzleCollection = PuzzleCollection([])
-private var savedResults: SavedResults! = nil
+private var savedResults: SavedResults!
 
 private struct Command: ParsableCommand {
     @Option(name: .shortAndLong)
@@ -17,7 +17,10 @@ private struct Command: ParsableCommand {
     @Option(name: .shortAndLong, help: "The puzzle input")
     var input: String?
 
-    @Option(name: [.customShort("f"), .customLong("file")], help: "A path to the file containing the puzzle input")
+    @Option(
+        name: [.customShort("f"), .customLong("file")],
+        help: "A path to the file containing the puzzle input"
+    )
     var inputFile: String?
 
     private func inputType(for day: UInt8) -> InputType? {
@@ -66,21 +69,25 @@ private struct Command: ParsableCommand {
     }
 
     private func checkPuzzle(for day: UInt8, _ part: PuzzlePart, matches answer: String) throws {
-        let s = Spinner(pattern: .dots, text: "Day \(day) part \(part)")
-        s.start()
+        let spinner = Spinner(pattern: .dots, text: "Day \(day) part \(part)")
+        spinner.start()
         do {
             let result = try getResult(for: day, part, with: inputType(for: day)!)
             if result == answer {
-                s.succeed()
+                spinner.succeed()
             } else {
-                s.fail(text: "Expected \(answer) but got \(result)")
+                spinner.fail(text: "Expected \(answer) but got \(result)")
             }
         } catch {
-            s.fail()
+            spinner.fail()
         }
     }
 
-    private func generateResult(for day: UInt8, _ part: PuzzlePart, with inputType: InputType) throws {
+    private func generateResult(
+        for day: UInt8,
+        _ part: PuzzlePart,
+        with inputType: InputType
+    ) throws {
         let result = try getResult(for: day, part, with: inputType)
         copyToClipboard(result)
         print(result)
@@ -90,7 +97,11 @@ private struct Command: ParsableCommand {
         }
     }
 
-    private func getResult(for day: UInt8, _ part: PuzzlePart, with inputType: InputType) throws -> String {
+    private func getResult(
+        for day: UInt8,
+        _ part: PuzzlePart,
+        with inputType: InputType
+    ) throws -> String {
         let input = try getInput(for: inputType)
         return try puzzleCollection.runPuzzle(day: day, part: part, input: input)
     }
@@ -120,7 +131,7 @@ func isNegativeResponse(_ response: String) -> Bool {
     response.lowercased() == "n" || response.lowercased() == "no"
 }
 
-fileprivate func copyToClipboard(_ value: String) {
+private func copyToClipboard(_ value: String) {
     let pasteboard = NSPasteboard.general
     pasteboard.declareTypes([.string], owner: nil)
     pasteboard.setString(value, forType: .string)
@@ -146,7 +157,8 @@ fileprivate func copyToClipboard(_ value: String) {
 public enum AOC {
     public static func run(puzzles: [PuzzleDay], resultsPath: String) {
         puzzleCollection = PuzzleCollection(puzzles)
-        savedResults = (try? .load(from: resultsPath)) ?? SavedResults(path: resultsPath)
+        // swiftlint:disable:next force_try
+        savedResults = (try? .load(from: resultsPath)) ?? (try! SavedResults(path: resultsPath))
         Command.main()
     }
 }

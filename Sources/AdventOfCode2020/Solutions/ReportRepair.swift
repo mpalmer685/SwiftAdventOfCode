@@ -13,14 +13,19 @@ struct ReportRepair: Puzzle {
         let entries = getLines(from: input).compactMap(Int.init).sorted()
         for (i, entry) in entries.enumerated() {
             let goalTotal = 2020 - entry
-            if let (first, second) = findPair(totaling: goalTotal, in: entries[i + 1 ..< entries.endIndex]) {
+            if let (first, second) = findPair(
+                totaling: goalTotal,
+                in: entries[i + 1 ..< entries.endIndex]
+            ) {
                 return entry * first * second
             }
         }
         throw ReportRepairError.noMatchesFound
     }
 
-    private func findPair<T: Collection>(totaling goal: Int, in array: T) -> (Int, Int)? where T.Element == Int {
+    private func findPair<T: Collection>(totaling goal: Int, in array: T) -> (Int, Int)?
+        where T.Element == Int
+    {
         let sorted = array.sorted()
         var low = sorted.startIndex
         var high = sorted.endIndex - 1

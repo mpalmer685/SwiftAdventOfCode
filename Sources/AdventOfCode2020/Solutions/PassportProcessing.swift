@@ -1,10 +1,10 @@
 import AOCKit
 import Foundation
 
-fileprivate typealias Passport = [String : String]
-fileprivate typealias FieldSet = Set<String>
-fileprivate typealias Validator = (Passport) -> Bool
-fileprivate typealias ValidatorBuilder = (String) -> (Passport) -> Bool
+private typealias Passport = [String: String]
+private typealias FieldSet = Set<String>
+private typealias Validator = (Passport) -> Bool
+private typealias ValidatorBuilder = (String) -> (Passport) -> Bool
 
 struct PassportProcessing: Puzzle {
     func part1Solution(for input: String) throws -> Int {
@@ -55,7 +55,7 @@ struct PassportProcessing: Puzzle {
     }
 }
 
-fileprivate extension String {
+private extension String {
     static let birthYear = "byr"
     static let issueYear = "iyr"
     static let expirationYear = "eyr"
@@ -66,7 +66,7 @@ fileprivate extension String {
     static let countryId = "cid"
 }
 
-fileprivate struct PassportValidator {
+private struct PassportValidator {
     func containsRequiredKeys(_ passport: Passport) -> Bool {
         FieldSet(passport.keys).isSuperset(of: FieldSet(Self.validators.keys))
     }
@@ -106,13 +106,16 @@ fileprivate struct PassportValidator {
         field(.passportId, validate: matches(pattern: "^\\d{9}$"))
     )
 
-    private static let todo: ValidatorBuilder = {_ in { _ in fatalError() } }
+    private static let todo: ValidatorBuilder = { _ in { _ in fatalError() } }
 
-    private static func makeValidators(_ pairs: (String, Validator)...) -> [String : Validator] {
-        pairs.reduce(into: Dictionary<String, Validator>()) { $0[$1.0] = $1.1 }
+    private static func makeValidators(_ pairs: (String, Validator)...) -> [String: Validator] {
+        pairs.reduce(into: [String: Validator]()) { $0[$1.0] = $1.1 }
     }
 
-    private static func field(_ name: String, validate builder: ValidatorBuilder) -> (key: String, value: Validator) {
+    private static func field(
+        _ name: String,
+        validate builder: ValidatorBuilder
+    ) -> (key: String, value: Validator) {
         (key: name, value: builder(name))
     }
 
@@ -156,7 +159,11 @@ fileprivate struct PassportValidator {
         }
     }
 
-    private static func hasUnits(_ units: String, between min: Int, and max: Int) -> ValidatorBuilder {
+    private static func hasUnits(
+        _ units: String,
+        between min: Int,
+        and max: Int
+    ) -> ValidatorBuilder {
         let regex = NSRegularExpression("(\\d+)\(units)")
         return { fieldName in
             { passport in
@@ -174,7 +181,7 @@ enum PassportProcessingError: Error {
 extension PassportProcessingError: CustomStringConvertible {
     public var description: String {
         switch self {
-            case .invalidSegment(let segment):
+            case let .invalidSegment(segment):
                 return "Unable to process segment: \(segment)"
         }
     }

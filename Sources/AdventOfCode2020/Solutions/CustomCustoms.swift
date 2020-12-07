@@ -1,7 +1,7 @@
 import AOCKit
 
-fileprivate typealias GroupAnswers = Set<Character>
-fileprivate typealias AnswersCombiner = (inout GroupAnswers, GroupAnswers) -> Void
+private typealias GroupAnswers = Set<Character>
+private typealias AnswersCombiner = (inout GroupAnswers, GroupAnswers) -> Void
 
 struct CustomCustoms: Puzzle {
     func part1Solution(for input: String) throws -> Int {
@@ -16,7 +16,10 @@ struct CustomCustoms: Puzzle {
         getGroupAnswers(from: input, using: combineAnswers).reduce(0) { $0 + $1.count }
     }
 
-    private func getGroupAnswers(from input: String, using combineAnswers: AnswersCombiner) -> [GroupAnswers] {
+    private func getGroupAnswers(
+        from input: String,
+        using combineAnswers: AnswersCombiner
+    ) -> [GroupAnswers] {
         getLines(from: input, omittingEmptyLines: false)
             .split(whereSeparator: \.isEmpty)
             .map { Array($0).map { Set($0) } }

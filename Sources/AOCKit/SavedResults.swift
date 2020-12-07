@@ -13,7 +13,7 @@ struct SavedResults {
         $0.outputFormatting = .prettyPrinted
     }
 
-    private var resultsByDay: [UInt8 : Result]
+    private var resultsByDay: [UInt8: Result]
     private var saveLocation: File?
 
     static func load(from path: String) throws -> SavedResults {
@@ -24,9 +24,9 @@ struct SavedResults {
         return result
     }
 
-    init(path: String) {
+    init(path: String) throws {
         resultsByDay = [:]
-        saveLocation = try! Folder.current.createFileIfNeeded(at: path)
+        saveLocation = try Folder.current.createFileIfNeeded(at: path)
     }
 
     var days: [UInt8] {
@@ -47,7 +47,12 @@ struct SavedResults {
         }
     }
 
-    mutating func update(_ day: UInt8, for part: PuzzlePart, with inputType: InputType, to answer: String) {
+    mutating func update(
+        _ day: UInt8,
+        for part: PuzzlePart,
+        with inputType: InputType,
+        to answer: String
+    ) {
         var result = resultsByDay[day] ?? Result(inputType: inputType)
         switch part {
             case .partOne:
@@ -61,7 +66,7 @@ struct SavedResults {
 
     func save() throws {
         guard let saveLocation = saveLocation else { return }
-        try saveLocation.write(self.encoded(using: encoder))
+        try saveLocation.write(encoded(using: encoder))
     }
 }
 
@@ -105,9 +110,9 @@ extension InputType: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         switch self {
-            case .file(let path):
+            case let .file(path):
                 try container.encode(path, forKey: .file)
-            case .string(let value):
+            case let .string(value):
                 try container.encode(value, forKey: .string)
         }
     }

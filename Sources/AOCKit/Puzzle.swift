@@ -35,8 +35,13 @@ public extension Puzzle {
 }
 
 public extension Puzzle {
-    func split(_ input: String, on character: Character, omittingEmptySubsequences: Bool = true) -> [String] {
-        input.split(separator: character, omittingEmptySubsequences: omittingEmptySubsequences).map(String.init)
+    func split(
+        _ input: String,
+        on character: Character,
+        omittingEmptySubsequences: Bool = true
+    ) -> [String] {
+        input.split(separator: character, omittingEmptySubsequences: omittingEmptySubsequences)
+            .map(String.init)
     }
 
     func getLines(from input: String, omittingEmptyLines: Bool = true) -> [String] {
@@ -56,9 +61,9 @@ enum PuzzleError: Error {
 extension PuzzleError: CustomStringConvertible {
     public var description: String {
         switch self {
-            case .dayNotImplemented(let day):
+            case let .dayNotImplemented(day):
                 return "Solution for day \(day) not implemented"
-            case .partNotImplemented(let part):
+            case let .partNotImplemented(part):
                 return "Part \(part) not implemented"
         }
     }

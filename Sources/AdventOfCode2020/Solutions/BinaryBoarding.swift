@@ -13,15 +13,16 @@ struct BinaryBoarding: Puzzle {
 
     private func bruteForceFindMissing(from seats: [UInt]) -> UInt {
         let (min, max) = extent(of: seats)
-        let allSeats = Array(min...max)
-        return allSeats.first { !seats.contains($0) && seats.contains($0 + 1) && seats.contains($0 - 1) }!
+        let allSeats = Array(min ... max)
+        return allSeats
+            .first { !seats.contains($0) && seats.contains($0 + 1) && seats.contains($0 - 1) }!
     }
 
     private func offByOneFindMissing(from seats: [UInt]) -> UInt {
-        for (i, seatId) in seats.enumerated() where i > 0 && i < seats.endIndex - 1 {
-            if seats[i + 1] - seatId > 1 {
-                return seatId + 1
-            }
+        for (i, seatId) in seats.enumerated()
+            where i > 0 && i < seats.endIndex - 1 && seats[i + 1] - seatId > 1
+        {
+            return seatId + 1
         }
         return 0
     }
@@ -48,15 +49,15 @@ struct BinaryBoarding: Puzzle {
     }
 }
 
-fileprivate struct BoardingPass {
+private struct BoardingPass {
     private var row: UInt
     private var column: UInt
 
     var seatId: UInt { row * 8 + column }
 
     init(string: String) {
-        row = Self.parseValue(from: string[0..<7], upperHalfSymbol: "B")
-        column = Self.parseValue(from: string[7..<10], upperHalfSymbol: "R")
+        row = Self.parseValue(from: string[0 ..< 7], upperHalfSymbol: "B")
+        column = Self.parseValue(from: string[7 ..< 10], upperHalfSymbol: "R")
     }
 
     private static func parseValue(from regions: Substring, upperHalfSymbol: Character) -> UInt {
@@ -65,10 +66,10 @@ fileprivate struct BoardingPass {
     }
 }
 
-fileprivate extension String {
+private extension String {
     subscript(range: Range<Int>) -> Substring {
         let start = index(startIndex, offsetBy: range.lowerBound)
         let end = index(startIndex, offsetBy: range.upperBound)
-        return self[start..<end]
+        return self[start ..< end]
     }
 }

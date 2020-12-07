@@ -12,7 +12,7 @@ struct HandyHaversacks: Puzzle {
             visited.insert(nextColor)
             let containers = rules
                 .filter { $0.value.contains { $0.0 == nextColor } }
-                .map { $0.key }
+                .map(\.key)
                 .filter { !visited.contains($0) }
             colors += containers
         }
