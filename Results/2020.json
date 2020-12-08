@@ -1,11 +1,19 @@
 {
   "resultsByDay" : [
-    6,
+    8,
     {
-      "partOneAnswer" : "6249",
-      "partTwoAnswer" : "3103",
+      "partOneAnswer" : "1832",
+      "partTwoAnswer" : "662",
       "inputType" : {
-        "file" : "Inputs\/2020\/day6"
+        "file" : "Inputs\/2020\/day8"
+      }
+    },
+    1,
+    {
+      "partOneAnswer" : "1018944",
+      "partTwoAnswer" : "8446464",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day1"
       }
     },
     2,
@@ -14,6 +22,30 @@
       "partTwoAnswer" : "502",
       "inputType" : {
         "file" : "Inputs\/2020\/day2"
+      }
+    },
+    4,
+    {
+      "partOneAnswer" : "235",
+      "partTwoAnswer" : "194",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day4"
+      }
+    },
+    6,
+    {
+      "partOneAnswer" : "6249",
+      "partTwoAnswer" : "3103",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day6"
+      }
+    },
+    5,
+    {
+      "partOneAnswer" : "904",
+      "partTwoAnswer" : "669",
+      "inputType" : {
+        "file" : "Inputs\/2020\/day5"
       }
     },
     7,
@@ -30,30 +62,6 @@
       "partTwoAnswer" : "958815792",
       "inputType" : {
         "file" : "Inputs\/2020\/day3"
-      }
-    },
-    1,
-    {
-      "partOneAnswer" : "1018944",
-      "partTwoAnswer" : "8446464",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day1"
-      }
-    },
-    4,
-    {
-      "partOneAnswer" : "235",
-      "partTwoAnswer" : "194",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day4"
-      }
-    },
-    5,
-    {
-      "partOneAnswer" : "904",
-      "partTwoAnswer" : "669",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day5"
       }
     }
   ]
