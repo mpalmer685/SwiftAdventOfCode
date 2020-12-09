@@ -41,46 +41,56 @@ private struct Command: ParsableCommand {
     }
 
     func run() throws {
+        let success: Bool
         if let day = day, let part = part {
             if let answer = savedResults.answer(for: day, part) {
-                try checkPuzzle(for: day, part, matches: answer)
+                success = checkPuzzle(for: day, part, matches: answer)
             } else {
                 try generateResult(for: day, part, with: inputType(for: day)!)
+                success = true
             }
         } else if let day = day {
-            try checkAll(for: day)
+            success = checkAll(for: day)
         } else {
-            try checkAllPuzzles()
+            success = checkAllPuzzles()
         }
+
+        throw success ? ExitCode.success : ExitCode.failure
     }
 
-    func checkAllPuzzles() throws {
+    func checkAllPuzzles() -> Bool {
+        var success = true
         for day in savedResults.days {
-            try checkAll(for: day)
+            success &&= checkAll(for: day)
         }
+        return success
     }
 
-    func checkAll(for day: UInt8) throws {
+    func checkAll(for day: UInt8) -> Bool {
+        var success = true
         for part in [PuzzlePart.partOne, PuzzlePart.partTwo] {
             if let answer = savedResults.answer(for: day, part) {
-                try checkPuzzle(for: day, part, matches: answer)
+                success &&= checkPuzzle(for: day, part, matches: answer)
             }
         }
+        return success
     }
 
-    private func checkPuzzle(for day: UInt8, _ part: PuzzlePart, matches answer: String) throws {
+    private func checkPuzzle(for day: UInt8, _ part: PuzzlePart, matches answer: String) -> Bool {
         let spinner = Spinner(pattern: .dots, text: "Day \(day) part \(part)")
         spinner.start()
         do {
             let result = try getResult(for: day, part, with: inputType(for: day)!)
             if result == answer {
                 spinner.succeed()
+                return true
             } else {
                 spinner.fail(text: "Expected \(answer) but got \(result)")
             }
         } catch {
             spinner.fail()
         }
+        return false
     }
 
     private func generateResult(
@@ -135,6 +145,11 @@ private func copyToClipboard(_ value: String) {
     let pasteboard = NSPasteboard.general
     pasteboard.declareTypes([.string], owner: nil)
     pasteboard.setString(value, forType: .string)
+}
+
+infix operator &&= : AssignmentPrecedence
+func &&= (lhs: inout Bool, rhs: Bool) {
+    lhs = lhs && rhs
 }
 
 /*
