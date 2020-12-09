@@ -9,4 +9,5 @@ AOC.run(puzzles: [
     .day(6, CustomCustoms()),
     .day(7, HandyHaversacks()),
     .day(8, HandheldHalting()),
+    .day(9, EncodingError()),
 ], resultsPath: "Results/2020.json")
