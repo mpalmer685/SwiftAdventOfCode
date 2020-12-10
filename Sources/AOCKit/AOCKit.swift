@@ -44,39 +44,39 @@ private struct Command: ParsableCommand {
         let success: Bool
         if let day = day, let part = part {
             if let answer = savedResults.answer(for: day, part) {
-                success = checkPuzzle(for: day, part, matches: answer)
+                success = try checkPuzzle(for: day, part, matches: answer)
             } else {
                 try generateResult(for: day, part, with: inputType(for: day)!)
                 success = true
             }
         } else if let day = day {
-            success = checkAll(for: day)
+            success = try checkAll(for: day)
         } else {
-            success = checkAllPuzzles()
+            success = try checkAllPuzzles()
         }
 
         throw success ? ExitCode.success : ExitCode.failure
     }
 
-    func checkAllPuzzles() -> Bool {
+    func checkAllPuzzles() throws -> Bool {
         var success = true
         for day in savedResults.days {
-            success &&= checkAll(for: day)
+            success &&= try checkAll(for: day)
         }
         return success
     }
 
-    func checkAll(for day: UInt8) -> Bool {
+    func checkAll(for day: UInt8) throws -> Bool {
         var success = true
         for part in [PuzzlePart.partOne, PuzzlePart.partTwo] {
             if let answer = savedResults.answer(for: day, part) {
-                success &&= checkPuzzle(for: day, part, matches: answer)
+                success &&= try checkPuzzle(for: day, part, matches: answer)
             }
         }
         return success
     }
 
-    private func checkPuzzle(for day: UInt8, _ part: PuzzlePart, matches answer: String) -> Bool {
+    private func checkPuzzle(for day: UInt8, _ part: PuzzlePart, matches answer: String) throws -> Bool {
         let spinner = Spinner(pattern: .dots, text: "Day \(day) part \(part)")
         spinner.start()
         do {
@@ -89,6 +89,7 @@ private struct Command: ParsableCommand {
             }
         } catch {
             spinner.fail()
+            throw error
         }
         return false
     }
