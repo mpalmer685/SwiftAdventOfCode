@@ -10,4 +10,5 @@ AOC.run(puzzles: [
     .day(7, HandyHaversacks()),
     .day(8, HandheldHalting()),
     .day(9, EncodingError()),
+    .day(10, AdapterArray()),
 ], resultsPath: "Results/2020.json")
