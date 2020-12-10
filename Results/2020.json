@@ -1,84 +1,74 @@
 {
-  "resultsByDay" : [
-    8,
-    {
-      "partOneAnswer" : "1832",
-      "partTwoAnswer" : "662",
+  "resultsByDay" : {
+    "1" : {
       "inputType" : {
-        "file" : "Inputs\/2020\/day8"
-      }
-    },
-    5,
-    {
-      "partOneAnswer" : "904",
-      "partTwoAnswer" : "669",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day5"
-      }
-    },
-    6,
-    {
-      "partOneAnswer" : "6249",
-      "partTwoAnswer" : "3103",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day6"
-      }
-    },
-    4,
-    {
-      "partOneAnswer" : "235",
-      "partTwoAnswer" : "194",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day4"
-      }
-    },
-    3,
-    {
-      "partOneAnswer" : "282",
-      "partTwoAnswer" : "958815792",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day3"
-      }
-    },
-    2,
-    {
-      "partOneAnswer" : "548",
-      "partTwoAnswer" : "502",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day2"
-      }
-    },
-    9,
-    {
-      "partOneAnswer" : "1212510616",
-      "partTwoAnswer" : "171265123",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day9"
-      }
-    },
-    7,
-    {
-      "partOneAnswer" : "103",
-      "partTwoAnswer" : "1469",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day7"
-      }
-    },
-    1,
-    {
+        "file" : "Inputs/2020/day1"
+      },
       "partOneAnswer" : "1018944",
-      "partTwoAnswer" : "8446464",
-      "inputType" : {
-        "file" : "Inputs\/2020\/day1"
-      }
+      "partTwoAnswer" : "8446464"
     },
-    10,
-    {
-      "partOneAnswer" : "1914",
-      "partTwoAnswer" : "9256148959232",
+    "2" : {
       "inputType" : {
-        "file" : "Inputs\/2020\/day10"
-      }
+        "file" : "Inputs/2020/day2"
+      },
+      "partOneAnswer" : "548",
+      "partTwoAnswer" : "502"
+    },
+    "3" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day3"
+      },
+      "partOneAnswer" : "282",
+      "partTwoAnswer" : "958815792"
+    },
+    "4" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day4"
+      },
+      "partOneAnswer" : "235",
+      "partTwoAnswer" : "194"
+    },
+    "5" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day5"
+      },
+      "partOneAnswer" : "904",
+      "partTwoAnswer" : "669"
+    },
+    "6" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day6"
+      },
+      "partOneAnswer" : "6249",
+      "partTwoAnswer" : "3103"
+    },
+    "7" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day7"
+      },
+      "partOneAnswer" : "103",
+      "partTwoAnswer" : "1469"
+    },
+    "8" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day8"
+      },
+      "partOneAnswer" : "1832",
+      "partTwoAnswer" : "662"
+    },
+    "9" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day9"
+      },
+      "partOneAnswer" : "1212510616",
+      "partTwoAnswer" : "171265123"
+    },
+    "10" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day10"
+      },
+      "partOneAnswer" : "1914",
+      "partTwoAnswer" : "9256148959232"
     }
-  ]
+  }
 }

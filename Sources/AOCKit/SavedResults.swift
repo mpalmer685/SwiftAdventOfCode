@@ -10,10 +10,13 @@ struct SavedResults {
     }
 
     private let encoder = configure(JSONEncoder()) {
-        $0.outputFormatting = .prettyPrinted
+        guard #available(macOS 10.15, *) else {
+            fatalError("Platform not supported")
+        }
+        $0.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
     }
 
-    private var resultsByDay: [UInt8: Result]
+    private var resultsByDay: [Int: Result]
     private var saveLocation: File?
 
     static func load(from path: String) throws -> SavedResults {
@@ -30,15 +33,15 @@ struct SavedResults {
     }
 
     var days: [UInt8] {
-        resultsByDay.keys.sorted()
+        resultsByDay.keys.sorted().map(UInt8.init)
     }
 
     subscript(day: UInt8) -> Result? {
-        resultsByDay[day]
+        resultsByDay[Int(day)]
     }
 
     func answer(for day: UInt8, _ part: PuzzlePart) -> String? {
-        let result = resultsByDay[day]
+        let result = resultsByDay[Int(day)]
         switch part {
             case .partOne:
                 return result?.partOneAnswer
@@ -53,7 +56,7 @@ struct SavedResults {
         with inputType: InputType,
         to answer: String
     ) {
-        var result = resultsByDay[day] ?? Result(inputType: inputType)
+        var result = resultsByDay[Int(day)] ?? Result(inputType: inputType)
         switch part {
             case .partOne:
                 result.partOneAnswer = answer
@@ -61,7 +64,7 @@ struct SavedResults {
                 result.partTwoAnswer = answer
         }
 
-        resultsByDay[day] = result
+        resultsByDay[Int(day)] = result
     }
 
     func save() throws {
