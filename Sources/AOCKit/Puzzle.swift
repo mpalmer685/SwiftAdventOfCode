@@ -25,11 +25,11 @@ public protocol Puzzle {
 }
 
 public extension Puzzle {
-    func part1Solution(for input: String) throws -> String {
+    func part1Solution(for input: String) throws -> Int {
         throw PuzzleError.partNotImplemented(.partOne)
     }
 
-    func part2Solution(for input: String) throws -> String {
+    func part2Solution(for input: String) throws -> Int {
         throw PuzzleError.partNotImplemented(.partTwo)
     }
 }
