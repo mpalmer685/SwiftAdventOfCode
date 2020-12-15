@@ -97,6 +97,13 @@
       },
       "partOneAnswer" : "8570568288597",
       "partTwoAnswer" : "3289441921203"
+    },
+    "15" : {
+      "inputType" : {
+        "string" : "5,1,9,18,13,8,0"
+      },
+      "partOneAnswer" : "376",
+      "partTwoAnswer" : "323780"
     }
   }
 }
