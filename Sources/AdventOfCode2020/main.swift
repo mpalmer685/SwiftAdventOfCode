@@ -16,4 +16,5 @@ AOC.run(puzzles: [
     .day(13, ShuttleSearch()),
     .day(14, DockingData()),
     .day(15, RambunctiousRecitation()),
+    .day(16, TicketTranslation()),
 ], resultsPath: "Results/2020.json")

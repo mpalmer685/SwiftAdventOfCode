@@ -41,3 +41,16 @@ extension Collection where Element == Int {
         return nil
     }
 }
+
+extension Array where Element: Equatable {
+    mutating func remove(_ item: Element) {
+        guard let index = firstIndex(of: item) else { return }
+        remove(at: index)
+    }
+
+    func removing(_ item: Element) -> Self {
+        var copy = self
+        copy.remove(item)
+        return copy
+    }
+}
