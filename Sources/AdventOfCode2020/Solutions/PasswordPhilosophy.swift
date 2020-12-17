@@ -26,16 +26,14 @@ struct Entry {
 
     static let characterCountPolicy: Policy = { entry in
         entry.password
-            .filter { $0 == entry.requiredCharacter }
-            .count
+            .count { $0 == entry.requiredCharacter }
             .isBetween(entry.minimum, and: entry.maximum)
     }
 
     static let characterPositionPolicy: Policy = { entry in
         [entry.minimum - 1, entry.maximum - 1]
             .map { entry.password[$0] }
-            .filter { $0 == entry.requiredCharacter }
-            .count == 1
+            .count { $0 == entry.requiredCharacter } == 1
     }
 
     static let pattern =
