@@ -64,3 +64,10 @@ extension Collection {
         return (elements.min()!, elements.max()!)
     }
 }
+
+extension Collection {
+    var tail: SubSequence {
+        let start = index(startIndex, offsetBy: 1)
+        return self[start...]
+    }
+}

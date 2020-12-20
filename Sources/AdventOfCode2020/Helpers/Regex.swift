@@ -49,3 +49,7 @@ extension NSRegularExpression {
         match(string) != nil
     }
 }
+
+func ~= (regex: NSRegularExpression, source: String) -> Bool {
+    regex.matches(source)
+}
