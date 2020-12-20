@@ -9,7 +9,14 @@ struct SavedResults {
         var partTwoAnswer: String?
     }
 
-    private var resultsByDay: [UInt8 : Result]
+    private let encoder = configure(JSONEncoder()) {
+        guard #available(macOS 10.15, *) else {
+            fatalError("Platform not supported")
+        }
+        $0.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+    }
+
+    private var resultsByDay: [Int: Result]
     private var saveLocation: File?
 
     static func load(from path: String) throws -> SavedResults {
@@ -20,20 +27,20 @@ struct SavedResults {
         return result
     }
 
-    init(path: String) {
+    init(path: String) throws {
         resultsByDay = [:]
-        saveLocation = try! Folder.current.createFileIfNeeded(at: path)
+        saveLocation = try Folder.current.createFileIfNeeded(at: path)
     }
 
-    var days: [UInt8] {
+    var days: [Int] {
         resultsByDay.keys.sorted()
     }
 
-    subscript(day: UInt8) -> Result? {
+    subscript(day: Int) -> Result? {
         resultsByDay[day]
     }
 
-    func answer(for day: UInt8, _ part: PuzzlePart) -> String? {
+    func answer(for day: Int, _ part: PuzzlePart) -> String? {
         let result = resultsByDay[day]
         switch part {
             case .partOne:
@@ -43,7 +50,12 @@ struct SavedResults {
         }
     }
 
-    mutating func update(_ day: UInt8, for part: PuzzlePart, with inputType: InputType, to answer: String) {
+    mutating func update(
+        _ day: Int,
+        for part: PuzzlePart,
+        with inputType: InputType,
+        to answer: String
+    ) {
         var result = resultsByDay[day] ?? Result(inputType: inputType)
         switch part {
             case .partOne:
@@ -57,7 +69,7 @@ struct SavedResults {
 
     func save() throws {
         guard let saveLocation = saveLocation else { return }
-        try saveLocation.write(self.encoded())
+        try saveLocation.write(encoded(using: encoder))
     }
 }
 
@@ -101,9 +113,9 @@ extension InputType: Codable {
         var container = encoder.container(keyedBy: CodingKeys.self)
 
         switch self {
-            case .file(let path):
+            case let .file(path):
                 try container.encode(path, forKey: .file)
-            case .string(let value):
+            case let .string(value):
                 try container.encode(value, forKey: .string)
         }
     }

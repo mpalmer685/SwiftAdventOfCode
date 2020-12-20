@@ -1,0 +1,18 @@
+disabled_rules:
+- identifier_name
+opt_in_rules:
+    - collection_alignment
+
+excluded:
+    - .build
+    - .swiftpm
+
+large_tuple:
+    warning: 3
+    error: 4
+opening_brace:
+    allow_multiline_func: true
+switch_case_alignment:
+    indented_cases: true
+trailing_comma:
+    mandatory_comma: true

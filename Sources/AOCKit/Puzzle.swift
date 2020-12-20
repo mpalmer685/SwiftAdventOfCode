@@ -3,7 +3,7 @@ import ArgumentParser
 typealias PuzzleSolution<T: CustomStringConvertible> = (String) throws -> T
 typealias StringPuzzleSolution = (String) throws -> String
 
-enum PuzzlePart: Int, ExpressibleByArgument {
+enum PuzzlePart: Int, ExpressibleByArgument, CaseIterable {
     case partOne = 1
     case partTwo = 2
 }
@@ -25,11 +25,11 @@ public protocol Puzzle {
 }
 
 public extension Puzzle {
-    func part1Solution(for input: String) throws -> String {
+    func part1Solution(for input: String) throws -> Int {
         throw PuzzleError.partNotImplemented(.partOne)
     }
 
-    func part2Solution(for input: String) throws -> String {
+    func part2Solution(for input: String) throws -> Int {
         throw PuzzleError.partNotImplemented(.partTwo)
     }
 }
@@ -45,16 +45,16 @@ public extension Puzzle {
 }
 
 enum PuzzleError: Error {
-    case dayNotImplemented(_ day: UInt8)
+    case dayNotImplemented(_ day: Int)
     case partNotImplemented(_ part: PuzzlePart)
 }
 
 extension PuzzleError: CustomStringConvertible {
     public var description: String {
         switch self {
-            case .dayNotImplemented(let day):
+            case let .dayNotImplemented(day):
                 return "Solution for day \(day) not implemented"
-            case .partNotImplemented(let part):
+            case let .partNotImplemented(part):
                 return "Part \(part) not implemented"
         }
     }
