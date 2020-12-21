@@ -55,23 +55,6 @@ struct JurassicJigsaw: Puzzle {
             }
         }
 
-        func orient(
-            _ tile: Tile,
-            at location: (row: Int, col: Int),
-            aligning edge: KeyPath<Tile, String>,
-            with neighborEdge: KeyPath<Tile, String>,
-            of neighbor: Tile
-        ) {
-            var tile = tile
-            for transform in transformations {
-                tile.perform(transform)
-                if tile[keyPath: edge] == neighbor[keyPath: neighborEdge] {
-                    place(tile, at: location.row, location.col)
-                    return
-                }
-            }
-        }
-
         func placeRow(
             _ row: Int,
             aligning edge: KeyPath<Tile, String>,
@@ -83,7 +66,9 @@ struct JurassicJigsaw: Puzzle {
                 let neighbor = grid[(row, col) + offset]!
                 let next = neighborsByTile[neighbor]!
                     .first { $0.allEdges.contains(neighbor[keyPath: neighborEdge]) }!
-                orient(next, at: (row, col), aligning: edge, with: neighborEdge, of: neighbor)
+                orient(next, aligning: edge, with: neighborEdge, of: neighbor) {
+                    place($0, at: row, col)
+                }
             }
         }
 
@@ -93,6 +78,23 @@ struct JurassicJigsaw: Puzzle {
         }
 
         return grid.result()
+    }
+
+    private func orient(
+        _ tile: Tile,
+        aligning edge: KeyPath<Tile, String>,
+        with neighborEdge: KeyPath<Tile, String>,
+        of neighbor: Tile,
+        then completion: (Tile) -> Void
+    ) {
+        var tile = tile
+        for transform in transformations {
+            tile.perform(transform)
+            if tile[keyPath: edge] == neighbor[keyPath: neighborEdge] {
+                completion(tile)
+                return
+            }
+        }
     }
 
     private func findMonsters(in grid: [[Tile]]) -> Int {
