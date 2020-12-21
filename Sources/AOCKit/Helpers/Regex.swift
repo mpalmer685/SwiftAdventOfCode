@@ -10,7 +10,7 @@ public struct RegexMatch {
         match = result
     }
 
-    subscript(idx: Int) -> String {
+    public subscript(idx: Int) -> String {
         guard let range = range(from: match.range(at: idx)) else {
             return ""
         }
@@ -18,7 +18,7 @@ public struct RegexMatch {
     }
 
     @available(macOS 10.13, *)
-    subscript(name: String) -> String {
+    public subscript(name: String) -> String {
         guard let range = range(from: match.range(withName: name)) else {
             return ""
         }

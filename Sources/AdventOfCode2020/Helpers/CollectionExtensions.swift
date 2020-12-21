@@ -57,17 +57,10 @@ extension Array where Element: Equatable {
 
 extension Collection {
     func extent<T: Comparable>(of keyPath: KeyPath<Element, T>) -> (T, T)? {
-        let elements = self.map { $0[keyPath: keyPath] }
+        let elements = map { $0[keyPath: keyPath] }
         guard elements.count > 0 else { return nil }
         guard elements.count > 1 else { return (elements.first!, elements.first!) }
 
         return (elements.min()!, elements.max()!)
-    }
-}
-
-extension Collection {
-    var tail: SubSequence {
-        let start = index(startIndex, offsetBy: 1)
-        return self[start...]
     }
 }
