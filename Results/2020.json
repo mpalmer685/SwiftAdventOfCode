@@ -132,6 +132,13 @@
       },
       "partOneAnswer" : "151",
       "partTwoAnswer" : "386"
+    },
+    "20" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day20"
+      },
+      "partOneAnswer" : "140656720229539",
+      "partTwoAnswer" : "1885"
     }
   }
 }
