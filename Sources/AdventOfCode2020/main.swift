@@ -21,4 +21,5 @@ AOC.run(puzzles: [
     .day(18, OperationOrder()),
     .day(19, MonsterMessages()),
     .day(20, JurassicJigsaw()),
+    .day(21, AllergenAssessment()),
 ], resultsPath: "Results/2020.json")

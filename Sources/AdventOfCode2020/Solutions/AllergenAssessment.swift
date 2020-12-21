@@ -1,0 +1,86 @@
+import AOCKit
+
+struct AllergenAssessment: Puzzle {
+    func part1Solution(for input: String) throws -> Int {
+        let (ingredients, allergens) = parse(input)
+        let ingredientsByAllergen = mapAllergensToIngredients(
+            ingredients: ingredients,
+            allergens: allergens
+        )
+        let allergenicIngredients = Set(ingredientsByAllergen.values)
+        return ingredients.values
+            .flatMap { $0.filter { !allergenicIngredients.contains($0) } }
+            .count
+    }
+
+    func part2Solution(for input: String) throws -> String {
+        let (ingredients, allergens) = parse(input)
+        let ingredientsByAllergen = mapAllergensToIngredients(
+            ingredients: ingredients,
+            allergens: allergens
+        )
+        return ingredientsByAllergen.sorted { $0.key < $1.key }
+            .map(\.value)
+            .joined(separator: ",")
+    }
+
+    private func mapAllergensToIngredients(
+        ingredients: [Int: [String]],
+        allergens: [Int: [String]]
+    ) -> [String: String] {
+        let uniqueAllergens: Set<String> = allergens.reduce(into: Set()) { $0.formUnion($1.value) }
+        var possibleIngredientsByAllergen: [String: Set<String>] = uniqueAllergens
+            .reduce(into: [:]) { result, allergen in
+                let foodsWithAllergen = allergens
+                    .filter { $0.value.contains(allergen) }
+                    .compactMap { ingredients[$0.key] }
+                    .map(Set.init)
+                result[allergen] = foodsWithAllergen
+                    .reduce(into: foodsWithAllergen.first!) { $0.formIntersection($1) }
+            }
+
+        var allergenicIngredients: [String: String] = [:]
+        while !possibleIngredientsByAllergen.isEmpty {
+            let (allergen, ingredients) = possibleIngredientsByAllergen
+                .first { $0.value.count == 1 }!
+            let ingredient = ingredients.first!
+            allergenicIngredients[allergen] = ingredient
+            removeInstances(of: ingredient, from: &possibleIngredientsByAllergen)
+        }
+
+        return allergenicIngredients
+    }
+
+    private func removeInstances<Key, Element: Equatable>(
+        of item: Element,
+        from dict: inout [Key: Set<Element>]
+    ) {
+        for (key, var value) in dict {
+            if value.count == 1, value.first! == item {
+                dict[key] = nil
+            } else {
+                value.remove(item)
+                dict[key] = value
+            }
+        }
+    }
+
+    private func parse(_ input: String) -> FoodList {
+        var ingredients = [Int: [String]]()
+        var allergens = [Int: [String]]()
+
+        for (id, line) in getLines(from: input).enumerated() {
+            let parts = line.components(separatedBy: "(contains ")
+            let ingredientsList = parts[0].trimmingCharacters(in: .whitespaces)
+                .components(separatedBy: .whitespaces)
+            let allergenList = parts[1].trimmingCharacters(in: ["(", ")"])
+                .components(separatedBy: ", ")
+            ingredients[id] = ingredientsList
+            allergens[id] = allergenList
+        }
+
+        return (ingredients, allergens)
+    }
+}
+
+private typealias FoodList = (ingredients: [Int: [String]], allergens: [Int: [String]])
