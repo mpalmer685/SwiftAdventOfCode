@@ -1,5 +1,6 @@
 disabled_rules:
-- identifier_name
+    - identifier_name
+    - opening_brace
 opt_in_rules:
     - collection_alignment
 
@@ -10,8 +11,6 @@ excluded:
 large_tuple:
     warning: 3
     error: 4
-opening_brace:
-    allow_multiline_func: true
 switch_case_alignment:
     indented_cases: true
 trailing_comma:

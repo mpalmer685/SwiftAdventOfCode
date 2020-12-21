@@ -11,6 +11,14 @@ let package = Package(
             name: "AOCKit",
             targets: ["AOCKit"]
         ),
+        .executable(
+            name: "aoc2020",
+            targets: ["AdventOfCode2020"]
+        ),
+        .executable(
+            name: "AdventOfCode2020",
+            targets: ["AdventOfCode2020"]
+        ),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -36,6 +44,10 @@ let package = Package(
                 .product(name: "CLISpinner", package: "CLISpinner"),
                 .product(name: "Codextended", package: "Codextended"),
             ]
+        ),
+        .target(
+            name: "AdventOfCode2020",
+            dependencies: ["AOCKit"]
         ),
     ]
 )
