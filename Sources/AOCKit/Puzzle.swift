@@ -3,7 +3,7 @@ import ArgumentParser
 typealias PuzzleSolution<T: CustomStringConvertible> = (String) throws -> T
 typealias StringPuzzleSolution = (String) throws -> String
 
-enum PuzzlePart: Int, ExpressibleByArgument {
+enum PuzzlePart: Int, ExpressibleByArgument, CaseIterable {
     case partOne = 1
     case partTwo = 2
 }
@@ -54,7 +54,7 @@ public extension Puzzle {
 }
 
 enum PuzzleError: Error {
-    case dayNotImplemented(_ day: UInt8)
+    case dayNotImplemented(_ day: Int)
     case partNotImplemented(_ part: PuzzlePart)
 }
 

@@ -1,6 +1,6 @@
 --allman false
 --assetliterals visual-width
---beforemarks 
+--beforemarks
 --binarygrouping none
 --classthreshold 0
 --closingparen balanced
@@ -27,7 +27,7 @@
 --lifecycle
 --linebreaks lf
 --maxwidth 100
---modifierorder 
+--modifierorder
 --nospaceoperators
 --nowrapoperators 
 --octalgrouping none
@@ -37,14 +37,14 @@
 --ranges spaced
 --redundanttype inferred
 --self remove
---selfrequired 
+--selfrequired
 --semicolons never
 --shortoptionals always
 --smarttabs enabled
 --stripunusedargs unnamed-only
 --structthreshold 0
 --tabwidth unspecified
---trailingclosures 
+--trailingclosures
 --trimwhitespace always
 --typeattributes preserve
 --typemark "MARK: - %t"

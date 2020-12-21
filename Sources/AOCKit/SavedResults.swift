@@ -32,16 +32,16 @@ struct SavedResults {
         saveLocation = try Folder.current.createFileIfNeeded(at: path)
     }
 
-    var days: [UInt8] {
-        resultsByDay.keys.sorted().map(UInt8.init)
+    var days: [Int] {
+        resultsByDay.keys.sorted()
     }
 
-    subscript(day: UInt8) -> Result? {
-        resultsByDay[Int(day)]
+    subscript(day: Int) -> Result? {
+        resultsByDay[day]
     }
 
-    func answer(for day: UInt8, _ part: PuzzlePart) -> String? {
-        let result = resultsByDay[Int(day)]
+    func answer(for day: Int, _ part: PuzzlePart) -> String? {
+        let result = resultsByDay[day]
         switch part {
             case .partOne:
                 return result?.partOneAnswer
@@ -51,12 +51,12 @@ struct SavedResults {
     }
 
     mutating func update(
-        _ day: UInt8,
+        _ day: Int,
         for part: PuzzlePart,
         with inputType: InputType,
         to answer: String
     ) {
-        var result = resultsByDay[Int(day)] ?? Result(inputType: inputType)
+        var result = resultsByDay[day] ?? Result(inputType: inputType)
         switch part {
             case .partOne:
                 result.partOneAnswer = answer
