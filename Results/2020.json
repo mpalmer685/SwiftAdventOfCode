@@ -146,6 +146,13 @@
       },
       "partOneAnswer" : "2826",
       "partTwoAnswer" : "pbhthx,sqdsxhb,dgvqv,csnfnl,dnlsjr,xzb,lkdg,rsvlb"
+    },
+    "22" : {
+      "inputType" : {
+        "file" : "Inputs/2020/day22"
+      },
+      "partOneAnswer" : "35818",
+      "partTwoAnswer" : "34771"
     }
   }
 }
