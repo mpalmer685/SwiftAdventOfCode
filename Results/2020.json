@@ -153,6 +153,13 @@
       },
       "partOneAnswer" : "35818",
       "partTwoAnswer" : "34771"
+    },
+    "23" : {
+      "inputType" : {
+        "string" : "253149867"
+      },
+      "partOneAnswer" : "34952786",
+      "partTwoAnswer" : "505334281774"
     }
   }
 }

@@ -6,7 +6,6 @@
 --closingparen balanced
 --commas always
 --conflictmarkers reject
---decimalgrouping none
 --elseposition same-line
 --enumthreshold 0
 --exponentcase lowercase
