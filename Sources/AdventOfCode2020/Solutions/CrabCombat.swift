@@ -16,12 +16,8 @@ struct CrabCombat: Puzzle {
         against player2: [Int],
         using playCombat: CombatGame
     ) -> Int {
-        switch playCombat(player1, player2) {
-            case let .playerOne(cards):
-                fallthrough
-            case let .playerTwo(cards):
-                return calculateScore(for: cards)
-        }
+        let winner = playCombat(player1, player2)
+        return calculateScore(for: winner.deck)
     }
 
     private func calculateScore(for hand: [Int]) -> Int {
@@ -39,6 +35,13 @@ struct CrabCombat: Puzzle {
 private enum GameResult {
     case playerOne([Int])
     case playerTwo([Int])
+
+    var deck: [Int] {
+        switch self {
+            case let .playerOne(deck): return deck
+            case let .playerTwo(deck): return deck
+        }
+    }
 }
 
 private typealias CombatGame = ([Int], [Int]) -> GameResult
