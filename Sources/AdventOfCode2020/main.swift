@@ -24,4 +24,5 @@ AOC.run(puzzles: [
     .day(21, AllergenAssessment()),
     .day(22, CrabCombat()),
     .day(23, CrabCups()),
+    .day(24, LobbyLayout()),
 ], resultsPath: "Results/2020.json")
