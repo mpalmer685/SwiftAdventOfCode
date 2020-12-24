@@ -2,85 +2,48 @@ import AOCKit
 
 struct ConwayCubes: Puzzle {
     func part1Solution(for input: String) throws -> Int {
-        let field: Set<Position3D> = try simulate(using: input)
-        return field.count
+        var field: [Position3D: Bool] = try parse(input)
+        for _ in 0 ..< 6 {
+            GameOfLife.playRound(on: &field, using: willCellBeActive)
+        }
+
+        return field.count { $0.value }
     }
 
     func part2Solution(for input: String) throws -> Int {
-        let field: Set<Position4D> = try simulate(using: input)
-        return field.count
+        var field: [Position4D: Bool] = try parse(input)
+        for _ in 0 ..< 6 {
+            GameOfLife.playRound(on: &field, using: willCellBeActive)
+        }
+
+        return field.count { $0.value }
     }
 
-    private func simulate<T: Position>(using input: String) throws -> Set<T> {
-        var field: Set<T> = try parse(input)
-        for _ in 0 ..< 6 {
-            try advance(&field)
+    private func parse<T: Position>(_ input: String) throws -> [T: Bool] {
+        var field: [T: Bool] = [:]
+        for (y, line) in getLines(from: input).enumerated() {
+            for (x, cell) in Array(line).enumerated() {
+                field[try T([x, y])] = cell == "#"
+            }
         }
         return field
     }
 
-    private func advance<T: Position>(_ field: inout Set<T>) throws {
-        var copy = field
-
-        func check(position: [Int], dimensions: [KeyPath<T, Int>]) throws {
-            if dimensions.isEmpty {
-                let p = try T(position)
-                if isCellActive(in: field, at: p) {
-                    copy.insert(p)
-                } else {
-                    copy.remove(p)
-                }
-            } else {
-                let (min, max) = field.extent(of: dimensions.first!)!
-                for x in min - 1 ... max + 1 {
-                    try check(position: position + [x], dimensions: Array(dimensions[1...]))
-                }
-            }
-        }
-
-        try check(position: [], dimensions: T.dimensions)
-
-        field = copy
-    }
-
-    private func isCellActive<T: Position>(in field: Set<T>, at position: T) -> Bool {
-        let activeNeighbors = position.neighbors.count(where: field.contains)
-        let isActive = field.contains(position)
-        if isActive && activeNeighbors != 2 && activeNeighbors != 3 {
+    private func willCellBeActive(isActive: Bool, activeNeighbors: Int) -> Bool {
+        if isActive, activeNeighbors != 2, activeNeighbors != 3 {
             return false
-        } else if !isActive && activeNeighbors == 3 {
+        } else if !isActive, activeNeighbors == 3 {
             return true
         }
         return isActive
     }
-
-    private func parse<T: Position>(_ input: String) throws -> Set<T> {
-        var field = Set<T>()
-        for (y, line) in getLines(from: input).enumerated() {
-            let cells = Array(line).enumerated().filter { $0.element == "#" }.map(\.offset)
-            for x in cells {
-                field.insert(try T([x, y]))
-            }
-        }
-        return field
-    }
 }
 
-private protocol Position {
-    static var dimensions: [KeyPath<Self, Int>] { get }
-
+private protocol Position: GameOfLifePosition {
     init(_ coords: [Int]) throws
-
-    var neighbors: [Self] { get }
-}
-
-extension Position {
-    static var dimensionality: Int { dimensions.count }
 }
 
 private struct Position3D: Position, Equatable, Hashable {
-    static var dimensions: [KeyPath<Position3D, Int>] { [\.x, \.y, \.z] }
-
     let x: Int
     let y: Int
     let z: Int
@@ -102,9 +65,9 @@ private struct Position3D: Position, Equatable, Hashable {
             throw ConwayCubesError.invalidCoordinates
         }
 
-        self.x = coords[0, default: 0]
-        self.y = coords[1, default: 0]
-        self.z = coords[2, default: 0]
+        x = coords[0, default: 0]
+        y = coords[1, default: 0]
+        z = coords[2, default: 0]
     }
 
     init(_ x: Int, _ y: Int, _ z: Int) {
@@ -115,8 +78,6 @@ private struct Position3D: Position, Equatable, Hashable {
 }
 
 private struct Position4D: Position, Equatable, Hashable {
-    static var dimensions: [KeyPath<Position4D, Int>] { [\.x, \.y, \.z, \.w] }
-
     let x: Int
     let y: Int
     let z: Int
@@ -141,10 +102,10 @@ private struct Position4D: Position, Equatable, Hashable {
             throw ConwayCubesError.invalidCoordinates
         }
 
-        self.x = coords[0, default: 0]
-        self.y = coords[1, default: 0]
-        self.z = coords[2, default: 0]
-        self.w = coords[3, default: 0]
+        x = coords[0, default: 0]
+        y = coords[1, default: 0]
+        z = coords[2, default: 0]
+        w = coords[3, default: 0]
     }
 
     init(_ x: Int, _ y: Int, _ z: Int, _ w: Int) {

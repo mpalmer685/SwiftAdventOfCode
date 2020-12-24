@@ -14,26 +14,19 @@ struct LobbyLayout: Puzzle {
         flipTiles(in: &floor, at: parse(input))
 
         for _ in 0 ..< 100 {
-            for p in floor.keys {
-                for neighbor in Direction.allCases.map({ p + $0 }) where floor[neighbor] == nil {
-                    floor[neighbor] = false
-                }
-            }
-
-            var tilesToFlip: [Position] = []
-            for (position, isActive) in floor {
-                let neighborCount = Direction.allCases.count { floor[position + $0] == true }
-                if isActive, neighborCount == 0 || neighborCount > 2 {
-                    tilesToFlip.append(position)
-                } else if !isActive, neighborCount == 2 {
-                    tilesToFlip.append(position)
-                }
-            }
-
-            flipTiles(in: &floor, at: tilesToFlip)
+            GameOfLife.playRound(on: &floor, using: willCellBeActive)
         }
 
         return floor.values.count(where: \.isTrue)
+    }
+
+    private func willCellBeActive(isActive: Bool, activeNeighbors: Int) -> Bool {
+        if isActive, activeNeighbors == 0 || activeNeighbors > 2 {
+            return false
+        } else if !isActive, activeNeighbors == 2 {
+            return true
+        }
+        return isActive
     }
 
     private func flipTiles(in tiles: inout Floor, at positions: [Position]) {
@@ -112,6 +105,12 @@ private struct Position: Equatable, Hashable {
         lhs.x += dx
         lhs.y += dy
         lhs.z += dz
+    }
+}
+
+extension Position: GameOfLifePosition {
+    var neighbors: [Position] {
+        Direction.allCases.map { self + $0 }
     }
 }
 
