@@ -1,7 +1,5 @@
 import AOCKit
 
-let testInput = "389125467"
-
 struct CrabCups: Puzzle {
     func part1Solution(for input: String) throws -> String {
         let (result, _) = play(100, roundsWith: parse(input))
