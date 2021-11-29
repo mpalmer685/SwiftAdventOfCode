@@ -13,6 +13,9 @@ struct Command: ParsableCommand {
     @Option(name: .shortAndLong)
     var part: PuzzlePart?
 
+    @Flag(name: .long)
+    var next: Bool = false
+
     @Option(name: .shortAndLong, help: "The puzzle input")
     var input: String?
 
@@ -53,6 +56,10 @@ struct Command: ParsableCommand {
             }
         } else if let day = day {
             success = try checkAll(for: day)
+        } else if next {
+            let (day, part) = nextPuzzle(after: Self.savedResults.latest)
+            try generateResult(for: day, part, with: inputType(for: day)!)
+            success = true
         } else {
             success = try checkAllPuzzles()
         }
@@ -117,6 +124,19 @@ struct Command: ParsableCommand {
     ) throws -> String {
         let input = try getInput(for: inputType)
         return try Self.puzzleCollection.runPuzzle(day: day, part: part, input: input)
+    }
+}
+
+private func nextPuzzle(after puzzle: (day: Int, part: PuzzlePart)?)
+    -> (day: Int, part: PuzzlePart)
+{
+    guard let (day, part) = puzzle else { return (1, .partOne) }
+
+    switch part {
+        case .partOne:
+            return (day, .partTwo)
+        case .partTwo:
+            return (day + 1, .partOne)
     }
 }
 

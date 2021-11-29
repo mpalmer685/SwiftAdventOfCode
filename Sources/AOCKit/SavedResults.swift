@@ -40,6 +40,22 @@ struct SavedResults {
         resultsByDay[day]
     }
 
+    var latest: (day: Int, part: PuzzlePart)? {
+        guard var latestDay = days.max() else { return nil }
+        while latestDay > 0 {
+            guard let result = resultsByDay[latestDay] else { continue }
+            if result.partTwoAnswer != nil {
+                return (latestDay, .partTwo)
+            } else if result.partOneAnswer != nil {
+                return (latestDay, .partOne)
+            }
+
+            latestDay -= 1
+        }
+
+        return nil
+    }
+
     func answer(for day: Int, _ part: PuzzlePart) -> String? {
         let result = resultsByDay[day]
         switch part {
