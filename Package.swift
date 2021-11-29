@@ -24,10 +24,7 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/JohnSundell/Files", from: "4.0.0"),
-        .package(
-            url: "https://github.com/apple/swift-argument-parser",
-            .upToNextMinor(from: "0.3.0")
-        ),
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
         .package(url: "https://github.com/onevcat/Rainbow", from: "3.0.0"),
         .package(url: "https://github.com/kiliankoe/CLISpinner", from: "0.4.0"),
         .package(url: "https://github.com/JohnSundell/Codextended", from: "0.1.0"),
