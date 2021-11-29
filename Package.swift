@@ -16,6 +16,10 @@ let package = Package(
             targets: ["AdventOfCode2020"]
         ),
         .executable(
+            name: "aoc2021",
+            targets: ["AdventOfCode2021"]
+        ),
+        .executable(
             name: "AdventOfCode2020",
             targets: ["AdventOfCode2020"]
         ),
@@ -44,6 +48,10 @@ let package = Package(
         ),
         .target(
             name: "AdventOfCode2020",
+            dependencies: ["AOCKit"]
+        ),
+        .target(
+            name: "AdventOfCode2021",
             dependencies: ["AOCKit"]
         ),
     ]
