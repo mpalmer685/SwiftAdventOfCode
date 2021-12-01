@@ -1,0 +1,11 @@
+{
+  "resultsByDay" : {
+    "1" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day1"
+      },
+      "partOneAnswer" : "1665",
+      "partTwoAnswer" : "1702"
+    }
+  }
+}
