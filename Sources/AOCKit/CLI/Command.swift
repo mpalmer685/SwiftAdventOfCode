@@ -16,6 +16,9 @@ struct Command: ParsableCommand {
     @Flag(name: .long)
     var next: Bool = false
 
+    @Flag(name: .long)
+    var latest: Bool = false
+
     @Option(name: .shortAndLong, help: "The puzzle input")
     var input: String?
 
@@ -56,6 +59,11 @@ struct Command: ParsableCommand {
             }
         } else if let day = day {
             success = try checkAll(for: day)
+        } else if latest,
+                  let (day, part) = Self.savedResults.latest,
+                  let answer = Self.savedResults.answer(for: day, part)
+        {
+            success = try checkPuzzle(for: day, part, matches: answer)
         } else if next {
             let (day, part) = nextPuzzle(after: Self.savedResults.latest)
             try generateResult(for: day, part, with: inputType(for: day)!)
