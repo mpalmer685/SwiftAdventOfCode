@@ -20,6 +20,13 @@
       },
       "partOneAnswer" : "4147524",
       "partTwoAnswer" : "3570354"
+    },
+    "4" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day4"
+      },
+      "partOneAnswer" : "16716",
+      "partTwoAnswer" : "4880"
     }
   }
 }
