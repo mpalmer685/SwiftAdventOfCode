@@ -27,6 +27,13 @@
       },
       "partOneAnswer" : "16716",
       "partTwoAnswer" : "4880"
+    },
+    "5" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day5"
+      },
+      "partOneAnswer" : "6841",
+      "partTwoAnswer" : "19258"
     }
   }
 }
