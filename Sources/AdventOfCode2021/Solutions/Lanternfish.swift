@@ -1,6 +1,6 @@
 import AOCKit
 
-let testInput = "3,4,3,1,2"
+private let testInput = "3,4,3,1,2"
 
 struct Lanternfish: Puzzle {
     func part1Solution(for input: String) throws -> Int {
