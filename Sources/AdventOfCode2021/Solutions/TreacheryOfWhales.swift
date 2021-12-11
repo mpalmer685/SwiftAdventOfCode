@@ -70,14 +70,6 @@ private func getBestDestination(
     fatalError("Didn't find a solution within \(maxTries) tries.")
 }
 
-private func median(of values: [Int]) -> Int {
-    values.sorted(by: <)[values.count / 2]
-}
-
-private func mean(of values: [Int]) -> Int {
-    values.reduce(0, +) / values.count
-}
-
 private typealias CostCalculator = (Int) -> Int
 
 private let identityCost: CostCalculator = { $0 }

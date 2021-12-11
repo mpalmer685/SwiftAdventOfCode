@@ -10,4 +10,5 @@ AOC.run(puzzles: [
     .day(7, TreacheryOfWhales()),
     .day(8, SevenSegmentSearch()),
     .day(9, SmokeBasin()),
+    .day(10, SyntaxScoring()),
 ], resultsPath: "Results/2021.json")
