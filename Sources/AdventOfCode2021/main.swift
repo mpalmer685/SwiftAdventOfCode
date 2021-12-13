@@ -13,4 +13,5 @@ AOC.run(puzzles: [
     .day(10, SyntaxScoring()),
     .day(11, DumboOctopus()),
     .day(12, PassagePathing()),
+    .day(13, TransparentOrigami()),
 ], resultsPath: "Results/2021.json")
