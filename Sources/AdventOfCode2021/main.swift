@@ -16,4 +16,5 @@ AOC.run(puzzles: [
     .day(13, TransparentOrigami()),
     .day(14, ExtendedPolymerization()),
     .day(15, Chiton()),
+    .day(16, PacketDecoder()),
 ], resultsPath: "Results/2021.json")
