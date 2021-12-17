@@ -111,6 +111,13 @@
       },
       "partOneAnswer" : "908",
       "partTwoAnswer" : "10626195124371"
+    },
+    "17" : {
+      "inputType" : {
+        "string" : "target area: x=185..221, y=-122..-74"
+      },
+      "partOneAnswer" : "7381",
+      "partTwoAnswer" : "3019"
     }
   }
 }
