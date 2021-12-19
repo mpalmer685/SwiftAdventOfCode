@@ -118,6 +118,13 @@
       },
       "partOneAnswer" : "7381",
       "partTwoAnswer" : "3019"
+    },
+    "18" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day18"
+      },
+      "partOneAnswer" : "4323",
+      "partTwoAnswer" : "4749"
     }
   }
 }
