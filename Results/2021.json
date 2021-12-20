@@ -125,6 +125,13 @@
       },
       "partOneAnswer" : "4323",
       "partTwoAnswer" : "4749"
+    },
+    "20" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day20"
+      },
+      "partOneAnswer" : "5354",
+      "partTwoAnswer" : "18269"
     }
   }
 }
