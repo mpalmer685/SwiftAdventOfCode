@@ -19,5 +19,6 @@ AOC.run(puzzles: [
     .day(16, PacketDecoder()),
     .day(17, TrickShot()),
     .day(18, Snailfish()),
+    .day(19, BeaconScanner()),
     .day(20, TrenchMap()),
 ], resultsPath: "Results/2021.json")

@@ -126,6 +126,13 @@
       "partOneAnswer" : "4323",
       "partTwoAnswer" : "4749"
     },
+    "19" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day19"
+      },
+      "partOneAnswer" : "381",
+      "partTwoAnswer" : "12201"
+    },
     "20" : {
       "inputType" : {
         "file" : "Inputs/2021/day20"
