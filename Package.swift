@@ -32,6 +32,7 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Rainbow", from: "3.0.0"),
         .package(url: "https://github.com/kiliankoe/CLISpinner", from: "0.4.0"),
         .package(url: "https://github.com/JohnSundell/Codextended", from: "0.1.0"),
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -52,7 +53,10 @@ let package = Package(
         ),
         .target(
             name: "AdventOfCode2021",
-            dependencies: ["AOCKit"]
+            dependencies: [
+                "AOCKit",
+                .product(name: "Algorithms", package: "swift-algorithms"),
+            ]
         ),
     ]
 )
