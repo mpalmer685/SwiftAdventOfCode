@@ -22,4 +22,5 @@ AOC.run(puzzles: [
     .day(19, BeaconScanner()),
     .day(20, TrenchMap()),
     .day(21, DiracDice()),
+    .day(22, ReactorReboot()),
 ], resultsPath: "Results/2021.json")
