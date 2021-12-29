@@ -24,4 +24,5 @@ AOC.run(puzzles: [
     .day(21, DiracDice()),
     .day(22, ReactorReboot()),
     .day(24, ArithmeticLogicUnit()),
+    .day(25, SeaCucumber()),
 ], resultsPath: "Results/2021.json")

@@ -1,4 +1,4 @@
-struct Grid {
+struct Grid<Cell> {
     struct Point: Hashable {
         let x: Int
         let y: Int
@@ -13,9 +13,9 @@ struct Grid {
         }
     }
 
-    private var cells: [[Int]]
+    private var cells: [[Cell]]
 
-    init(_ cells: [[Int]]) {
+    init(_ cells: [[Cell]]) {
         let width = cells[0].count
         guard cells.allSatisfy({ $0.count == width }) else {
             fatalError("Irregular row lengths")
@@ -36,7 +36,7 @@ struct Grid {
         point.x.isBetween(0, and: width - 1) && point.y.isBetween(0, and: height - 1)
     }
 
-    subscript(_ point: Point) -> Int {
+    subscript(_ point: Point) -> Cell {
         get {
             guard contains(point) else { fatalError("Out of bounds: \(point)") }
             return cells[point.y][point.x]
@@ -52,9 +52,8 @@ extension Grid.Point: CustomStringConvertible {
     public var description: String { "(\(x), \(y))" }
 }
 
-extension Grid: CustomStringConvertible {
-    public var description: String {
-        cells.map { $0.map(String.init).joined() }.joined(separator: "\n")
+extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
+    var description: String {
+        cells.map { $0.map(\.description).joined() }.joined(separator: "\n")
     }
 }
-

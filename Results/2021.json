@@ -160,6 +160,12 @@
       },
       "partOneAnswer" : "39999698799429",
       "partTwoAnswer" : "18116121134117"
+    },
+    "25" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day25"
+      },
+      "partOneAnswer" : "414"
     }
   }
 }

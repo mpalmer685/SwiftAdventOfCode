@@ -15,7 +15,7 @@ struct DumboOctopus: Puzzle {
         return cycles
     }
 
-    private func parseGrid(from input: String) -> Grid {
+    private func parseGrid(from input: String) -> Grid<Int> {
         let cells = getLines(from: input).map { line in
             Array(line).map(String.init).compactMap(Int.init)
         }
@@ -34,12 +34,12 @@ private let adjacentCells = [
     (1, 1),
 ]
 
-private func countFlashes(in grid: inout Grid) -> Int {
+private func countFlashes(in grid: inout Grid<Int>) -> Int {
     for point in grid.points {
         grid[point] += 1
     }
 
-    var flashed = Set<Grid.Point>()
+    var flashed = Set<Grid<Int>.Point>()
     while true {
         var hasFlashed = false
         for point in grid.points where grid[point] > 9 && !flashed.contains(point) {
