@@ -153,6 +153,13 @@
       },
       "partOneAnswer" : "653798",
       "partTwoAnswer" : "1257350313518866"
+    },
+    "24" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day24"
+      },
+      "partOneAnswer" : "39999698799429",
+      "partTwoAnswer" : "18116121134117"
     }
   }
 }
