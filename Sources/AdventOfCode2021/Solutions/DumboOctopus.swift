@@ -39,7 +39,7 @@ private func countFlashes(in grid: inout Grid<Int>) -> Int {
         grid[point] += 1
     }
 
-    var flashed = Set<Grid<Int>.Point>()
+    var flashed = Set<GridPoint>()
     while true {
         var hasFlashed = false
         for point in grid.points where grid[point] > 9 && !flashed.contains(point) {

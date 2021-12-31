@@ -154,6 +154,13 @@
       "partOneAnswer" : "653798",
       "partTwoAnswer" : "1257350313518866"
     },
+    "23" : {
+      "inputType" : {
+        "file" : "Inputs/2021/day23"
+      },
+      "partOneAnswer" : "18170",
+      "partTwoAnswer" : "50208"
+    },
     "24" : {
       "inputType" : {
         "file" : "Inputs/2021/day24"

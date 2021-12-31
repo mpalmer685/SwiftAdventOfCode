@@ -37,10 +37,10 @@ private let adjacentCells = [
 ]
 
 private func findPath(in grid: Grid<Int>) -> Int {
-    let start = Grid<Int>.Point(0, 0)
-    let goal = Grid<Int>.Point(grid.width - 1, grid.height - 1)
-    var costs: [Grid<Int>.Point: Int] = [start: 0]
-    var heap = Heap<Grid<Int>.Point> {
+    let start = GridPoint(0, 0)
+    let goal = GridPoint(grid.width - 1, grid.height - 1)
+    var costs: [GridPoint: Int] = [start: 0]
+    var heap = Heap<GridPoint> {
         costs[$0, default: .max] < costs[$1, default: .max]
     }
     heap.insert(start)

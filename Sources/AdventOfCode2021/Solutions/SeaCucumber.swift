@@ -38,12 +38,12 @@ private extension Grid where Cell == Location {
         points.contains(where: canMove)
     }
 
-    func canMove(at position: Point) -> Bool {
+    func canMove(at position: GridPoint) -> Bool {
         guard let next = nextPosition(for: position) else { return false }
         return self[next] == .empty
     }
 
-    private func nextPosition(for position: Point) -> Point? {
+    private func nextPosition(for position: GridPoint) -> GridPoint? {
         switch self[position] {
             case .empty: return nil
             case .east: return wrap(position.offsetBy(1, 0))
@@ -51,8 +51,8 @@ private extension Grid where Cell == Location {
         }
     }
 
-    private func wrap(_ position: Point) -> Point {
-        Point(position.x % width, position.y % height)
+    private func wrap(_ position: GridPoint) -> GridPoint {
+        GridPoint(position.x % width, position.y % height)
     }
 }
 
