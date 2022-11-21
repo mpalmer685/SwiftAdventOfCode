@@ -2,12 +2,14 @@ import AOCKit
 import Foundation
 
 struct BinaryBoarding: Puzzle {
-    func part1Solution(for input: String) throws -> UInt {
-        getLines(from: input).map(BoardingPass.init).map(\.seatId).max()!
+    static let day = 5
+
+    func part1() throws -> UInt {
+        input().lines.raw.map(BoardingPass.init).map(\.seatId).max()!
     }
 
-    func part2Solution(for input: String) throws -> UInt {
-        let seatIds = getLines(from: input).map(BoardingPass.init).map(\.seatId).sorted()
+    func part2() throws -> UInt {
+        let seatIds = input().lines.raw.map(BoardingPass.init).map(\.seatId).sorted()
         return binarySearchFindMissing(from: seatIds)
     }
 

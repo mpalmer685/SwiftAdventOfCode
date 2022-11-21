@@ -7,14 +7,16 @@ private typealias Validator = (Passport) -> Bool
 private typealias ValidatorBuilder = (String) -> (Passport) -> Bool
 
 struct PassportProcessing: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let passports = try parsePassports(from: input)
+    static let day = 4
+
+    func part1() throws -> Int {
+        let passports = try parsePassports()
         let validator = PassportValidator()
         return validate(passports, using: validator.containsRequiredKeys)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let passports = try parsePassports(from: input)
+    func part2() throws -> Int {
+        let passports = try parsePassports()
         let validator = PassportValidator()
         return validate(passports, using: validator.allFieldsValid)
     }
@@ -23,8 +25,8 @@ struct PassportProcessing: Puzzle {
         passports.filter(isValid).count
     }
 
-    private func parsePassports(from input: String) throws -> [Passport] {
-        let lines = getLines(from: input, omittingEmptyLines: false)
+    private func parsePassports() throws -> [Passport] {
+        let lines = input().lines
 
         var passports: [Passport] = []
         var current = Passport()
@@ -35,7 +37,7 @@ struct PassportProcessing: Puzzle {
                 continue
             }
 
-            let pairs = split(line, on: " ")
+            let pairs = line.words
             for pair in pairs {
                 let (key, value) = try parseField(from: pair)
                 current[key] = value
@@ -46,12 +48,12 @@ struct PassportProcessing: Puzzle {
         return passports
     }
 
-    private func parseField(from string: String) throws -> (key: String, value: String) {
-        let pair = split(string, on: ":")
+    private func parseField(from word: Word) throws -> (key: String, value: String) {
+        let pair = word.words(separatedBy: ":")
         guard pair.count == 2 else {
-            throw PassportProcessingError.invalidSegment(string)
+            throw PassportProcessingError.invalidSegment(word.raw)
         }
-        return (key: pair[0], value: pair[1])
+        return (key: pair[0].raw, value: pair[1].raw)
     }
 }
 

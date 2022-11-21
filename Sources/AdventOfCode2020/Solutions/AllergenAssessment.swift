@@ -1,8 +1,10 @@
 import AOCKit
 
 struct AllergenAssessment: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (ingredients, allergens) = parse(input)
+    static let day = 21
+
+    func part1() throws -> Int {
+        let (ingredients, allergens) = parseInput()
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
             allergens: allergens
@@ -13,8 +15,8 @@ struct AllergenAssessment: Puzzle {
             .count
     }
 
-    func part2Solution(for input: String) throws -> String {
-        let (ingredients, allergens) = parse(input)
+    func part2() throws -> String {
+        let (ingredients, allergens) = parseInput()
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
             allergens: allergens
@@ -65,15 +67,15 @@ struct AllergenAssessment: Puzzle {
         }
     }
 
-    private func parse(_ input: String) -> FoodList {
+    private func parseInput() -> FoodList {
         var ingredients = [Int: [String]]()
         var allergens = [Int: [String]]()
 
-        for (id, line) in getLines(from: input).enumerated() {
-            let parts = line.components(separatedBy: "(contains ")
-            let ingredientsList = parts[0].trimmingCharacters(in: .whitespaces)
-                .components(separatedBy: .whitespaces)
-            let allergenList = parts[1].trimmingCharacters(in: ["(", ")"])
+        let lines = input().lines.filter(\.isNotEmpty)
+        for (id, line) in lines.enumerated() {
+            let parts = line.words(separatedBy: " (contains ")
+            let ingredientsList = parts[0].words(separatedBy: .whitespaces).raw
+            let allergenList = parts[1].trimmingCharacters(in: ["(", ")"]).raw
                 .components(separatedBy: ", ")
             ingredients[id] = ingredientsList
             allergens[id] = allergenList

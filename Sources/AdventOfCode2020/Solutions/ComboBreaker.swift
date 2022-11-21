@@ -1,8 +1,10 @@
 import AOCKit
 
 struct ComboBreaker: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (cardPublicKey, doorPublicKey) = parse(input)
+    static let day = 25
+
+    func part1() throws -> Int {
+        let (cardPublicKey, doorPublicKey) = parseInput()
 
         var cardValue = 1,
             doorValue = 1,
@@ -17,8 +19,8 @@ struct ComboBreaker: Puzzle {
         return loopTest == cardPublicKey ? cardValue : doorValue
     }
 
-    private func parse(_ input: String) -> (Int, Int) {
-        let keys = getLines(from: input).compactMap(Int.init)
+    private func parseInput() -> (Int, Int) {
+        let keys = input().lines.integers
         return (keys[0], keys[1])
     }
 }

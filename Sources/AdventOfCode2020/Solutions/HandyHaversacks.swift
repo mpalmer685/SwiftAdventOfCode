@@ -2,8 +2,10 @@ import AOCKit
 import Foundation
 
 struct HandyHaversacks: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let rules = try parseBagRules(from: input)
+    static let day = 7
+
+    func part1() throws -> Int {
+        let rules = try parseBagRules()
         let startingColor = "shiny gold"
 
         var visited = Set<String>()
@@ -20,8 +22,8 @@ struct HandyHaversacks: Puzzle {
         return visited.count
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let rules = try parseBagRules(from: input)
+    func part2() throws -> Int {
+        let rules = try parseBagRules()
         let startingColor = "shiny gold"
 
         var cache = [String: Int]()
@@ -38,9 +40,9 @@ struct HandyHaversacks: Puzzle {
         return countChildren(of: startingColor)
     }
 
-    private func parseBagRules(from input: String) throws -> [String: [(String, Int)]] {
-        try getLines(from: input)
-            .map { $0.components(separatedBy: " contain ") }
+    private func parseBagRules() throws -> [String: [(String, Int)]] {
+        try input().lines
+            .map { $0.words(separatedBy: " contain ").raw }
             .reduce(into: [:], addBagRule)
     }
 

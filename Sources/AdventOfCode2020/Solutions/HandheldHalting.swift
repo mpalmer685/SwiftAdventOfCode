@@ -1,13 +1,15 @@
 import AOCKit
 
 struct HandheldHalting: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var program = try Program(lines: getLines(from: input))
+    static let day = 8
+
+    func part1() throws -> Int {
+        var program = try Program(lines: input().lines.raw)
         return program.run()
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        var program = try Program(lines: getLines(from: input))
+    func part2() throws -> Int {
+        var program = try Program(lines: input().lines.raw)
         program.repair()
         return program.run()
     }

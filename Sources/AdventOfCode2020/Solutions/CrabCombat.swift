@@ -1,13 +1,15 @@
 import AOCKit
 
 struct CrabCombat: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (player1, player2) = parse(input)
+    static let day = 22
+
+    func part1() throws -> Int {
+        let (player1, player2) = parseInput()
         return getScoreForGame(player1, against: player2, using: playCombat)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let (player1, player2) = parse(input)
+    func part2() throws -> Int {
+        let (player1, player2) = parseInput()
         return getScoreForGame(player1, against: player2, using: playRecursiveCombat)
     }
 
@@ -24,10 +26,10 @@ struct CrabCombat: Puzzle {
         hand.enumerated().reduce(0) { $0 + (hand.count - $1.offset) * $1.element }
     }
 
-    private func parse(_ input: String) -> (player1: [Int], player2: [Int]) {
-        let players = getLines(from: input)
-            .split { $0.starts(with: "Player") }
-            .map { $0.compactMap(Int.init) }
+    private func parseInput() -> (player1: [Int], player2: [Int]) {
+        let players = input().lines.filter(\.isNotEmpty)
+            .split { $0.raw.starts(with: "Player") }
+            .map(\.integers)
         return (players[0], players[1])
     }
 }

@@ -2,17 +2,19 @@ import AOCKit
 import Foundation
 
 struct PasswordPhilosophy: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        count(entries: parseEntries(from: input), using: Entry.characterCountPolicy)
+    static let day = 2
+
+    func part1() throws -> Int {
+        count(entries: parseEntries(), using: Entry.characterCountPolicy)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        count(entries: parseEntries(from: input), using: Entry.characterPositionPolicy)
+    func part2() throws -> Int {
+        count(entries: parseEntries(), using: Entry.characterPositionPolicy)
     }
 
-    private func parseEntries(from input: String) -> [Entry] {
-        getLines(from: input)
-            .compactMap(Entry.pattern.match)
+    private func parseEntries() -> [Entry] {
+        input().lines
+            .compactMap { Entry.pattern.match($0.raw) }
             .map(Entry.init)
     }
 

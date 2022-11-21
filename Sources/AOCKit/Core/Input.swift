@@ -41,6 +41,15 @@ public extension StringInput {
     }
 }
 
+public extension StringInput {
+    var isEmpty: Bool { raw.isEmpty }
+    var isNotEmpty: Bool { !isEmpty }
+
+    func trimmingCharacters(in set: CharacterSet) -> Self {
+        Self(raw.trimmingCharacters(in: set))
+    }
+}
+
 public final class Input: StringInput {
     public let raw: String
 
@@ -69,14 +78,6 @@ public final class Word: StringInput {
     public lazy var lines: [Line] = { [Line(raw)] }()
     public var words: [Word] { [self] }
     public var csvWords: [Word] { [self] }
-
-    public func words(separatedBy: CharacterSet) -> [Word] {
-        [self]
-    }
-
-    public func words(separatedBy: String) -> [Word] {
-        [self]
-    }
 }
 
 public extension Collection where Element: StringInput {

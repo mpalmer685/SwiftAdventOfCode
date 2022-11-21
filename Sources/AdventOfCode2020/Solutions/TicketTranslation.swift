@@ -1,15 +1,17 @@
 import AOCKit
 
 struct TicketTranslation: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (rules, _, otherTickets) = parse(input)
+    static let day = 16
+
+    func part1() throws -> Int {
+        let (rules, _, otherTickets) = parse()
         return otherTickets
             .flatMap { invalidFields(in: $0, using: rules) }
             .reduce(0, +)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let (rules, myTicket, otherTickets) = parse(input)
+    func part2() throws -> Int {
+        let (rules, myTicket, otherTickets) = parse()
         let validTickets = otherTickets.filter { invalidFields(in: $0, using: rules).isEmpty }
         let fieldIndices = getFieldMapping(for: rules, using: validTickets)
 
@@ -52,7 +54,7 @@ struct TicketTranslation: Puzzle {
 
     private func remove<Key, Value: Equatable>(_ item: Value, in dict: inout [Key: [Value]]) {
         for (key, value) in dict {
-            if value.count == 1 && value.first! == item {
+            if value.count == 1, value.first! == item {
                 dict[key] = nil
             } else {
                 dict[key] = value.removing(item)
@@ -60,15 +62,15 @@ struct TicketTranslation: Puzzle {
         }
     }
 
-    private func parse(_ input: String) -> ([Rule], Ticket, [Ticket]) {
-        let lines = getLines(from: input)
-        let yourTicketLabelIndex = lines.firstIndex(of: "your ticket:")!
-        let nearbyTicketsLabelIndex = lines.firstIndex(of: "nearby tickets:")!
+    private func parse() -> ([Rule], Ticket, [Ticket]) {
+        let lines = input().lines.filter(\.isNotEmpty)
+        let yourTicketLabelIndex = lines.firstIndex { $0.raw == "your ticket:" }!
+        let nearbyTicketsLabelIndex = lines.firstIndex { $0.raw == "nearby tickets:" }!
 
-        let rules = lines[0 ..< yourTicketLabelIndex].map(Rule.init)
-        let myTicket = split(lines[yourTicketLabelIndex + 1], on: ",").compactMap(Int.init)
+        let rules = lines[0 ..< yourTicketLabelIndex].raw.map(Rule.init)
+        let myTicket = lines[yourTicketLabelIndex + 1].csvWords.integers
         let otherTickets = lines[(nearbyTicketsLabelIndex + 1)...]
-            .map { split($0, on: ",").compactMap(Int.init) }
+            .map(\.csvWords.integers)
 
         return (rules, myTicket, otherTickets)
     }
@@ -100,7 +102,7 @@ extension Rule: Equatable {}
 
 extension Rule: CustomDebugStringConvertible {
     var debugDescription: String {
-        let ranges = self.ranges.map { "\($0.lowerBound)-\($0.upperBound)" }.joined(separator: " or ")
+        let ranges = ranges.map { "\($0.lowerBound)-\($0.upperBound)" }.joined(separator: " or ")
         return "\(name): \(ranges)"
     }
 }

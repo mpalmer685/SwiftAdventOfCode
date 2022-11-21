@@ -2,18 +2,20 @@ import AOCKit
 import Foundation
 
 struct MonsterMessages: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (rules, messages) = parse(input)
+    static let day = 19
+
+    func part1() throws -> Int {
+        let (rules, messages) = parseInput()
         return messages.count { isMessageValid($0, for: [0], given: rules) }
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let (rules, messages) = parse(input, overrides: ["8: 42 | 42 8", "11: 42 31 | 42 11 31"])
+    func part2() throws -> Int {
+        let (rules, messages) = parseInput(overrides: ["8: 42 | 42 8", "11: 42 31 | 42 11 31"])
         return messages.count { isMessageValid($0, for: [0], given: rules) }
     }
 
-    private func parse(_ input: String, overrides: [String] = []) -> ([Int: Rule], [String]) {
-        let lines = getLines(from: input, omittingEmptyLines: false)
+    private func parseInput(overrides: [String] = []) -> ([Int: Rule], [String]) {
+        let lines = input().lines.raw
         let splitIndex = lines.firstIndex(where: \.isEmpty)!
 
         let ruleLines = lines[...(splitIndex - 1)] + overrides
@@ -40,7 +42,11 @@ struct MonsterMessages: Puzzle {
 
         switch rule {
             case let .literal(c):
-                return message.first == c && isMessageValid(message.tail, for: ruleIds.tail, given: rules)
+                return message.first == c && isMessageValid(
+                    message.tail,
+                    for: ruleIds.tail,
+                    given: rules
+                )
             case let .sequence(r):
                 return isMessageValid(message, for: r + ruleIds.tail, given: rules)
             case let .fork(r):

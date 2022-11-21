@@ -1,14 +1,16 @@
 import AOCKit
 
 struct OperationOrder: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        try getLines(from: input)
+    static let day = 18
+
+    func part1() throws -> Int {
+        try input().lines.raw
             .map { try evaluate(string: $0, using: .part1) }
             .reduce(0, +)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        try getLines(from: input)
+    func part2() throws -> Int {
+        try input().lines.raw
             .map { try evaluate(string: $0, using: .part2) }
             .reduce(0, +)
     }
@@ -32,7 +34,10 @@ struct OperationOrder: Puzzle {
         return operands.last!
     }
 
-    private func tokenize(_ string: String, using operatorSet: Operator.OperatorSet) throws -> [Token] {
+    private func tokenize(
+        _ string: String,
+        using operatorSet: Operator.OperatorSet
+    ) throws -> [Token] {
         var tokens = [Token]()
         for ch in Array(string) where !ch.isWhitespace {
             if let value = ch.wholeNumberValue {
@@ -86,7 +91,7 @@ struct OperationOrder: Puzzle {
             if topOfStack.precedence < .closeGroup {
                 outputStack.append(.operator(topOfStack))
             }
-            if op.precedence == .closeGroup && topOfStack.precedence == .openGroup {
+            if op.precedence == .closeGroup, topOfStack.precedence == .openGroup {
                 break
             }
         }
@@ -115,7 +120,11 @@ private struct Operator {
         Operator(symbol: symbol, precedence: .closeGroup, associativity: .left, operate: noOp)
     }
 
-    static func arithmetic(symbol: Character, precedence: Precedence, operation: @escaping Operation) -> Self {
+    static func arithmetic(
+        symbol: Character,
+        precedence: Precedence,
+        operation: @escaping Operation
+    ) -> Self {
         Operator(symbol: symbol, precedence: precedence, associativity: .left, operate: operation)
     }
 

@@ -1,19 +1,22 @@
 import AOCKit
 
 struct CrabCups: Puzzle {
-    func part1Solution(for input: String) throws -> String {
-        let (result, _) = play(100, roundsWith: parse(input))
+    static let day = 23
+    static let rawInput: String? = "253149867"
+
+    func part1() throws -> String {
+        let (result, _) = play(100, roundsWith: parseInput())
         return result
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let cups = parse(input)
+    func part2() throws -> Int {
+        let cups = parseInput()
         let (_, result) = play(10_000_000, roundsWith: cups + Array(cups.max()! + 1 ... 1_000_000))
         return result
     }
 
-    private func parse(_ input: String) -> [Int] {
-        input.compactMap { Int(String($0)) }
+    private func parseInput() -> [Int] {
+        input().digits
     }
 }
 

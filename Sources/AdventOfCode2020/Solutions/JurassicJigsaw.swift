@@ -16,16 +16,18 @@ private let seaMonsterPixels = seaMonster.count
 private let tileIdPattern = NSRegularExpression("^Tile (\\d+):")
 
 struct JurassicJigsaw: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let tiles = parse(input)
+    static let day = 20
+
+    func part1() throws -> Int {
+        let tiles = parseInput()
         return tiles
             .filter { neighbors(of: $0, in: tiles).count == 2 }
             .map(\.id)
             .reduce(1, *)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let tiles = parse(input)
+    func part2() throws -> Int {
+        let tiles = parseInput()
         let grid = assemble(tiles)
         return findMonsters(in: grid)
     }
@@ -151,12 +153,13 @@ struct JurassicJigsaw: Puzzle {
             }
     }
 
-    private func parse(_ input: String) -> [Tile] {
+    private func parseInput() -> [Tile] {
         var tiles = [Tile]()
         var tileId = 0
         var rows = [String]()
 
-        for line in getLines(from: input) {
+        let lines = input().lines.filter(\.isNotEmpty).raw
+        for line in lines {
             if let match = tileIdPattern.match(line) {
                 if !rows.isEmpty {
                     tiles.append(Tile(id: tileId, pixels: rows.map(Array.init)))

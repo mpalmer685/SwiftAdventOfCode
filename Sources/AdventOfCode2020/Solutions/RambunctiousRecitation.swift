@@ -1,14 +1,17 @@
 import AOCKit
 
 struct RambunctiousRecitation: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let startingNumbers = split(input, on: ",").compactMap(Int.init)
+    static let day = 15
+    static let rawInput: String? = "5,1,9,18,13,8,0"
+
+    func part1() throws -> Int {
+        let startingNumbers = input().csvWords.integers
         return play(turns: 2020, startingWith: startingNumbers)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let startingNumbers = split(input, on: ",").compactMap(Int.init)
-        return play(turns: 30000000, startingWith: startingNumbers)
+    func part2() throws -> Int {
+        let startingNumbers = input().csvWords.integers
+        return play(turns: 30_000_000, startingWith: startingNumbers)
     }
 
     private func play(turns: Int, startingWith startingNumbers: [Int]) -> Int {

@@ -42,6 +42,6 @@ public extension Puzzle {
             }
         } catch {}
 
-        return Input("")
+        fatalError("Could not find input for day \(Self.day)")
     }
 }

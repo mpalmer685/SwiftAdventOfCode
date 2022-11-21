@@ -2,8 +2,10 @@ import AOCKit
 import Foundation
 
 struct DockingData: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let instructions = getLines(from: input).map(Instruction.init)
+    static let day = 14
+
+    func part1() throws -> Int {
+        let instructions = input().lines.raw.map(Instruction.init)
         var memory: [Int: Int] = [:]
         var mask = MaskV1("1")
         for instruction in instructions {
@@ -17,8 +19,8 @@ struct DockingData: Puzzle {
         return memory.values.reduce(0, +)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let instructions = getLines(from: input).map(Instruction.init)
+    func part2() throws -> Int {
+        let instructions = input().lines.raw.map(Instruction.init)
         var memory: [Int: Int] = [:]
         var mask = MaskV2("1")
         for instruction in instructions {

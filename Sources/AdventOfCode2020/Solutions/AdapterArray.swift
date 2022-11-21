@@ -1,8 +1,10 @@
 import AOCKit
 
 struct AdapterArray: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let adapters = getAdapters(from: input).sorted()
+    static let day = 10
+
+    func part1() throws -> Int {
+        let adapters = getAdapters().sorted()
         var differencesOfOne = 0
         var differencesOfThree = 0
 
@@ -23,8 +25,8 @@ struct AdapterArray: Puzzle {
         return differencesOfOne * differencesOfThree
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let adapters = getAdapters(from: input).sorted()
+    func part2() throws -> Int {
+        let adapters = getAdapters().sorted()
         var scores = [Int](repeating: 0, count: adapters.count)
         scores[0] = 1
 
@@ -40,8 +42,8 @@ struct AdapterArray: Puzzle {
         return scores.last!
     }
 
-    private func getAdapters(from input: String) -> [Int] {
-        let data = getLines(from: input).compactMap(Int.init)
+    private func getAdapters() -> [Int] {
+        let data = input().lines.integers
         return [0] + data + [data.max()! + 3]
     }
 }

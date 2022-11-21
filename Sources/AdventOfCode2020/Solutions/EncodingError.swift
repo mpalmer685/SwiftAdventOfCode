@@ -1,13 +1,15 @@
 import AOCKit
 
 struct EncodingError: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let data = getLines(from: input).compactMap(Int.init)
+    static let day = 9
+
+    func part1() throws -> Int {
+        let data = input().lines.integers
         return findInvalidNumber(in: data)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let data = getLines(from: input).compactMap(Int.init)
+    func part2() throws -> Int {
+        let data = input().lines.integers
         let invalidNumber = findInvalidNumber(in: data)
         guard let range = data.findContiguousRange(totaling: invalidNumber) else {
             fatalError()
@@ -26,7 +28,9 @@ struct EncodingError: Puzzle {
         fatalError()
     }
 
-    private func isValid<T: Collection>(value: Int, in collection: T) -> Bool where T.Element == Int {
+    private func isValid<T: Collection>(value: Int, in collection: T) -> Bool
+        where T.Element == Int
+    {
         collection.findPair(totaling: value) != nil
     }
 }

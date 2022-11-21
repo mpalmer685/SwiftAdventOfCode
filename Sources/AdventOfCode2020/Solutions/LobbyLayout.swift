@@ -3,15 +3,17 @@ import AOCKit
 private typealias Floor = [Position: Bool]
 
 struct LobbyLayout: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
+    static let day = 24
+
+    func part1() throws -> Int {
         var floor = Floor()
-        flipTiles(in: &floor, at: parse(input))
+        flipTiles(in: &floor, at: parseInput())
         return floor.values.count(where: \.isTrue)
     }
 
-    func part2Solution(for input: String) throws -> Int {
+    func part2() throws -> Int {
         var floor = Floor()
-        flipTiles(in: &floor, at: parse(input))
+        flipTiles(in: &floor, at: parseInput())
 
         for _ in 0 ..< 100 {
             GameOfLife.playRound(on: &floor, using: willCellBeActive)
@@ -35,9 +37,9 @@ struct LobbyLayout: Puzzle {
         }
     }
 
-    private func parse(_ input: String) -> [Position] {
-        func parsePosition(from line: String) -> Position {
-            let characters = Array(line)
+    private func parseInput() -> [Position] {
+        func parsePosition(from line: Line) -> Position {
+            let characters = line.characters
 
             var position = Position.start
             var i = 0
@@ -56,7 +58,7 @@ struct LobbyLayout: Puzzle {
             return position
         }
 
-        return getLines(from: input).map(parsePosition)
+        return input().lines.map(parsePosition)
     }
 }
 
