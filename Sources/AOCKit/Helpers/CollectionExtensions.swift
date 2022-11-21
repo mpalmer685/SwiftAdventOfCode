@@ -1,11 +1,11 @@
 public extension Collection {
+    var isNotEmpty: Bool { isEmpty == false }
+
     var tail: SubSequence {
         let start = index(startIndex, offsetBy: 1)
         return self[start...]
     }
-}
 
-public extension Collection {
     func reject(_ isRejected: @escaping (Element) -> Bool) -> [Element] {
         filter(not(isRejected))
     }
