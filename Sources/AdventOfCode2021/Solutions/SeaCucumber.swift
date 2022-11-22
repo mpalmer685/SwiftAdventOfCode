@@ -1,8 +1,10 @@
 import AOCKit
 
 struct SeaCucumber: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var grid = parse(input)
+    static let day = 25
+
+    func part1() throws -> Int {
+        var grid = parseInput()
         var step = 1
 
         while grid.canMove() {
@@ -13,8 +15,8 @@ struct SeaCucumber: Puzzle {
         return step
     }
 
-    private func parse(_ input: String) -> Grid<Location> {
-        let cells = getLines(from: input).map { Array($0).map(Location.init) }
+    private func parseInput() -> Grid<Location> {
+        let cells = input().lines.characters.map { $0.map(Location.init) }
         return Grid(cells)
     }
 }

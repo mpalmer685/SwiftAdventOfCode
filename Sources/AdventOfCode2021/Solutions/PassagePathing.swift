@@ -45,22 +45,24 @@ start-RW
 """
 
 struct PassagePathing: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let startCave = parseCaves(from: input)
+    static let day = 12
+
+    func part1() throws -> Int {
+        let startCave = parseCaves()
         return countPaths(from: startCave, using: VisitOnceHistory())
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let startCave = parseCaves(from: input)
+    func part2() throws -> Int {
+        let startCave = parseCaves()
         return countPaths(from: startCave, using: VisitOneTwiceHistory())
     }
 
-    private func parseCaves(from input: String) -> Cave {
+    private func parseCaves() -> Cave {
         var caves: [Cave.CaveType: Cave] = [:]
-        for line in getLines(from: input) {
-            let names = line.components(separatedBy: "-")
-            let firstType = Cave.CaveType(name: names[0])
-            let secondType = Cave.CaveType(name: names[1])
+        for line in input().lines {
+            let names = line.words(separatedBy: "-")
+            let firstType = Cave.CaveType(name: names[0].raw)
+            let secondType = Cave.CaveType(name: names[1].raw)
 
             let first = caves[firstType] ?? Cave(type: firstType)
             let second = caves[secondType] ?? Cave(type: secondType)

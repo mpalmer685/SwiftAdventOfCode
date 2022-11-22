@@ -2,20 +2,22 @@ import AOCKit
 import Foundation
 
 struct Amphipod: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        solve(parse(lines: getLines(from: input)))
+    static let day = 23
+
+    func part1() throws -> Int {
+        solve(parse(lines: input().lines))
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let extraLines = ["  #D#C#B#A#  ", "  #D#B#A#C#  "]
-        var lines = getLines(from: input)
+    func part2() throws -> Int {
+        let extraLines = ["  #D#C#B#A#  ", "  #D#B#A#C#  "].map(Line.init)
+        var lines = input().lines
         lines.insert(contentsOf: extraLines, at: 3)
         return solve(parse(lines: lines))
     }
 
-    func parse(lines: [String]) -> Grid<Character> {
-        let cols = lines[0].count
-        let cells = lines.map(Array.init).map { $0.padded(toLength: cols, with: " ") }
+    func parse(lines: [Line]) -> Grid<Character> {
+        let cols = lines[0].raw.count
+        let cells = lines.map(\.characters).map { $0.padded(toLength: cols, with: " ") }
         return Grid(cells)
     }
 }

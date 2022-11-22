@@ -2,24 +2,25 @@ import AOCKit
 import Foundation
 
 struct TransparentOrigami: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var (dots, folds) = parse(input)
+    static let day = 13
+
+    func part1() throws -> Int {
+        var (dots, folds) = parseInput()
         guard let firstFold = folds.first else { fatalError() }
         perform(fold: firstFold, using: &dots)
         return dots.count
     }
 
-    func part2Solution(for input: String) throws -> String {
-        var (dots, folds) = parse(input)
+    func part2() throws -> String {
+        var (dots, folds) = parseInput()
         for fold in folds {
             perform(fold: fold, using: &dots)
         }
         return format(dots)
     }
 
-    private func parse(_ input: String) -> (dots: Set<Point>, folds: [Fold]) {
-        let parts = getLines(from: input, omittingEmptyLines: false)
-            .split(whereSeparator: \.isEmpty)
+    private func parseInput() -> (dots: Set<Point>, folds: [Fold]) {
+        let parts = input().lines.split(whereSeparator: \.isEmpty)
         let dots = parts[0].map(Point.init)
         let folds = parts[1].map(Fold.init)
         return (Set(dots), folds)
@@ -67,12 +68,12 @@ private struct Point: Hashable {
         self.y = y
     }
 
-    init(line: String) {
-        let parts = line.components(separatedBy: ",")
-        guard let x = Int(parts[0]) else {
+    init(line: Line) {
+        let parts = line.csvWords
+        guard let x = parts[0].integer else {
             fatalError("Unable to parse x coordinate: \(parts[0])")
         }
-        guard let y = Int(parts[1]) else {
+        guard let y = parts[1].integer else {
             fatalError("Unable to parse y coordinate: \(parts[1])")
         }
         self.x = x
@@ -86,8 +87,8 @@ private enum Fold {
     case up(Int)
     case left(Int)
 
-    init(line: String) {
-        guard let match = foldInstructionPattern.match(line) else {
+    init(line: Line) {
+        guard let match = foldInstructionPattern.match(line.raw) else {
             fatalError("Line does not match pattern: \(line)")
         }
         guard let coord = Int(match[2]) else {

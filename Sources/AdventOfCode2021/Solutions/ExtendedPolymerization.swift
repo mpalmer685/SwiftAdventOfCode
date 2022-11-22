@@ -22,34 +22,35 @@ CN -> C
 """
 
 struct ExtendedPolymerization: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var (polymer, rules) = parse(input)
+    static let day = 14
+
+    func part1() throws -> Int {
+        var (polymer, rules) = parseInput()
         run(reactions: 10, on: &polymer, using: rules)
         let (_, mostCommon) = polymer.mostCommonElement
         let (_, leastCommon) = polymer.leastCommonElement
         return mostCommon - leastCommon
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        var (polymer, rules) = parse(input)
+    func part2() throws -> Int {
+        var (polymer, rules) = parseInput()
         run(reactions: 40, on: &polymer, using: rules)
         let (_, mostCommon) = polymer.mostCommonElement
         let (_, leastCommon) = polymer.leastCommonElement
         return mostCommon - leastCommon
     }
 
-    private func parse(_ input: String) -> (Polymer, RuleCollection) {
-        let parts = getLines(from: input, omittingEmptyLines: false)
-            .split(whereSeparator: \.isEmpty)
+    private func parseInput() -> (Polymer, RuleCollection) {
+        let parts = input().lines.split(whereSeparator: \.isEmpty)
         let rules = parseRules(from: Array(parts[1]))
-        return (Polymer(parts[0][0]), rules)
+        return (Polymer(parts[0][0].raw), rules)
     }
 }
 
-private func parseRules(from lines: [String]) -> RuleCollection {
+private func parseRules(from lines: [Line]) -> RuleCollection {
     lines.reduce(into: [:]) { rules, line in
-        let parts = line.components(separatedBy: " -> ")
-        rules[parts[0]] = Character(parts[1])
+        let parts = line.words(separatedBy: " -> ")
+        rules[parts[0].raw] = Character(parts[1].raw)
     }
 }
 

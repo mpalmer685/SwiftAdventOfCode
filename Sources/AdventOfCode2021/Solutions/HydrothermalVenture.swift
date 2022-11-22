@@ -1,8 +1,10 @@
 import AOCKit
 
 struct HydrothermalVenture: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let lines = parse(input)
+    static let day = 5
+
+    func part1() throws -> Int {
+        let lines = parseInput()
         var field = Field()
 
         for (start, end) in lines where !isDiagonal(start, end) {
@@ -14,8 +16,8 @@ struct HydrothermalVenture: Puzzle {
         return field.count { $0.value > 1 }
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let lines = parse(input)
+    func part2() throws -> Int {
+        let lines = parseInput()
         var field = Field()
 
         for (start, end) in lines {
@@ -27,8 +29,8 @@ struct HydrothermalVenture: Puzzle {
         return field.count { $0.value > 1 }
     }
 
-    private func parse(_ input: String) -> [(start: Point, end: Point)] {
-        getLines(from: input).map(parsePair)
+    private func parseInput() -> [(start: Point, end: Point)] {
+        input().lines.map(parsePair)
     }
 }
 
@@ -43,9 +45,9 @@ private struct Point: Hashable {
         self.y = y
     }
 
-    init(input: String) {
-        let coords = input.split(separator: ",")
-        guard let x = Int(coords[0]), let y = Int(coords[1]) else { fatalError() }
+    init(input: Word) {
+        let coords = input.words(separatedBy: ",")
+        guard let x = coords[0].integer, let y = coords[1].integer else { fatalError() }
 
         self.x = x
         self.y = y
@@ -71,8 +73,8 @@ private func sign(_ x: Int) -> Int {
     x == 0 ? 0 : x / abs(x)
 }
 
-private func parsePair(from input: String) -> (start: Point, end: Point) {
-    let parts = input.components(separatedBy: " -> ").map(Point.init)
+private func parsePair(from line: Line) -> (start: Point, end: Point) {
+    let parts = line.words(separatedBy: " -> ").map(Point.init)
     return (parts[0], parts[1])
 }
 

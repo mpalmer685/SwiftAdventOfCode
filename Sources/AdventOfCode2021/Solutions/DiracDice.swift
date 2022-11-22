@@ -2,8 +2,10 @@ import AOCKit
 import Foundation
 
 struct DiracDice: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let (p1, p2) = parse(input)
+    static let day = 21
+
+    func part1() throws -> Int {
+        let (p1, p2) = parseInput()
         var die = DeterministicDie()
         var game: GameState = .starting(player1Position: p1, player2Position: p2)
         while !game.hasWinner(forScore: 1000) {
@@ -13,10 +15,10 @@ struct DiracDice: Puzzle {
         return game.losingScore * die.rolls
     }
 
-    func part2Solution(for input: String) throws -> Int {
+    func part2() throws -> Int {
         let rollMultipliers = [0, 0, 0, 1, 3, 6, 7, 6, 3, 1]
 
-        let (p1, p2) = parse(input)
+        let (p1, p2) = parseInput()
         var wins: [Player: Int] = [:]
 
         func play(_ game: GameState, winMultiplier: Int = 1) {
@@ -35,8 +37,8 @@ struct DiracDice: Puzzle {
         return winner.value
     }
 
-    private func parse(_ input: String) -> (Int, Int) {
-        let lines = getLines(from: input)
+    private func parseInput() -> (Int, Int) {
+        let lines = input().lines.raw
         let pattern = NSRegularExpression("(\\d+)$")
         guard let m1 = pattern.match(lines[0]), let m2 = pattern.match(lines[1]) else {
             fatalError()

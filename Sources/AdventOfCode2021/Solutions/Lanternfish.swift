@@ -3,21 +3,21 @@ import AOCKit
 private let testInput = "3,4,3,1,2"
 
 struct Lanternfish: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let fish = parse(input)
+    static let day = 6
+
+    func part1() throws -> Int {
+        let fish = parseInput()
         return countFish(fish, forDays: 80)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let fish = parse(input)
+    func part2() throws -> Int {
+        let fish = parseInput()
         return countFish(fish, forDays: 256)
     }
 
-    private func parse(_ input: String) -> [Int: Int] {
-        input
-            .trimmingCharacters(in: .whitespacesAndNewlines)
-            .split(separator: ",")
-            .compactMap(Int.init).reduce(into: [:]) { fishByAge, age in
+    private func parseInput() -> [Int: Int] {
+        input().csvWords.integers
+            .reduce(into: [:]) { fishByAge, age in
                 fishByAge[age, default: 0] += 1
             }
     }

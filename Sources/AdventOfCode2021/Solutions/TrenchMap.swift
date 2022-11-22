@@ -1,8 +1,10 @@
 import AOCKit
 
 struct TrenchMap: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var (algorithm, image) = parse(input)
+    static let day = 20
+
+    func part1() throws -> Int {
+        var (algorithm, image) = parseInput()
 
         for round in 0 ..< 2 {
             let defaultPixel = round.isEven
@@ -14,8 +16,8 @@ struct TrenchMap: Puzzle {
         return image.pixels.count
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        var (algorithm, image) = parse(input)
+    func part2() throws -> Int {
+        var (algorithm, image) = parseInput()
 
         for round in 0 ..< 50 {
             let defaultPixel = round.isEven
@@ -27,21 +29,20 @@ struct TrenchMap: Puzzle {
         return image.pixels.count
     }
 
-    private func parse(_ input: String) -> (EnhancementAlgorithm, Image) {
-        let lines = getLines(from: input, omittingEmptyLines: false)
-        let parts = lines.split(whereSeparator: \.isEmpty)
+    private func parseInput() -> (EnhancementAlgorithm, Image) {
+        let parts = input().lines.split(whereSeparator: \.isEmpty)
 
         guard parts.count == 2 else { fatalError() }
         guard parts[0].count == 1 else { fatalError() }
 
-        let algorithm: EnhancementAlgorithm = Array(parts[0][0]).enumerated()
+        let algorithm: EnhancementAlgorithm = parts[0][0].characters.enumerated()
             .reduce(into: []) { a, pair in
                 if pair.element == "#" {
                     a.insert(pair.offset)
                 }
             }
 
-        let image = parseImage(from: Array(parts[1]))
+        let image = parseImage(from: parts[1].raw)
 
         return (algorithm, image)
     }

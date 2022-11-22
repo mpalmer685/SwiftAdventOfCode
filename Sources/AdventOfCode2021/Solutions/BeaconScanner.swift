@@ -2,14 +2,16 @@ import AOCKit
 import Foundation
 
 struct BeaconScanner: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let scanners = parse(input.trimmingCharacters(in: .whitespacesAndNewlines))
+    static let day = 19
+
+    func part1() throws -> Int {
+        let scanners = parse(input())
         let transforms = getTransforms(toAlign: scanners)
         return countUniqueBeacons(in: scanners, using: transforms)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let scanners = parse(input.trimmingCharacters(in: .whitespacesAndNewlines))
+    func part2() throws -> Int {
+        let scanners = parse(input())
         let transforms = getTransforms(toAlign: scanners)
         return findMaxDistance(between: scanners, using: transforms)
     }
@@ -81,10 +83,10 @@ private func transform(_ scanner: Scanner, using t: Transform) -> Scanner {
     scanner.map { beacon in transform(beacon, using: t) }
 }
 
-private func parse(_ input: String) -> [Scanner] {
-    input.components(separatedBy: "\n\n").map { scanner in
+private func parse(_ input: Input) -> [Scanner] {
+    input.raw.components(separatedBy: "\n\n").map { scanner in
         scanner.components(separatedBy: "\n")[1...].map { line in
-            let parts = line.split(separator: ",").map(String.init).compactMap(Int.init)
+            let parts = Line(line).csvWords.integers
             return Position(parts[0], parts[1], parts[2])
         }
     }

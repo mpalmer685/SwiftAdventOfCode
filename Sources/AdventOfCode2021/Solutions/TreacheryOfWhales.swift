@@ -3,8 +3,10 @@ import AOCKit
 private let testInput = "16,1,2,0,4,2,7,1,2,14"
 
 struct TreacheryOfWhales: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let positions = getPositions(from: input)
+    static let day = 7
+
+    func part1() throws -> Int {
+        let positions = getPositions(from: input())
         return getBestDestination(
             for: positions,
             startingAt: median(of: positions),
@@ -12,8 +14,8 @@ struct TreacheryOfWhales: Puzzle {
         )
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let positions = getPositions(from: input)
+    func part2() throws -> Int {
+        let positions = getPositions(from: input())
         return getBestDestination(
             for: positions,
             startingAt: mean(of: positions),
@@ -22,11 +24,8 @@ struct TreacheryOfWhales: Puzzle {
     }
 }
 
-private func getPositions(from input: String) -> [Int] {
-    input
-        .trimmingCharacters(in: .whitespacesAndNewlines)
-        .split(separator: ",")
-        .compactMap { Int(String($0)) }
+private func getPositions(from input: Input) -> [Int] {
+    input.csvWords.integers
 }
 
 private func getBestDestination(

@@ -9,21 +9,23 @@ private let testInput6 = "C0015000016115A2E0802F182340"
 private let testInput7 = "A0016C880162017C3686B18A3D4780"
 
 struct PacketDecoder: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let bits = bits(from: input.trimmingCharacters(in: .whitespacesAndNewlines))
+    static let day = 16
+
+    func part1() throws -> Int {
+        let bits = bits(from: input())
         let packet = parsePacket(from: bits)
         return packet.versionSum
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let bits = bits(from: input.trimmingCharacters(in: .whitespacesAndNewlines))
+    func part2() throws -> Int {
+        let bits = bits(from: input())
         let packet = parsePacket(from: bits)
         return packet.value
     }
 }
 
-private func bits(from hexString: String) -> [Character] {
-    Array(hexString).reduce(into: []) { bits, hexDigit in
+private func bits(from input: Input) -> [Character] {
+    input.characters.reduce(into: []) { bits, hexDigit in
         guard let i = Int(hexDigit, radix: 16) else { fatalError() }
         let s = String(i, radix: 2).padded(toLength: 4, withPad: "0", padding: .left)
         bits += Array(s)

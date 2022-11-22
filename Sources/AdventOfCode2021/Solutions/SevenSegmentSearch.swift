@@ -1,22 +1,24 @@
 import AOCKit
 
 struct SevenSegmentSearch: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let outputDigits = parse(input).flatMap(\.output)
+    static let day = 8
+
+    func part1() throws -> Int {
+        let outputDigits = parseInput().flatMap(\.output)
         let uniqueDigitLengths = [2, 3, 4, 7]
         return outputDigits.count { uniqueDigitLengths.contains($0.count) }
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        parse(input).map(decode).compactMap(Int.init).reduce(0, +)
+    func part2() throws -> Int {
+        parseInput().map(decode).compactMap(Int.init).reduce(0, +)
     }
 
-    private func parse(_ input: String) -> [Entry] {
-        getLines(from: input).map { line in
-            let parts = line.components(separatedBy: " | ")
-            let patterns = parts[0].components(separatedBy: .whitespaces)
-            let output = parts[1].components(separatedBy: .whitespaces)
-            return (output, patterns)
+    private func parseInput() -> [Entry] {
+        input().lines.map { line in
+            let parts = line.words(separatedBy: " | ")
+            let patterns = parts[0].words(separatedBy: .whitespaces)
+            let output = parts[1].words(separatedBy: .whitespaces)
+            return (output.raw, patterns.raw)
         }
     }
 }

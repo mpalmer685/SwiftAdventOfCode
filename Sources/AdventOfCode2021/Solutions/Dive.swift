@@ -1,7 +1,9 @@
 import AOCKit
 
 struct Dive: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
+    static let day = 2
+
+    func part1() throws -> Int {
         struct SimplePosition: Position {
             let x: Int
             let depth: Int
@@ -20,12 +22,12 @@ struct Dive: Puzzle {
             }
         }
 
-        let commands = try parse(input)
+        let commands = try parseInput()
         let finalPosition = follow(commands, startingAt: SimplePosition.origin)
         return finalPosition.x * finalPosition.depth
     }
 
-    func part2Solution(for input: String) throws -> Int {
+    func part2() throws -> Int {
         struct AimedPosition: Position {
             let x: Int
             let depth: Int
@@ -49,13 +51,13 @@ struct Dive: Puzzle {
             }
         }
 
-        let commands = try parse(input)
+        let commands = try parseInput()
         let finalPosition = follow(commands, startingAt: AimedPosition.origin)
         return finalPosition.x * finalPosition.depth
     }
 
-    private func parse(_ input: String) throws -> [Command] {
-        try getLines(from: input).map(Command.parse)
+    private func parseInput() throws -> [Command] {
+        try input().lines.filter(\.isNotEmpty).map(Command.parse)
     }
 
     private func follow<P: Position>(_ commands: [Command], startingAt origin: P) -> P {
@@ -80,9 +82,11 @@ private struct Command {
     let direction: Direction
     let distance: Int
 
-    static func parse(_ line: String) throws -> Self {
-        let parts = line.split(separator: " ").map(String.init)
-        guard let direction = Direction(rawValue: parts[0]), let distance = Int(parts[1]) else {
+    static func parse(_ line: Line) throws -> Self {
+        let parts = line.words
+        guard let direction = Direction(rawValue: parts[0].raw),
+              let distance = parts[1].integer
+        else {
             throw DiveError.parseError
         }
         return Self(direction: direction, distance: distance)

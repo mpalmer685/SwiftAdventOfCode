@@ -1,18 +1,20 @@
 import AOCKit
 
 struct SonarSweep: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let measurements = getMeasurements(from: input)
+    static let day = 1
+
+    func part1() throws -> Int {
+        let measurements = getMeasurements()
         return countIncreases(in: measurements)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let measurements = getMeasurements(from: input).windowed(3).map(sum)
+    func part2() throws -> Int {
+        let measurements = getMeasurements().windowed(3).map(sum)
         return countIncreases(in: measurements)
     }
 
-    private func getMeasurements(from input: String) -> [Int] {
-        getLines(from: input).compactMap(Int.init)
+    private func getMeasurements() -> [Int] {
+        input().lines.integers
     }
 }
 

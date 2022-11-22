@@ -2,14 +2,16 @@ import AOCKit
 import Foundation
 
 struct Snailfish: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let numbers = getLines(from: input).map(Number.init)
+    static let day = 18
+
+    func part1() throws -> Int {
+        let numbers = input().lines.raw.map(Number.init)
         let sum = numbers.reduce(+)
         return sum.magnitude
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let numbers = getLines(from: input).map(Number.init)
+    func part2() throws -> Int {
+        let numbers = input().lines.raw.map(Number.init)
 
         var maxMagnitude = 0
         for i in numbers.indices {

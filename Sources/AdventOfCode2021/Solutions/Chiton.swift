@@ -14,18 +14,20 @@ private let testInput = """
 """
 
 struct Chiton: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let cells = parse(input)
+    static let day = 15
+
+    func part1() throws -> Int {
+        let cells = parseInput()
         return findPath(in: Grid(cells))
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let cells = fill(grid: parse(input))
+    func part2() throws -> Int {
+        let cells = fill(grid: parseInput())
         return findPath(in: Grid(cells))
     }
 
-    private func parse(_ input: String) -> [[Int]] {
-        getLines(from: input).map { line in Array(line).map(String.init).compactMap(Int.init) }
+    private func parseInput() -> [[Int]] {
+        input().lines.digits
     }
 }
 

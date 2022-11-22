@@ -9,26 +9,26 @@ private let testInput = """
 """
 
 struct SmokeBasin: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let grid = parseGrid(from: input)
+    static let day = 9
+
+    func part1() throws -> Int {
+        let grid = parseGrid()
 
         return findLowPoints(in: grid)
             .map { 1 + heightAt(point: $0, in: grid) }
             .reduce(0, +)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let grid = parseGrid(from: input)
+    func part2() throws -> Int {
+        let grid = parseGrid()
         let lowPoints = findLowPoints(in: grid)
         let sizes = lowPoints.map { getBasinSize(in: grid, startingAt: $0) }.sorted(by: >)
 
         return sizes.prefix(3).reduce(1, *)
     }
 
-    private func parseGrid(from input: String) -> [[Int]] {
-        getLines(from: input)
-            .map(Array.init)
-            .map { row in row.compactMap { Int(String($0)) }}
+    private func parseGrid() -> [[Int]] {
+        input().lines.digits
     }
 }
 

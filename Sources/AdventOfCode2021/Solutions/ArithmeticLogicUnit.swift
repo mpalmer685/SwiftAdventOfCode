@@ -2,18 +2,20 @@ import AOCKit
 import Foundation
 
 struct ArithmeticLogicUnit: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let parameters = parse(input)
+    static let day = 24
+
+    func part1() throws -> Int {
+        let parameters = parseInput()
         return findModelNumber(using: parameters, choosingNextValueWith: max)
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let parameters = parse(input)
+    func part2() throws -> Int {
+        let parameters = parseInput()
         return findModelNumber(using: parameters, choosingNextValueWith: min)
     }
 
-    private func parse(_ input: String) -> [(Int, Int, Int)] {
-        let operations = getLines(from: input).map(Operation.init)
+    private func parseInput() -> [(Int, Int, Int)] {
+        let operations = input().lines.map(Operation.init)
 
         var parameters = [(Int, Int, Int)]()
         for i in stride(from: 0, to: 18 * 14, by: 18) {
@@ -62,10 +64,10 @@ private struct Operation {
     let destination: String
     let value: Int?
 
-    init(line: String) {
-        let parts = line.components(separatedBy: " ")
-        instruction = parts[0]
-        destination = parts[1]
-        value = parts.count > 2 ? Int(parts[2]) : nil
+    init(line: Line) {
+        let parts = line.words
+        instruction = parts[0].raw
+        destination = parts[1].raw
+        value = parts.count > 2 ? parts[2].integer : nil
     }
 }

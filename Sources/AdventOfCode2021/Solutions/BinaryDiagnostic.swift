@@ -1,8 +1,10 @@
 import AOCKit
 
 struct BinaryDiagnostic: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        let data = parse(input)
+    static let day = 3
+
+    func part1() throws -> Int {
+        let data = parseInput()
         let bitCount = data[0].count
         guard data.allSatisfy({ $0.count == bitCount }) else {
             throw BinaryDiagnosticError.inconsistentBitCount
@@ -24,8 +26,8 @@ struct BinaryDiagnostic: Puzzle {
         return gammaRate * epsilonRate
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        let data = parse(input)
+    func part2() throws -> Int {
+        let data = parseInput()
         let bitCount = data[0].count
         guard data.allSatisfy({ $0.count == bitCount }) else {
             throw BinaryDiagnosticError.inconsistentBitCount
@@ -68,8 +70,8 @@ struct BinaryDiagnostic: Puzzle {
         return oxygenGeneratorRating * co2ScrubberRating
     }
 
-    private func parse(_ input: String) -> [[Character]] {
-        getLines(from: input).map(Array.init)
+    private func parseInput() -> [[Character]] {
+        input().lines.characters
     }
 }
 

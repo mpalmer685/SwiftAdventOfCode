@@ -1,13 +1,15 @@
 import AOCKit
 
 struct DumboOctopus: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var grid = parseGrid(from: input)
+    static let day = 11
+
+    func part1() throws -> Int {
+        var grid = parseGrid()
         return (0 ..< 100).reduce(0) { flashes, _ in flashes + countFlashes(in: &grid) }
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        var grid = parseGrid(from: input)
+    func part2() throws -> Int {
+        var grid = parseGrid()
         var cycles = 0
         repeat {
             cycles += 1
@@ -15,10 +17,8 @@ struct DumboOctopus: Puzzle {
         return cycles
     }
 
-    private func parseGrid(from input: String) -> Grid<Int> {
-        let cells = getLines(from: input).map { line in
-            Array(line).map(String.init).compactMap(Int.init)
-        }
+    private func parseGrid() -> Grid<Int> {
+        let cells = input().lines.digits
         return Grid(cells)
     }
 }

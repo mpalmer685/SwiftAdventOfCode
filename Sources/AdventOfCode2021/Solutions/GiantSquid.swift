@@ -1,8 +1,10 @@
 import AOCKit
 
 struct GiantSquid: Puzzle {
-    func part1Solution(for input: String) throws -> Int {
-        var (numbers, boards) = parse(input)
+    static let day = 4
+
+    func part1() throws -> Int {
+        var (numbers, boards) = parseInput()
 
         for number in numbers {
             for i in boards.indices {
@@ -16,8 +18,8 @@ struct GiantSquid: Puzzle {
         fatalError("Didn't find a solution.")
     }
 
-    func part2Solution(for input: String) throws -> Int {
-        var (numbers, boards) = parse(input)
+    func part2() throws -> Int {
+        var (numbers, boards) = parseInput()
 
         var lastPlayedNumber: Int?
         var lastWinningBoard: Board?
@@ -41,11 +43,10 @@ struct GiantSquid: Puzzle {
         return lastPlayedNumber * lastWinningBoard.currentScore
     }
 
-    private func parse(_ input: String) -> ([Int], [Board]) {
-        let groups = getLines(from: input, omittingEmptyLines: false)
-            .split(whereSeparator: \.isEmpty)
+    private func parseInput() -> ([Int], [Board]) {
+        let groups = input().lines.split(whereSeparator: \.isEmpty)
 
-        let numbers = groups[0][0].split(separator: ",").compactMap { Int(String($0)) }
+        let numbers = groups[0][0].csvWords.integers
 
         let boards = groups[1...].map { Board(input: Array($0)) }
 
@@ -64,9 +65,9 @@ private struct Board {
         groups.contains(where: \.isEmpty)
     }
 
-    init(input: [String]) {
+    init(input: [Line]) {
         let rows = input.map { line in
-            line.components(separatedBy: .whitespaces).compactMap(Int.init)
+            line.words.integers
         }
 
         let columns = (0 ..< rows[0].count).map { col in
