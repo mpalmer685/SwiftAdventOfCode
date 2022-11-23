@@ -20,8 +20,8 @@ let package = Package(
             targets: ["AdventOfCode2021"]
         ),
         .executable(
-            name: "AdventOfCode2020",
-            targets: ["AdventOfCode2020"]
+            name: "aoc2022",
+            targets: ["AdventOfCode2022"]
         ),
     ],
     dependencies: [
@@ -57,6 +57,10 @@ let package = Package(
                 "AOCKit",
                 .product(name: "Algorithms", package: "swift-algorithms"),
             ]
+        ),
+        .target(
+            name: "AdventOfCode2022",
+            dependencies: ["AOCKit"]
         ),
     ]
 )
