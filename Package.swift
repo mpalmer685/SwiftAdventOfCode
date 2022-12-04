@@ -60,7 +60,10 @@ let package = Package(
         ),
         .target(
             name: "AdventOfCode2022",
-            dependencies: ["AOCKit"]
+            dependencies: [
+                "AOCKit",
+                .product(name: "Algorithms", package: "swift-algorithms"),
+            ]
         ),
     ]
 )
