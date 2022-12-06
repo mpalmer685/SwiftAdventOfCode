@@ -13,6 +13,6 @@ struct CalorieCounting: Puzzle {
     }
 }
 
-private extension Collection where Element: Numeric {
+extension Collection where Element: Numeric {
     var sum: Element { reduce(0, +) }
 }
