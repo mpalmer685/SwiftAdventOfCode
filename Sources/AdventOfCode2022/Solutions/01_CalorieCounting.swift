@@ -12,7 +12,3 @@ struct CalorieCounting: Puzzle {
         input().lines.split(whereSeparator: \.isEmpty).map(\.integers.sum).max(count: 3).sum
     }
 }
-
-extension Collection where Element: Numeric {
-    var sum: Element { reduce(0, +) }
-}

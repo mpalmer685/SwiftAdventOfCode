@@ -15,3 +15,9 @@ public extension Sequence {
         }
     }
 }
+
+public extension Sequence where Element: Numeric {
+    var sum: Element { reduce(0, +) }
+
+    var product: Element { reduce(1, *) }
+}
