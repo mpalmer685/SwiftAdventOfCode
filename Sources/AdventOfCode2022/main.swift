@@ -6,4 +6,5 @@ AdventOfCode(year: 2022, puzzles: [
     RucksackReorganization(),
     CampCleanup(),
     SupplyStacks(),
+    TuningTrouble(),
 ]).run()

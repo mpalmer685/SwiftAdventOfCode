@@ -19,6 +19,10 @@
     "5" : {
       "partOneAnswer" : "SBPQRSCDF",
       "partTwoAnswer" : "RGLVRCQSB"
+    },
+    "6" : {
+      "partOneAnswer" : "1920",
+      "partTwoAnswer" : "2334"
     }
   }
 }
