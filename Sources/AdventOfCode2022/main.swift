@@ -8,4 +8,5 @@ AdventOfCode(year: 2022, puzzles: [
     SupplyStacks(),
     TuningTrouble(),
     NoSpaceLeftOnDevice(),
+    TreetopTreeHouse(),
 ]).run()
