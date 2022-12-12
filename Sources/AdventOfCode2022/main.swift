@@ -11,4 +11,5 @@ AdventOfCode(year: 2022, puzzles: [
     TreetopTreeHouse(),
     RopeBridge(),
     CathodeRayTube(),
+    MonkeyInTheMiddle(),
 ]).run()
