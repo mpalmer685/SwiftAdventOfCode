@@ -12,4 +12,5 @@ AdventOfCode(year: 2022, puzzles: [
     RopeBridge(),
     CathodeRayTube(),
     MonkeyInTheMiddle(),
+    HillClimbingAlgorithm(),
 ]).run()
