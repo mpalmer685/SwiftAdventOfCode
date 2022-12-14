@@ -14,4 +14,5 @@ AdventOfCode(year: 2022, puzzles: [
     MonkeyInTheMiddle(),
     HillClimbingAlgorithm(),
     DistressSignal(),
+    RegolithReservoir(),
 ]).run()
