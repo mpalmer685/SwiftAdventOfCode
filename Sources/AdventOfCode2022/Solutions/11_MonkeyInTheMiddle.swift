@@ -92,13 +92,6 @@ private struct Monkey {
     var falseDest: Int
 }
 
-private extension Line {
-    var integers: [Int] {
-        let matches = NSRegularExpression("(-?\\d+)").matches(in: raw)
-        return matches.compactMap { Int($0[1]) }
-    }
-}
-
 private extension Character {
     var isOperator: Bool {
         ["+", "-", "*", "/"].contains(self)

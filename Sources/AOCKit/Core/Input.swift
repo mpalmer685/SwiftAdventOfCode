@@ -66,6 +66,11 @@ public final class Line: StringInput {
     }
 
     public var lines: [Line] { [self] }
+
+    public var integers: [Int] {
+        let matches = NSRegularExpression("(-?\\d+)").matches(in: raw)
+        return matches.compactMap { Int($0[1]) }
+    }
 }
 
 public final class Word: StringInput {

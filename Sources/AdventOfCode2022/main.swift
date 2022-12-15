@@ -15,4 +15,5 @@ AdventOfCode(year: 2022, puzzles: [
     HillClimbingAlgorithm(),
     DistressSignal(),
     RegolithReservoir(),
+    BeaconExclusionZone(),
 ]).run()
