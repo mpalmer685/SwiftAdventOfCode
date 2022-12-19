@@ -9,10 +9,36 @@ public extension Sequence {
         }
     }
 
+    func min<N: Comparable>(of element: (Element) -> N) -> N? {
+        var final: N?
+        for i in self {
+            let v = element(i)
+            if let m = final {
+                final = Swift.min(m, v)
+            } else {
+                final = v
+            }
+        }
+        return final
+    }
+
     func max<T: Comparable>(by keyPath: KeyPath<Element, T>) -> Self.Element? {
         self.max { first, second in
             first[keyPath: keyPath] < second[keyPath: keyPath]
         }
+    }
+
+    func max<N: Comparable>(of element: (Element) -> N) -> N? {
+        var final: N?
+        for i in self {
+            let v = element(i)
+            if let m = final {
+                final = Swift.max(m, v)
+            } else {
+                final = v
+            }
+        }
+        return final
     }
 }
 

@@ -286,21 +286,6 @@ private extension CharacterSet {
     static let semicolon = CharacterSet(charactersIn: ";")
 }
 
-private extension Sequence {
-    func max<N: Comparable>(of element: (Element) -> N) -> N? {
-        var final: N?
-        for i in self {
-            let v = element(i)
-            if let m = final {
-                final = Swift.max(m, v)
-            } else {
-                final = v
-            }
-        }
-        return final
-    }
-}
-
 private extension Collection {
     func sorted<C: Comparable>(using value: (Element) -> C) -> [Element] {
         sorted(by: { l, r in
