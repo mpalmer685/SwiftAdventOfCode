@@ -16,4 +16,5 @@ AdventOfCode(year: 2022, puzzles: [
     DistressSignal(),
     RegolithReservoir(),
     BeaconExclusionZone(),
+    ProboscideaVolcanium(),
 ]).run()
