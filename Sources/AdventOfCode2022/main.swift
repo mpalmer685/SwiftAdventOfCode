@@ -18,4 +18,5 @@ AdventOfCode(year: 2022, puzzles: [
     BeaconExclusionZone(),
     ProboscideaVolcanium(),
     PyroclasticFlow(),
+    BoilingBoulders(),
 ]).run()
