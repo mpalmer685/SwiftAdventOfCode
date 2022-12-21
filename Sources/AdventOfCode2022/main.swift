@@ -20,4 +20,5 @@ AdventOfCode(year: 2022, puzzles: [
     PyroclasticFlow(),
     BoilingBoulders(),
     NotEnoughMinerals(),
+    GrovePositioningSystem(),
 ]).run()
