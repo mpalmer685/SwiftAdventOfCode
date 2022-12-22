@@ -21,4 +21,5 @@ AdventOfCode(year: 2022, puzzles: [
     BoilingBoulders(),
     NotEnoughMinerals(),
     GrovePositioningSystem(),
+    MonkeyMap(),
 ]).run()
