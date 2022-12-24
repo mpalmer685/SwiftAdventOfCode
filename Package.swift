@@ -1,6 +1,7 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
+import Foundation
 import PackageDescription
 
 let package = Package(
@@ -47,23 +48,36 @@ let package = Package(
                 .product(name: "Codextended", package: "Codextended"),
             ]
         ),
-        .target(
+        .executableTarget(
             name: "AdventOfCode2020",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
+            exclude: inputFiles(for: 2020)
         ),
-        .target(
+        .executableTarget(
             name: "AdventOfCode2021",
             dependencies: [
                 "AOCKit",
                 .product(name: "Algorithms", package: "swift-algorithms"),
-            ]
+            ],
+            exclude: inputFiles(for: 2021)
         ),
-        .target(
+        .executableTarget(
             name: "AdventOfCode2022",
             dependencies: [
                 "AOCKit",
                 .product(name: "Algorithms", package: "swift-algorithms"),
-            ]
+            ],
+            exclude: inputFiles(for: 2022)
         ),
     ]
 )
+
+func inputFiles(for year: Int) -> [String] {
+    let sourceDirectory = URL(fileURLWithPath: #file).deletingLastPathComponent()
+    return (1 ... 25).compactMap { day in
+        let fragment = "Inputs/day\(day)"
+        let path = sourceDirectory.appendingPathComponent("Sources/AdventOfCode\(year)/\(fragment)")
+        if FileManager.default.fileExists(atPath: path.path) { return fragment }
+        return nil
+    }
+}
