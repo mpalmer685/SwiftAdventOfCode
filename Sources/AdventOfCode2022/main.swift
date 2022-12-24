@@ -23,4 +23,5 @@ AdventOfCode(year: 2022, puzzles: [
     GrovePositioningSystem(),
     MonkeyMath(),
     MonkeyMap(),
+    UnstableDiffusion(),
 ]).run()
