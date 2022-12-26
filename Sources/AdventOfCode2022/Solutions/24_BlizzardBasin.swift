@@ -144,7 +144,11 @@ extension Valley: AStarPathfindingGraph {
         distance(from: from, to: to) + to.time
     }
 
-    func distance(from: SearchState, to: SearchState) -> Int {
+    public func estimatedCost(from: SearchState, to: SearchState) -> Int {
+        distance(from: from, to: to)
+    }
+
+    private func distance(from: SearchState, to: SearchState) -> Int {
         from.location.manhattanDistance(to: to.location)
     }
 
