@@ -4,27 +4,23 @@ class HillClimbingAlgorithm: Puzzle {
     static let day = 12
 
     func part1() throws -> Int {
-        let (grid, start, end) = heightMap
-        let path = grid.shortestPath(from: start, to: end)
-        return path.count
+        heightMap.shortestPath().count
     }
 
     func part2() throws -> Int {
-        let (grid, _, end) = heightMap
-        let starts = grid.points.filter { grid[$0] == "a" }
-
+        let starts = heightMap.grid.points.filter { heightMap.grid[$0] == "a" }
         return starts
-            .map { grid.shortestPath(from: $0, to: end) }
+            .map { heightMap.shortestPath(from: $0) }
             .map(\.count)
             .filter { $0 != 0 }
             .min()!
     }
 
-    private lazy var heightMap = {
+    private lazy var heightMap: HeightMap = {
         var start = Point2D.zero
         var end = Point2D.zero
 
-        let grid = input().lines.enumerated().map { row, line in
+        let cells = input().lines.enumerated().map { row, line in
             line.characters.enumerated().map { col, char -> Character in
                 if char == "S" {
                     start = Point2D(col, row)
@@ -38,45 +34,29 @@ class HillClimbingAlgorithm: Puzzle {
             }
         }
 
-        return (Grid(grid), start, end)
+        return .init(grid: Grid(cells), start: start, end: end)
     }()
 }
 
-private protocol Pathfinding {
-    func neighbors(at point: Point2D) -> [Point2D]
-}
+private struct HeightMap: PathfindingGraph {
+    let grid: Grid<Character>
+    let start: Point2D
+    let end: Point2D
 
-extension Pathfinding {
-    private typealias SearchState = (currentPath: [Point2D], next: Point2D)
-
-    func shortestPath(from start: Point2D, to end: Point2D) -> [Point2D] {
-        var queue = SimpleQueue<SearchState>()
-        queue.push(([], start))
-
-        var visited = Set<Point2D>()
-        visited.insert(start)
-
-        while let (path, node) = queue.pop() {
-            if node == end {
-                return path
-            }
-
-            for neighbor in neighbors(at: node) where !visited.contains(neighbor) {
-                visited.insert(neighbor)
-                queue.push((path + [node], neighbor))
-            }
+    func nextStates(from state: Point2D) -> [Point2D] {
+        let height = grid[state].alphabeticIndex!
+        return state.neighbors.filter { neighbor in
+            grid.contains(neighbor) && grid[neighbor].alphabeticIndex! <= height + 1
         }
-
-        return []
     }
-}
 
-extension Grid: Pathfinding where Cell == Character {
-    fileprivate func neighbors(at point: Point2D) -> [Point2D] {
-        let height = self[point].alphabeticIndex!
-        return point.neighbors.filter { neighbor in
-            contains(neighbor) && self[neighbor].alphabeticIndex! <= height + 1
-        }
+    func shortestPath() -> [Point2D] { shortestPath(from: start, to: end) }
+
+    func shortestPath(from start: Point2D) -> [Point2D] { shortestPath(from: start, to: end) }
+
+    private func shortestPath(from start: Point2D, to end: Point2D) -> [Point2D] {
+        let pathfinder = BreadthFirstSearch(self)
+        return pathfinder.path(from: start, to: end)
     }
 }
 

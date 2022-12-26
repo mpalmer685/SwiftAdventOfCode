@@ -32,7 +32,7 @@ class BoilingBoulders: Puzzle {
         }
 
         let start = Point3D(xRange.lowerBound, yRange.lowerBound, zRange.lowerBound)
-        var toVisit: SimpleQueue<Point3D> = [start]
+        var toVisit: Queue<Point3D> = [start]
         var visited: Set<Point3D> = []
 
         while let p = toVisit.pop() {
@@ -48,31 +48,5 @@ class BoilingBoulders: Puzzle {
         }
 
         return visited
-    }
-}
-
-private struct SimpleQueue<Element> {
-    private var elements: [Element] = []
-
-    mutating func push(_ el: Element) {
-        elements.insert(el, at: 0)
-    }
-
-    mutating func push<S>(contentsOf elements: S) where S: Sequence, S.Element == Element {
-        for el in elements {
-            push(el)
-        }
-    }
-
-    mutating func pop() -> Element? {
-        elements.popLast()
-    }
-
-    var count: Int { elements.count }
-}
-
-extension SimpleQueue: ExpressibleByArrayLiteral {
-    init(arrayLiteral elements: Element...) {
-        self.elements = elements
     }
 }
