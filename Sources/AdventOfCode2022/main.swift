@@ -25,4 +25,5 @@ AdventOfCode(year: 2022, puzzles: [
     MonkeyMap(),
     UnstableDiffusion(),
     BlizzardBasin(),
+    FullOfHotAir(),
 ]).run()
