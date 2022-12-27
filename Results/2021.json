@@ -1,178 +1,495 @@
 {
   "resultsByDay" : {
     "1" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day1"
-      },
       "partOneAnswer" : "1665",
-      "partTwoAnswer" : "1702"
+      "partOneDebugTime" : {
+        "nanoseconds" : 5581575,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 3985568,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "1702",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 7712679,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 3527516,
+        "seconds" : 0
+      }
     },
     "2" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day2"
-      },
       "partOneAnswer" : "1690020",
-      "partTwoAnswer" : "1408487760"
+      "partOneDebugTime" : {
+        "nanoseconds" : 11253144,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 6080082,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "1408487760",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 11124475,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 5419068,
+        "seconds" : 0
+      }
     },
     "3" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day3"
-      },
       "partOneAnswer" : "4147524",
-      "partTwoAnswer" : "3570354"
+      "partOneDebugTime" : {
+        "nanoseconds" : 10882409,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 3830826,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "3570354",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 6439626,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 3346580,
+        "seconds" : 0
+      }
     },
     "4" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day4"
-      },
       "partOneAnswer" : "16716",
-      "partTwoAnswer" : "4880"
+      "partOneDebugTime" : {
+        "nanoseconds" : 72914809,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 21029721,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "4880",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 209749363,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 64116051,
+        "seconds" : 0
+      }
     },
     "5" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day5"
-      },
       "partOneAnswer" : "6841",
-      "partTwoAnswer" : "19258"
+      "partOneDebugTime" : {
+        "nanoseconds" : 111959081,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 35763072,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "19258",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 186360229,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 40716998,
+        "seconds" : 0
+      }
     },
     "6" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day6"
-      },
       "partOneAnswer" : "346063",
-      "partTwoAnswer" : "1572358335990"
+      "partOneDebugTime" : {
+        "nanoseconds" : 2446151,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 734869,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "1572358335990",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 2428433,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 767480,
+        "seconds" : 0
+      }
     },
     "7" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day7"
-      },
       "partOneAnswer" : "343441",
-      "partTwoAnswer" : "98925151"
+      "partOneDebugTime" : {
+        "nanoseconds" : 7301463,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 1327412,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "98925151",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 3789846,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 1184364,
+        "seconds" : 0
+      }
     },
     "8" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day8"
-      },
       "partOneAnswer" : "421",
-      "partTwoAnswer" : "986163"
+      "partOneDebugTime" : {
+        "nanoseconds" : 10894980,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 7344194,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "986163",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 25920490,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 14458431,
+        "seconds" : 0
+      }
     },
     "9" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day9"
-      },
       "partOneAnswer" : "480",
-      "partTwoAnswer" : "1045660"
+      "partOneDebugTime" : {
+        "nanoseconds" : 21120426,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 2450808,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "1045660",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 39818830,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 4307478,
+        "seconds" : 0
+      }
     },
     "10" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day10"
-      },
       "partOneAnswer" : "413733",
-      "partTwoAnswer" : "3354640192"
+      "partOneDebugTime" : {
+        "nanoseconds" : 11033972,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 1865776,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "3354640192",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 10583956,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 1560380,
+        "seconds" : 0
+      }
     },
     "11" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day11"
-      },
       "partOneAnswer" : "1755",
-      "partTwoAnswer" : "212"
+      "partOneDebugTime" : {
+        "nanoseconds" : 66965634,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 5306897,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "212",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 128634120,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 10041980,
+        "seconds" : 0
+      }
     },
     "12" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day12"
-      },
       "partOneAnswer" : "3761",
-      "partTwoAnswer" : "99138"
+      "partOneDebugTime" : {
+        "nanoseconds" : 96928750,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 51164897,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "99138",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 819714423,
+        "seconds" : 2
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 289940725,
+        "seconds" : 1
+      }
     },
     "13" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day13"
-      },
       "partOneAnswer" : "802",
-      "partTwoAnswer" : "###  #  # #  # #### ####  ##  #  # ### \n#  # # #  #  # #       # #  # #  # #  #\n#  # ##   #### ###    #  #    #  # ### \n###  # #  #  # #     #   # ## #  # #  #\n# #  # #  #  # #    #    #  # #  # #  #\n#  # #  # #  # #    ####  ###  ##  ### "
+      "partOneDebugTime" : {
+        "nanoseconds" : 12637719,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 6259357,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "###  #  # #  # #### ####  ##  #  # ### \n#  # # #  #  # #       # #  # #  # #  #\n#  # ##   #### ###    #  #    #  # ### \n###  # #  #  # #     #   # ## #  # #  #\n# #  # #  #  # #    #    #  # #  # #  #\n#  # #  # #  # #    ####  ###  ##  ### ",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 10609905,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 5540734,
+        "seconds" : 0
+      }
     },
     "14" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day14"
-      },
       "partOneAnswer" : "2745",
-      "partTwoAnswer" : "3420801168962"
+      "partOneDebugTime" : {
+        "nanoseconds" : 3234816,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 1879062,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "3420801168962",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 7336515,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 4610887,
+        "seconds" : 0
+      }
     },
     "15" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day15"
-      },
       "partOneAnswer" : "745",
-      "partTwoAnswer" : "3002"
+      "partOneDebugTime" : {
+        "nanoseconds" : 259906859,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 23377381,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "3002",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 713215227,
+        "seconds" : 20
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 827502716,
+        "seconds" : 0
+      }
     },
     "16" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day16"
-      },
       "partOneAnswer" : "908",
-      "partTwoAnswer" : "10626195124371"
+      "partOneDebugTime" : {
+        "nanoseconds" : 6507373,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 2658320,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "10626195124371",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 6531202,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 2232481,
+        "seconds" : 0
+      }
     },
     "17" : {
-      "inputType" : {
-        "string" : "target area: x=185..221, y=-122..-74"
-      },
       "partOneAnswer" : "7381",
-      "partTwoAnswer" : "3019"
+      "partOneDebugTime" : {
+        "nanoseconds" : 98277738,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 18366505,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "3019",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 98215557,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 17667525,
+        "seconds" : 0
+      }
     },
     "18" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day18"
-      },
       "partOneAnswer" : "4323",
-      "partTwoAnswer" : "4749"
+      "partOneDebugTime" : {
+        "nanoseconds" : 192259814,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 6951682,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "4749",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 184567809,
+        "seconds" : 4
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 341944012,
+        "seconds" : 0
+      }
     },
     "19" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day19"
-      },
       "partOneAnswer" : "381",
-      "partTwoAnswer" : "12201"
+      "partOneDebugTime" : {
+        "nanoseconds" : 551096970,
+        "seconds" : 8
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 722972896,
+        "seconds" : 1
+      },
+      "partTwoAnswer" : "12201",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 863085863,
+        "seconds" : 8
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 711342769,
+        "seconds" : 1
+      }
     },
     "20" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day20"
-      },
       "partOneAnswer" : "5354",
-      "partTwoAnswer" : "18269"
+      "partOneDebugTime" : {
+        "nanoseconds" : 160177539,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 37684807,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "18269",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 982290108,
+        "seconds" : 7
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 370737819,
+        "seconds" : 1
+      }
     },
     "21" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day21"
-      },
       "partOneAnswer" : "995904",
-      "partTwoAnswer" : "193753136998081"
+      "partOneDebugTime" : {
+        "nanoseconds" : 2350408,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 751084,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "193753136998081",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 937732619,
+        "seconds" : 139
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 522602812,
+        "seconds" : 24
+      }
     },
     "22" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day22"
-      },
       "partOneAnswer" : "653798",
-      "partTwoAnswer" : "1257350313518866"
+      "partOneDebugTime" : {
+        "nanoseconds" : 805734232,
+        "seconds" : 1
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 295534234,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "1257350313518866",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 108812512,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 12537324,
+        "seconds" : 0
+      }
     },
     "23" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day23"
-      },
       "partOneAnswer" : "18170",
-      "partTwoAnswer" : "50208"
+      "partOneDebugTime" : {
+        "nanoseconds" : 413684989,
+        "seconds" : 56
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 172936304,
+        "seconds" : 8
+      },
+      "partTwoAnswer" : "50208",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 46890121,
+        "seconds" : 53
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 354195148,
+        "seconds" : 7
+      }
     },
     "24" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day24"
-      },
       "partOneAnswer" : "39999698799429",
-      "partTwoAnswer" : "18116121134117"
+      "partOneDebugTime" : {
+        "nanoseconds" : 554286657,
+        "seconds" : 0
+      },
+      "partOneReleaseTime" : {
+        "nanoseconds" : 28633602,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "18116121134117",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 553488483,
+        "seconds" : 0
+      },
+      "partTwoReleaseTime" : {
+        "nanoseconds" : 29618988,
+        "seconds" : 0
+      }
     },
     "25" : {
-      "inputType" : {
-        "file" : "Inputs/2021/day25"
+      "partOneAnswer" : "414",
+      "partOneDebugTime" : {
+        "nanoseconds" : 540073316,
+        "seconds" : 19
       },
-      "partOneAnswer" : "414"
+      "partOneReleaseTime" : {
+        "nanoseconds" : 911183980,
+        "seconds" : 0
+      }
     }
   }
 }
