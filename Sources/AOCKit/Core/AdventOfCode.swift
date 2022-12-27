@@ -12,6 +12,10 @@ public class AdventOfCode {
 }
 
 extension AdventOfCode {
+    func hasSavedResult(for day: Int, _ part: PuzzlePart) -> Bool {
+        savedResults.answer(for: day, part) != nil
+    }
+
     func runPuzzle(for day: Int, part: PuzzlePart) throws -> String {
         guard let puzzle = puzzles.first(where: { type(of: $0).day == day }) else {
             throw PuzzleError.dayNotImplemented(day)

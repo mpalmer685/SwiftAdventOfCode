@@ -29,8 +29,8 @@ struct RunCommand: ParsableCommand {
     func run(event: AdventOfCode) throws {
         let success: Bool
         if let day = day, let part = part {
-            if let answer = event.savedResults.answer(for: day, part) {
-                success = try event.checkPuzzle(for: day, part: part, matches: answer)
+            if event.hasSavedResult(for: day, part) {
+                success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
                 try event.generateResult(for: day, part: part)
                 success = true
@@ -39,12 +39,12 @@ struct RunCommand: ParsableCommand {
             success = try event.checkAllParts(for: day)
         } else if latest {
             guard let (day, part) = event.savedResults.latest,
-                  let answer = event.savedResults.answer(for: day, part)
+                  event.hasSavedResult(for: day, part)
             else {
                 throw PuzzleError.noSavedResults
             }
 
-            success = try event.checkPuzzle(for: day, part: part, matches: answer)
+            success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
         } else if next {
             let (day, part) = nextPuzzle(after: event.savedResults.latest)
             try event.generateResult(for: day, part: part)
@@ -59,39 +59,58 @@ struct RunCommand: ParsableCommand {
 
 private extension AdventOfCode {
     func generateResult(for day: Int, part: PuzzlePart) throws {
-        let result = try runPuzzle(for: day, part: part)
+        let (result, duration) = try measure {
+            try runPuzzle(for: day, part: part)
+        }
         copyToClipboard(result)
-        print(result)
+        print("\(result) \("(took \(duration))".blue)")
         if confirm("Is this correct?".cyan.bold) {
-            savedResults.update(day, for: part, to: result)
+            savedResults.update(day, for: part, to: result, duration: duration)
             try savedResults.save()
         }
     }
 
-    func checkPuzzle(for day: Int, part: PuzzlePart, matches answer: String) throws -> Bool {
+    func checkPuzzleMatchesSavedAnswer(for day: Int, _ part: PuzzlePart) throws -> Bool {
+        guard let (savedAnswer, duration) = savedResults.savedResult(for: day, part) else {
+            throw PuzzleError.noSavedResults
+        }
+
         let spinner = Spinner(pattern: .dots, text: "Day \(day) part \(part)")
         spinner.start()
 
         do {
-            let result = try runPuzzle(for: day, part: part)
-            if result == answer {
-                spinner.succeed()
-                return true
-            } else {
-                spinner.fail(text: "Expected \(answer) but got \(result)")
+            let (result, newDuration) = try measure { try runPuzzle(for: day, part: part) }
+            guard result == savedAnswer else {
+                spinner.fail()
+                print("Expected \(savedAnswer) but got \(result).")
+                return false
             }
+
+            if let oldDuration = duration {
+                let comparison = newDuration.compared(to: oldDuration)
+                spinner
+                    .succeed(text: "Day \(day) part \(part) took \(newDuration) (\(comparison)).")
+                if comparison.isImprovement {
+                    savedResults.update(newDuration, for: day, part)
+                    try savedResults.save()
+                }
+            } else {
+                spinner
+                    .succeed(text: "Day \(day) part \(part) took \(newDuration.description.blue).")
+                savedResults.update(newDuration, for: day, part)
+                try savedResults.save()
+            }
+            return true
         } catch {
             spinner.fail()
             throw error
         }
-
-        return false
     }
 
     func checkAllParts(for day: Int) throws -> Bool {
         try PuzzlePart.allCases.allSatisfy { part in
-            if let answer = savedResults.answer(for: day, part) {
-                return try checkPuzzle(for: day, part: part, matches: answer)
+            if hasSavedResult(for: day, part) {
+                return try checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
                 return true
             }

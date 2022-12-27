@@ -6,6 +6,12 @@ struct SavedResults {
     struct Result: Codable {
         var partOneAnswer: String?
         var partTwoAnswer: String?
+
+        private var partOneDebugTime: Duration?
+        private var partTwoDebugTime: Duration?
+
+        private var partOneReleaseTime: Duration?
+        private var partTwoReleaseTime: Duration?
     }
 
     private let encoder = configure(JSONEncoder()) {
@@ -70,17 +76,44 @@ struct SavedResults {
         }
     }
 
+    func savedResult(for day: Int, _ part: PuzzlePart) -> (String, Duration?)? {
+        guard let result = resultsByDay[day] else { return nil }
+        switch part {
+            case .partOne:
+                guard let answer = result.partOneAnswer else { return nil }
+                return (answer, result.partOneTime)
+            case .partTwo:
+                guard let answer = result.partTwoAnswer else { return nil }
+                return (answer, result.partTwoTime)
+        }
+    }
+
     mutating func update(
         _ day: Int,
         for part: PuzzlePart,
-        to answer: String
+        to answer: String,
+        duration: Duration
     ) {
         var result = resultsByDay[day] ?? Result()
         switch part {
             case .partOne:
                 result.partOneAnswer = answer
+                result.partOneTime = duration
             case .partTwo:
                 result.partTwoAnswer = answer
+                result.partTwoTime = duration
+        }
+
+        resultsByDay[day] = result
+    }
+
+    mutating func update(_ duration: Duration, for day: Int, _ part: PuzzlePart) {
+        guard var result = resultsByDay[day] else { return }
+        switch part {
+            case .partOne:
+                result.partOneTime = duration
+            case .partTwo:
+                result.partTwoTime = duration
         }
 
         resultsByDay[day] = result
@@ -99,5 +132,41 @@ extension SavedResults: Codable {
 
     public func encode(to encoder: Encoder) throws {
         try encoder.encode(resultsByDay, for: "resultsByDay")
+    }
+}
+
+extension SavedResults.Result {
+    var partOneTime: Duration? {
+        get {
+            #if DEBUG
+                return partOneDebugTime
+            #else
+                return partOneReleaseTime
+            #endif
+        }
+        set {
+            #if DEBUG
+                partOneDebugTime = newValue
+            #else
+                partOneReleaseTime = newValue
+            #endif
+        }
+    }
+
+    var partTwoTime: Duration? {
+        get {
+            #if DEBUG
+                return partTwoDebugTime
+            #else
+                return partTwoReleaseTime
+            #endif
+        }
+        set {
+            #if DEBUG
+                partTwoDebugTime = newValue
+            #else
+                partTwoReleaseTime = newValue
+            #endif
+        }
     }
 }
