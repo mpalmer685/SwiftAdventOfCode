@@ -1,18 +1,4 @@
 public struct Grid<Cell> {
-    public struct Point: Hashable {
-        public let x: Int
-        public let y: Int
-
-        public init(_ x: Int, _ y: Int) {
-            self.x = x
-            self.y = y
-        }
-
-        public func offsetBy(_ dx: Int, _ dy: Int) -> Self {
-            Self(x + dx, y + dy)
-        }
-    }
-
     private(set) var cells: [[Cell]]
 
     public init(_ cells: [[Cell]]) {
@@ -36,15 +22,15 @@ public struct Grid<Cell> {
 
     public var count: Int { width * height }
 
-    public var points: [Point] {
-        cells.indices.flatMap { y in cells[y].indices.map { x in Point(x, y) } }
+    public var points: [Point2D] {
+        cells.indices.flatMap { y in cells[y].indices.map { x in Point2D(x, y) } }
     }
 
-    public func contains(_ point: Point) -> Bool {
+    public func contains(_ point: Point2D) -> Bool {
         point.x.isBetween(0, and: width - 1) && point.y.isBetween(0, and: height - 1)
     }
 
-    public subscript(_ point: Point) -> Cell {
+    public subscript(_ point: Point2D) -> Cell {
         get {
             guard contains(point) else { fatalError("Out of bounds: \(point)") }
             return cells[point.y][point.x]
@@ -78,7 +64,3 @@ extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
 
 extension Grid: Equatable where Cell: Equatable {}
 extension Grid: Hashable where Cell: Hashable {}
-
-extension Grid.Point: CustomStringConvertible {
-    public var description: String { "(\(x), \(y))" }
-}

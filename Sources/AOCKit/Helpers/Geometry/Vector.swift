@@ -50,6 +50,9 @@ internal extension VectorProtocol {
 public struct Vector2D: VectorProtocol {
     public static let numberOfDimensions = 2
 
+    public static let x = Self(1, 0)
+    public static let y = Self(0, 1)
+
     public var dx: Int
     public var dy: Int
 
