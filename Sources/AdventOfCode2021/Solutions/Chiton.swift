@@ -17,13 +17,13 @@ struct Chiton: Puzzle {
     static let day = 15
 
     func part1() throws -> Int {
-        let cells = parseInput()
-        return findPath(in: Grid(cells))
+        let grid = Grid(parseInput())
+        return Cave(grid).riskOfBestPath()
     }
 
     func part2() throws -> Int {
-        let cells = fill(grid: parseInput())
-        return findPath(in: Grid(cells))
+        let grid = Grid(fill(grid: parseInput()))
+        return Cave(grid).riskOfBestPath()
     }
 
     private func parseInput() -> [[Int]] {
@@ -31,48 +31,37 @@ struct Chiton: Puzzle {
     }
 }
 
-private let adjacentCells = [
-    (-1, 0),
-    (1, 0),
-    (0, -1),
-    (0, 1),
-]
+private struct Cave {
+    private let grid: Grid<Int>
 
-private func findPath(in grid: Grid<Int>) -> Int {
-    let start = GridPoint(0, 0)
-    let goal = GridPoint(grid.width - 1, grid.height - 1)
-    var costs: [GridPoint: Int] = [start: 0]
-    var heap = Heap<GridPoint> {
-        costs[$0, default: .max] < costs[$1, default: .max]
-    }
-    heap.insert(start)
-
-    while let node = heap.remove() {
-        guard node != goal else { break }
-
-        let neighbors = adjacentCells.map(node.offsetBy)
-
-        guard let currentNodeCost = costs[node] else {
-            fatalError("Could not find cost for node \(node)")
-        }
-
-        for neighbor in neighbors where grid.contains(neighbor) {
-            let value = grid[neighbor]
-            let costThroughCurrent = currentNodeCost + value
-
-            if costThroughCurrent < costs[neighbor, default: .max] {
-                costs[neighbor] = costThroughCurrent
-
-                if let index = heap.index(of: neighbor) {
-                    heap.replace(at: index, value: neighbor)
-                } else {
-                    heap.insert(neighbor)
-                }
-            }
-        }
+    init(_ grid: Grid<Int>) {
+        self.grid = grid
     }
 
-    return costs[goal]!
+    func riskOfBestPath() -> Int {
+        let pathfinder = DijkstraPathfinder(self)
+        let start = GridPoint(0, 0)
+        let goal = GridPoint(grid.width - 1, grid.height - 1)
+        let path = pathfinder.path(from: start, to: goal)
+        return path.map { grid[$0] }.sum
+    }
+}
+
+extension Cave: DijkstraPathfindingGraph {
+    func nextStates(from state: GridPoint) -> [GridPoint] {
+        state.neighbors.filter { grid.contains($0) }
+    }
+
+    func costToMove(from: GridPoint, to: GridPoint) -> Int {
+        grid[to]
+    }
+}
+
+private extension GridPoint {
+    var neighbors: [Self] {
+        let offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        return offsets.map(offsetBy)
+    }
 }
 
 private func fill(grid: [[Int]]) -> [[Int]] {
