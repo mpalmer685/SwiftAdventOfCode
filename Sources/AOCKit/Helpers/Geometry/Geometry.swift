@@ -21,16 +21,6 @@ public extension Dimensioned {
         Self(lhs.components.map { -$0 })
     }
 
-    static func + (lhs: Self, rhs: Self) -> Self {
-        let new = zip(lhs.components, rhs.components).map(+)
-        return Self(new)
-    }
-
-    static func - (lhs: Self, rhs: Self) -> Self {
-        let new = zip(lhs.components, rhs.components).map(-)
-        return Self(new)
-    }
-
     var description: String {
         let (start, end) = Self.descriptionWrappers
         return start + components.map(\.description).joined(separator: ", ") + end

@@ -33,7 +33,7 @@ private struct Valley {
     }
 
     struct Blizzard: Hashable {
-        let location: Map.Point
+        let location: Point2D
         let direction: Vector2D
     }
 
@@ -41,10 +41,10 @@ private struct Valley {
 
     private let map: Map
     private let blizzards: Set<Blizzard>
-    private let blizzardStates: [Set<Map.Point>]
+    private let blizzardStates: [Set<Point2D>]
 
-    let start: Map.Point
-    let end: Map.Point
+    let start: Point2D
+    let end: Point2D
 
     init(_ input: Input) {
         let height = input.lines.count
@@ -53,7 +53,7 @@ private struct Valley {
         var blizzards = Set<Blizzard>()
         for (y, line) in input.lines.enumerated() {
             for (x, char) in line.characters.enumerated() {
-                let p = Map.Point(x, y)
+                let p = Point2D(x, y)
                 switch char {
                     case "#":
                         map[p] = .wall
@@ -79,18 +79,18 @@ private struct Valley {
         end = map.points.first { $0.y == map.height - 1 && map[$0] == .ground }!
     }
 
-    static func findAllStates(for blizzards: Set<Blizzard>, in map: Map) -> [Set<Map.Point>] {
+    static func findAllStates(for blizzards: Set<Blizzard>, in map: Map) -> [Set<Point2D>] {
         func move(_ blizzards: Set<Blizzard>) -> Set<Blizzard> {
             blizzards.reduce(into: []) { next, blizzard in
                 var p = blizzard.location.move(blizzard.direction)
                 if p.x == 0 {
-                    p = Map.Point(map.width - 2, p.y)
+                    p = Point2D(map.width - 2, p.y)
                 } else if p.x == map.width - 1 {
-                    p = Map.Point(1, p.y)
+                    p = Point2D(1, p.y)
                 } else if p.y == 0 {
-                    p = Map.Point(p.x, map.height - 2)
+                    p = Point2D(p.x, map.height - 2)
                 } else if p.y == map.height - 1 {
-                    p = Map.Point(p.x, 1)
+                    p = Point2D(p.x, 1)
                 }
                 next.insert(Blizzard(location: p, direction: blizzard.direction))
             }
@@ -98,8 +98,8 @@ private struct Valley {
 
         var current = blizzards
         let initial = Set(current.map(\.location))
-        var states: [Set<Map.Point>] = [initial]
-        var seen: Set<Set<Map.Point>> = [initial]
+        var states: [Set<Point2D>] = [initial]
+        var seen: Set<Set<Point2D>> = [initial]
         for _ in 0 ..< lcm(map.width - 2, map.height - 2) {
             let moved = move(current)
             let state = Set(moved.map(\.location))
@@ -115,10 +115,10 @@ private struct Valley {
 }
 
 private struct SearchState: Hashable {
-    let location: Valley.Map.Point
+    let location: Point2D
     let time: Int
 
-    init(location: Valley.Map.Point, time: Int = 0) {
+    init(location: Point2D, time: Int = 0) {
         self.location = location
         self.time = time
     }
@@ -147,7 +147,7 @@ extension Valley: AStarPathfindingGraph {
 }
 
 private extension Valley {
-    func timeToTravel(from start: Map.Point, to destination: Map.Point, startTime: Int = 0) -> Int {
+    func timeToTravel(from start: Point2D, to destination: Point2D, startTime: Int = 0) -> Int {
         let pathfinder = AStarPathfinder(self)
 
         let start = SearchState(location: start, time: startTime)
@@ -157,26 +157,6 @@ private extension Valley {
             $0.location == destination.location
         }
         return path.count
-    }
-}
-
-private extension Valley.Map.Point {
-    func move(_ direction: Vector2D) -> Self {
-        offsetBy(direction.dx, direction.dy)
-    }
-
-    func manhattanDistance(to other: Self) -> Int {
-        abs(x - other.x) + abs(y - other.y)
-    }
-
-    var orthogonalNeighbors: [Self] {
-        let vectors: [Vector2D] = [
-            .init(0, 1),
-            .init(0, -1),
-            .init(-1, 0),
-            .init(1, 0),
-        ]
-        return vectors.map { move($0) }
     }
 }
 

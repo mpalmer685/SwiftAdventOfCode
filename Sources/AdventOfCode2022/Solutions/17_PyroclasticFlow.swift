@@ -3,8 +3,8 @@ import AOCKit
 class PyroclasticFlow: Puzzle {
     static let day = 17
 
-    private lazy var winds: [Direction] = {
-        input().characters.map(Direction.init(character:))
+    private lazy var winds: [Vector2D] = {
+        input().characters.map(Vector2D.init(character:))
     }()
 
     func part1() throws -> Int {
@@ -66,8 +66,8 @@ class PyroclasticFlow: Puzzle {
         fatalError("No solution found")
     }
 
-    private func drop(_ rock: Rock, in shaft: Shaft, using nextWind: () -> Direction) {
-        let start = Direction(2, shaft.maxY + 4)
+    private func drop(_ rock: Rock, in shaft: Shaft, using nextWind: () -> Vector2D) {
+        let start = Vector2D(2, shaft.maxY + 4)
 
         var rock = rock.move(start)
 
@@ -90,7 +90,7 @@ class PyroclasticFlow: Puzzle {
 }
 
 private class Shaft {
-    var space: Set<Point>
+    var space: Set<Point2D>
 
     let width: Int
 
@@ -110,7 +110,7 @@ private class Shaft {
 
         space = []
         for x in 0 ..< width {
-            space.insert(Point(x, 0))
+            space.insert(Point2D(x, 0))
         }
     }
 
@@ -126,13 +126,11 @@ private class Shaft {
     }
 }
 
-private typealias Point = Grid<Any>.Point
-
 private struct Rock {
-    let points: [Point]
+    let points: [Point2D]
 
-    func move(_ dir: Direction) -> Self {
-        Self(points: points.map { $0.offsetBy(dir.dx, dir.dy) })
+    func move(_ dir: Vector2D) -> Self {
+        Self(points: points.map { $0.offset(by: dir) })
     }
 
     static let order = [hLine, plus, l, vLine, square]
@@ -155,15 +153,7 @@ private struct Rock {
     ])
 }
 
-private struct Direction {
-    let dx: Int
-    let dy: Int
-
-    init(_ dx: Int, _ dy: Int) {
-        self.dx = dx
-        self.dy = dy
-    }
-
+private extension Vector2D {
     init(character: Character) {
         switch character {
             case "<":
@@ -179,12 +169,6 @@ private struct Direction {
     static let down = Self(0, -1)
     static let left = Self(-1, 0)
     static let right = Self(1, 0)
-}
-
-extension Direction: CustomStringConvertible {
-    public var description: String {
-        "<\(dx), \(dy)>"
-    }
 }
 
 private extension Collection where Element: Numeric, Element: Comparable {

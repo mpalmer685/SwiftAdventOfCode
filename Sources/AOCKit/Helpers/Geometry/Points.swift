@@ -30,6 +30,11 @@ public extension PointProtocol {
     static func - (lhs: Self, rhs: Vector) -> Self {
         lhs + -rhs
     }
+
+    static func - (lhs: Self, rhs: Self) -> Vector {
+        let new = zip(lhs.components, rhs.components).map(-)
+        return Vector(new)
+    }
 }
 
 public extension PointProtocol {

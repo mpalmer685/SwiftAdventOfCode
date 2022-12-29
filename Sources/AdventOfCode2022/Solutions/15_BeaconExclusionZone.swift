@@ -1,8 +1,7 @@
 import AOCKit
 import Foundation
 
-private typealias Position = Grid<Any>.Point
-private typealias ScanData = (scanner: Position, beacon: Position, distance: Int)
+private typealias ScanData = (scanner: Point2D, beacon: Point2D, distance: Int)
 
 class BeaconExclusionZone: Puzzle {
     static let day = 15
@@ -26,8 +25,8 @@ class BeaconExclusionZone: Puzzle {
 
     private lazy var scanData: [ScanData] = {
         input().lines.map(\.integers).map { values -> ScanData in
-            let scanner = Position(values[0], values[1])
-            let beacon = Position(values[2], values[3])
+            let scanner = Point2D(values[0], values[1])
+            let beacon = Point2D(values[2], values[3])
             let distance = scanner.manhattanDistance(to: beacon)
             return (scanner, beacon, distance)
         }
@@ -55,16 +54,16 @@ class BeaconExclusionZone: Puzzle {
 
         for (scanner, _, distance) in scanData {
             let corners = [
-                scanner.offsetBy(0, -distance - 1),
-                scanner.offsetBy(distance + 1, 0),
-                scanner.offsetBy(0, distance + 1),
-                scanner.offsetBy(-distance - 1, 0),
-                scanner.offsetBy(0, -distance - 1),
+                scanner - Vector2D(dx: 0, dy: distance + 1),
+                scanner + Vector2D(dx: distance + 1, dy: 0),
+                scanner + Vector2D(dx: 0, dy: distance + 1),
+                scanner - Vector2D(dx: distance + 1, dy: 0),
+                scanner - Vector2D(dx: 0, dy: distance + 1),
             ]
 
-            var borders = Set<Position>()
+            var borders = Set<Point2D>()
             for (start, end) in corners.adjacentPairs() {
-                let border = Position.all(from: start, to: end).filter { p -> Bool in
+                let border = Point2D.all(from: start, to: end).filter { p -> Bool in
                     range.contains(p.x) && range.contains(p.y)
                 }
                 borders.formUnion(border)
@@ -79,7 +78,7 @@ class BeaconExclusionZone: Puzzle {
     }
 }
 
-private extension Position {
+private extension Point2D {
     static func all(from start: Self, to end: Self) -> [Self] {
         let unitDx = (end.x - start.x).signum()
         let unitDy = (end.y - start.y).signum()
@@ -88,10 +87,6 @@ private extension Position {
         return (0 ..< distance).map { step -> Self in
             Self(start.x + unitDx * step, start.y + unitDy * step)
         }
-    }
-
-    func manhattanDistance(to other: Self) -> Int {
-        abs(x - other.x) + abs(y - other.y)
     }
 
     func isScanned(by scanData: [ScanData]) -> Bool {

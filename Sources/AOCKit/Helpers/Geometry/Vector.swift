@@ -13,6 +13,11 @@ public extension VectorProtocol {
     var isOrthogonal: Bool {
         components.count { $0 != 0 } <= 1
     }
+
+    static func + (lhs: Self, rhs: Self) -> Self {
+        let new = zip(lhs.components, rhs.components).map(+)
+        return Self(new)
+    }
 }
 
 internal extension VectorProtocol {

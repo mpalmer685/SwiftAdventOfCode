@@ -9,8 +9,8 @@ class RegolithReservoir: Puzzle {
         for line in input().lines {
             let positions = line.words(separatedBy: " -> ")
             for (start, end) in positions.adjacentPairs() {
-                let start = Position(start)
-                let end = Position(end)
+                let start = Point2D(start)
+                let end = Point2D(end)
 
                 for p in start ... end {
                     cave[p] = .wall
@@ -22,7 +22,7 @@ class RegolithReservoir: Puzzle {
     }()
 
     func part1() throws -> Int {
-        let start = Position(500, 0)
+        let start = Point2D(500, 0)
 
         func dropSand(into cave: inout Cave, floor: Int) -> Bool {
             var s = start
@@ -65,7 +65,7 @@ class RegolithReservoir: Puzzle {
     }
 
     func part2() throws -> Int {
-        let start = Position(500, 0)
+        let start = Point2D(500, 0)
 
         func dropSand(into cave: inout Cave, floor: Int) {
             var s = start
@@ -95,7 +95,7 @@ class RegolithReservoir: Puzzle {
         var cave = cave
         let floor = cave.maxY + 2
 
-        let source = Position(500, 0)
+        let source = Point2D(500, 0)
 
         var count = 0
         while cave[source] == nil {
@@ -107,23 +107,18 @@ class RegolithReservoir: Puzzle {
     }
 }
 
-private typealias Cave = [Position: CaveElement]
-private typealias Position = Grid<Any>.Point
+private typealias Cave = [Point2D: CaveElement]
 
 private enum CaveElement {
     case wall, sand
 }
 
-private extension Position {
+private extension Point2D {
     init(_ word: Word) {
         let parts = word.words(separatedBy: .comma)
         let x = parts[0].integer!
         let y = parts[1].integer!
         self.init(x, y)
-    }
-
-    func move(_ dir: Direction) -> Self {
-        Self(x + dir.dx, y + dir.dy)
     }
 
     static func ... (lhs: Self, rhs: Self) -> [Self] {
@@ -140,17 +135,14 @@ private extension Position {
     }
 }
 
-private struct Direction {
-    let dx: Int
-    let dy: Int
-
-    static let up = Direction(dx: 0, dy: -1)
-    static let down = Direction(dx: 0, dy: 1)
-    static let left = Direction(dx: -1, dy: 0)
-    static let right = Direction(dx: 1, dy: 0)
+private extension Vector2D {
+    static let up = Self(dx: 0, dy: -1)
+    static let down = Self(dx: 0, dy: 1)
+    static let left = Self(dx: -1, dy: 0)
+    static let right = Self(dx: 1, dy: 0)
 }
 
-private extension Dictionary where Key == Position {
+private extension Dictionary where Key == Point2D {
     var minX: Int { keys.map(\.x).min()! }
     var maxX: Int { keys.map(\.x).max()! }
 

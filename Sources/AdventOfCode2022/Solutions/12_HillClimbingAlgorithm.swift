@@ -45,7 +45,7 @@ private struct HeightMap: PathfindingGraph {
 
     func nextStates(from state: Point2D) -> [Point2D] {
         let height = grid[state].alphabeticIndex!
-        return state.neighbors.filter { neighbor in
+        return state.orthogonalNeighbors.filter { neighbor in
             grid.contains(neighbor) && grid[neighbor].alphabeticIndex! <= height + 1
         }
     }
@@ -57,33 +57,5 @@ private struct HeightMap: PathfindingGraph {
     private func shortestPath(from start: Point2D, to end: Point2D) -> [Point2D] {
         let pathfinder = BreadthFirstSearch(self)
         return pathfinder.path(from: start, to: end)
-    }
-}
-
-private typealias Point2D = Grid<Character>.Point
-
-private extension Point2D {
-    static var zero: Self { Self(0, 0) }
-
-    var neighbors: [Point2D] {
-        let directions = [
-            (0, 1),
-            (0, -1),
-            (1, 0),
-            (-1, 0),
-        ]
-        return directions.map { offsetBy($0.0, $0.1) }
-    }
-}
-
-private struct SimpleQueue<Element> {
-    private var elements: [Element] = []
-
-    mutating func push(_ el: Element) {
-        elements.insert(el, at: 0)
-    }
-
-    mutating func pop() -> Element? {
-        elements.popLast()
     }
 }
