@@ -1,21 +1,7 @@
 public protocol PathfindingGraph {
-    associatedtype State: Hashable
+    associatedtype State: Equatable & Hashable
 
     func nextStates(from state: State) -> [State]
-
-    func state(_ state: State, matchesGoal goal: State) -> Bool
-}
-
-public extension PathfindingGraph {
-    func state(_ state: State, matchesGoal goal: State) -> Bool {
-        state == goal
-    }
-}
-
-public protocol Pathfinding {
-    associatedtype State
-
-    func path(from start: State, to end: State) -> [State]
 }
 
 protocol PathNode: Hashable {

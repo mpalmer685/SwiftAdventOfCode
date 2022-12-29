@@ -1,25 +1,29 @@
-public final class BreadthFirstSearch<Map: PathfindingGraph>: Pathfinding {
-    private let map: Map
+public final class BreadthFirstSearch<Graph: PathfindingGraph> {
+    private let graph: Graph
 
-    public init(_ map: Map) {
-        self.map = map
+    public init(_ graph: Graph) {
+        self.graph = graph
     }
 
-    public func path(from start: Map.State, to end: Map.State) -> [Map.State] {
-        var frontier = Queue<Node<Map.State>>()
+    public func path(from start: Graph.State, to end: Graph.State) -> [Graph.State] {
+        path(from: start) { $0 == end }
+    }
+
+    public func path(from start: Graph.State, goalReached: (Graph.State) -> Bool) -> [Graph.State] {
+        var frontier = Queue<Node<Graph.State>>()
         frontier.push(Node(start))
 
-        var explored = Set<Map.State>()
+        var explored = Set<Graph.State>()
         explored.insert(start)
 
         while let currentNode = frontier.pop() {
             let currentState = currentNode.state
 
-            if map.state(currentState, matchesGoal: end) {
+            if goalReached(currentState) {
                 return currentNode.path
             }
 
-            for nextState in map.nextStates(from: currentState)
+            for nextState in graph.nextStates(from: currentState)
                 where !explored.contains(nextState)
             {
                 frontier.push(Node(nextState, parent: currentNode))
@@ -31,28 +35,32 @@ public final class BreadthFirstSearch<Map: PathfindingGraph>: Pathfinding {
     }
 }
 
-public final class DepthFirstSearch<Map: PathfindingGraph>: Pathfinding {
-    private let map: Map
+public final class DepthFirstSearch<Graph: PathfindingGraph> {
+    private let graph: Graph
 
-    public init(_ map: Map) {
-        self.map = map
+    public init(_ graph: Graph) {
+        self.graph = graph
     }
 
-    public func path(from start: Map.State, to end: Map.State) -> [Map.State] {
-        var frontier = Stack<Node<Map.State>>()
+    public func path(from start: Graph.State, to end: Graph.State) -> [Graph.State] {
+        path(from: start) { $0 == end }
+    }
+
+    public func path(from start: Graph.State, goalReached: (Graph.State) -> Bool) -> [Graph.State] {
+        var frontier = Stack<Node<Graph.State>>()
         frontier.push(Node(start))
 
-        var explored = Set<Map.State>()
+        var explored = Set<Graph.State>()
         explored.insert(start)
 
         while let currentNode = frontier.pop() {
             let currentState = currentNode.state
 
-            if map.state(currentState, matchesGoal: end) {
+            if goalReached(currentState) {
                 return currentNode.path
             }
 
-            for nextState in map.nextStates(from: currentState)
+            for nextState in graph.nextStates(from: currentState)
                 where !explored.contains(nextState)
             {
                 frontier.push(Node(nextState, parent: currentNode))

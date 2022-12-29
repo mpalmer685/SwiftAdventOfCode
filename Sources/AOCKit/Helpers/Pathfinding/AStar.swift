@@ -6,20 +6,20 @@ public protocol AStarPathfindingGraph: PathfindingGraph {
     func estimatedCost(from: State, to: State) -> Cost
 }
 
-public final class AStarPathfinder<Map: AStarPathfindingGraph>: Pathfinding {
+public final class AStarPathfinder<Graph: AStarPathfindingGraph> {
     private final class Node: PathNode, Comparable {
-        let state: Map.State
+        let state: Graph.State
         let parent: Node?
 
-        var estimatedTotalCost: Map.Cost { costFromStart + estimatedCostToDestination }
-        var costFromStart: Map.Cost
-        var estimatedCostToDestination: Map.Cost
+        var estimatedTotalCost: Graph.Cost { costFromStart + estimatedCostToDestination }
+        var costFromStart: Graph.Cost
+        var estimatedCostToDestination: Graph.Cost
 
         init(
-            _ state: Map.State,
+            _ state: Graph.State,
             parent: Node? = nil,
-            moveCost: Map.Cost = 0,
-            estimatedCostToDestination: Map.Cost = 0
+            moveCost: Graph.Cost = 0,
+            estimatedCostToDestination: Graph.Cost = 0
         ) {
             self.state = state
             self.parent = parent
@@ -32,32 +32,38 @@ public final class AStarPathfinder<Map: AStarPathfindingGraph>: Pathfinding {
         }
     }
 
-    private let map: Map
+    private let graph: Graph
 
-    public init(_ map: Map) {
-        self.map = map
+    public init(_ graph: Graph) {
+        self.graph = graph
     }
 
-    public func path(from start: Map.State, to end: Map.State) -> [Map.State] {
+    public func path(
+        from start: Graph.State,
+        to end: Graph.State,
+        goalReached: ((Graph.State) -> Bool)? = nil
+    ) -> [Graph.State] {
+        let goalReached = goalReached ?? stateEquals(end)
+
         var frontier = Heap<Node>.minHeap()
         frontier.insert(Node(start))
 
-        var explored = [Map.State: Map.Cost]()
+        var explored = [Graph.State: Graph.Cost]()
         explored[start] = 0
 
         while let currentNode = frontier.remove() {
             let currentState = currentNode.state
 
-            if map.state(currentState, matchesGoal: end) {
+            if goalReached(currentState) {
                 return currentNode.path
             }
 
-            for nextState in map.nextStates(from: currentState) {
+            for nextState in graph.nextStates(from: currentState) {
                 let node = Node(
                     nextState,
                     parent: currentNode,
-                    moveCost: map.costToMove(from: currentState, to: nextState),
-                    estimatedCostToDestination: map.estimatedCost(from: nextState, to: end)
+                    moveCost: graph.costToMove(from: currentState, to: nextState),
+                    estimatedCostToDestination: graph.estimatedCost(from: nextState, to: end)
                 )
 
                 if let bestCost = explored[nextState], bestCost <= node.costFromStart {
@@ -71,4 +77,8 @@ public final class AStarPathfinder<Map: AStarPathfindingGraph>: Pathfinding {
 
         return []
     }
+}
+
+private func stateEquals<State: Equatable>(_ goal: State) -> (State) -> Bool {
+    { $0 == goal }
 }

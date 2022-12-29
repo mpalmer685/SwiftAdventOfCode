@@ -10,14 +10,14 @@ public extension DijkstraPathfindingGraph {
     }
 }
 
-public final class DijkstraPathfinder<Map: DijkstraPathfindingGraph>: Pathfinding {
+public final class DijkstraPathfinder<Graph: DijkstraPathfindingGraph> {
     private final class Node: PathNode, Comparable {
-        let state: Map.State
+        let state: Graph.State
         let parent: Node?
 
-        var costFromStart: Map.Cost
+        var costFromStart: Graph.Cost
 
-        init(_ state: Map.State, parent: Node? = nil, moveCost: Map.Cost = 0) {
+        init(_ state: Graph.State, parent: Node? = nil, moveCost: Graph.Cost = 0) {
             self.state = state
             self.parent = parent
             costFromStart = (parent?.costFromStart ?? 0) + moveCost
@@ -28,31 +28,38 @@ public final class DijkstraPathfinder<Map: DijkstraPathfindingGraph>: Pathfindin
         }
     }
 
-    private let map: Map
+    private let graph: Graph
 
-    public init(_ map: Map) {
-        self.map = map
+    public init(_ graph: Graph) {
+        self.graph = graph
     }
 
-    public func path(from start: Map.State, to end: Map.State) -> [Map.State] {
+    public func path(from start: Graph.State, to end: Graph.State) -> [Graph.State] {
+        path(from: start) { $0 == end }
+    }
+
+    public func path(
+        from start: Graph.State,
+        goalReached: (Graph.State) -> Bool
+    ) -> [Graph.State] {
         var frontier = Heap<Node>.minHeap()
         frontier.insert(Node(start))
 
-        var explored = [Map.State: Map.Cost]()
+        var explored = [Graph.State: Graph.Cost]()
         explored[start] = 0
 
         while let currentNode = frontier.remove() {
             let currentState = currentNode.state
 
-            if map.state(currentState, matchesGoal: end) {
+            if goalReached(currentState) {
                 return currentNode.path
             }
 
-            for nextState in map.nextStates(from: currentState) {
+            for nextState in graph.nextStates(from: currentState) {
                 let node = Node(
                     nextState,
                     parent: currentNode,
-                    moveCost: map.costToMove(from: currentState, to: nextState)
+                    moveCost: graph.costToMove(from: currentState, to: nextState)
                 )
 
                 if let bestCost = explored[nextState], bestCost <= node.costFromStart {
@@ -67,21 +74,21 @@ public final class DijkstraPathfinder<Map: DijkstraPathfindingGraph>: Pathfindin
         return []
     }
 
-    public func calculateCosts(from start: Map.State) -> [Map.State: Map.Cost] {
+    public func calculateCosts(from start: Graph.State) -> [Graph.State: Graph.Cost] {
         var frontier = Heap<Node>.minHeap()
         frontier.insert(Node(start))
 
-        var explored = [Map.State: Map.Cost]()
+        var explored = [Graph.State: Graph.Cost]()
         explored[start] = 0
 
         while let currentNode = frontier.remove() {
             let currentState = currentNode.state
 
-            for nextState in map.nextStates(from: currentState) {
+            for nextState in graph.nextStates(from: currentState) {
                 let node = Node(
                     nextState,
                     parent: currentNode,
-                    moveCost: map.costToMove(from: currentState, to: nextState)
+                    moveCost: graph.costToMove(from: currentState, to: nextState)
                 )
 
                 if let bestCost = explored[nextState], bestCost <= node.costFromStart {

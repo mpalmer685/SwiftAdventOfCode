@@ -5,32 +5,25 @@ class BlizzardBasin: Puzzle {
 
     func part1() throws -> Int {
         let valley = Valley(input())
-        let pathfinder = AStarPathfinder(valley)
-
-        let start = SearchState(location: valley.start)
-        let destination = SearchState(location: valley.end)
-
-        return pathfinder.path(from: start, to: destination).count
+        return valley.timeToTravel(from: valley.start, to: valley.end)
     }
 
     func part2() throws -> Int {
         let valley = Valley(input())
-        let pathfinder = AStarPathfinder(valley)
 
-        let firstTrip = pathfinder.path(
-            from: SearchState(location: valley.start),
-            to: SearchState(location: valley.end)
+        let firstTrip = valley.timeToTravel(from: valley.start, to: valley.end)
+        let returnTrip = valley.timeToTravel(
+            from: valley.end,
+            to: valley.start,
+            startTime: firstTrip
         )
-        let returnTrip = pathfinder.path(
-            from: SearchState(location: valley.end, time: firstTrip.count),
-            to: SearchState(location: valley.start)
-        )
-        let finalTrip = pathfinder.path(
-            from: SearchState(location: valley.start, time: firstTrip.count + returnTrip.count),
-            to: SearchState(location: valley.end)
+        let finalTrip = valley.timeToTravel(
+            from: valley.start,
+            to: valley.end,
+            startTime: firstTrip + returnTrip
         )
 
-        return firstTrip.count + returnTrip.count + finalTrip.count
+        return firstTrip + returnTrip + finalTrip
     }
 }
 
@@ -151,9 +144,19 @@ extension Valley: AStarPathfindingGraph {
     private func distance(from: SearchState, to: SearchState) -> Int {
         from.location.manhattanDistance(to: to.location)
     }
+}
 
-    func state(_ state: SearchState, matchesGoal goal: SearchState) -> Bool {
-        state.location == goal.location
+private extension Valley {
+    func timeToTravel(from start: Map.Point, to destination: Map.Point, startTime: Int = 0) -> Int {
+        let pathfinder = AStarPathfinder(self)
+
+        let start = SearchState(location: start, time: startTime)
+        let destination = SearchState(location: destination)
+
+        let path = pathfinder.path(from: start, to: destination) {
+            $0.location == destination.location
+        }
+        return path.count
     }
 }
 
