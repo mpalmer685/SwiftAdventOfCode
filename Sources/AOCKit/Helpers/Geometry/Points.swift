@@ -56,8 +56,11 @@ public extension PointProtocol {
     func offset(by vector: Vector) -> Self { apply(vector) }
 
     var orthogonalNeighbors: [Self] {
-        let vectors = Vector.adjacents(orthogonalOnly: true)
-        return vectors.map { apply($0) }
+        Vector.orthogonalAdjacents.map { apply($0) }
+    }
+
+    var neighbors: [Self] {
+        Vector.adjacents.map { apply($0) }
     }
 }
 

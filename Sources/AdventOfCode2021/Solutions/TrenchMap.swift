@@ -51,8 +51,11 @@ struct TrenchMap: Puzzle {
 private func parseImage(from lines: [String]) -> Image {
     let height = lines.count
     let width = lines[0].count
-    let bounds = Rect(topLeft: Point(x: 0, y: 0), bottomRight: Point(x: width - 1, y: height - 1))
-    let pixels: Set<Point> = bounds.points.reduce(into: []) { pixels, point in
+    let bounds = Rect(
+        topLeft: Point2D(x: 0, y: 0),
+        bottomRight: Point2D(x: width - 1, y: height - 1)
+    )
+    let pixels: Set<Point2D> = bounds.points.reduce(into: []) { pixels, point in
         if lines[point.y][point.x] == "#" {
             pixels.insert(point)
         }
@@ -63,11 +66,8 @@ private func parseImage(from lines: [String]) -> Image {
 
 private typealias EnhancementAlgorithm = Set<Int>
 
-private struct Point: Hashable {
-    let x: Int
-    let y: Int
-
-    var neighbors: [Point] {
+private extension Point2D {
+    var neighbors: [Self] {
         let offsets = [
             (-1, -1),
             (0, -1),
@@ -82,15 +82,15 @@ private struct Point: Hashable {
         return offsets.map { offset(by: $0) }
     }
 
-    func offset(by offset: (Int, Int)) -> Point {
+    func offset(by offset: (Int, Int)) -> Self {
         let (dx, dy) = offset
-        return Point(x: x + dx, y: y + dy)
+        return Self(x: x + dx, y: y + dy)
     }
 }
 
 private struct Rect {
-    let topLeft: Point
-    let bottomRight: Point
+    let topLeft: Point2D
+    let bottomRight: Point2D
 
     var left: Int { topLeft.x }
     var right: Int { bottomRight.x }
@@ -100,29 +100,29 @@ private struct Rect {
     var width: Int { right - left }
     var height: Int { bottom - top }
 
-    var points: [Point] {
+    var points: [Point2D] {
         (left ... right).flatMap { x in
             (top ... bottom).map { y in
-                Point(x: x, y: y)
+                Point2D(x: x, y: y)
             }
         }
     }
 
-    func contains(_ point: Point) -> Bool {
+    func contains(_ point: Point2D) -> Bool {
         point.x.isBetween(left, and: right) && point.y.isBetween(top, and: bottom)
     }
 }
 
 private struct Image {
     let bounds: Rect
-    let pixels: Set<Point>
+    let pixels: Set<Point2D>
 
     func enhanced(using algorithm: EnhancementAlgorithm, withDefault defaultPixel: Bool) -> Image {
         let newBounds = Rect(
             topLeft: bounds.topLeft.offset(by: (-1, -1)),
             bottomRight: bounds.bottomRight.offset(by: (1, 1))
         )
-        var newPixels: Set<Point> = []
+        var newPixels: Set<Point2D> = []
         for point in newBounds.points {
             let index = algorithmIndex(for: point, withDefault: defaultPixel)
             if algorithm.contains(index) {
@@ -132,7 +132,7 @@ private struct Image {
         return Image(bounds: newBounds, pixels: newPixels)
     }
 
-    private func algorithmIndex(for point: Point, withDefault defaultPixel: Bool) -> Int {
+    private func algorithmIndex(for point: Point2D, withDefault defaultPixel: Bool) -> Int {
         let binary = point.neighbors.map { p in
             if bounds.contains(p) {
                 return pixels.contains(p) ? "1" : "0"

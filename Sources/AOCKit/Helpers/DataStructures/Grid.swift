@@ -30,6 +30,10 @@ public struct Grid<Cell> {
         point.x.isBetween(0, and: width - 1) && point.y.isBetween(0, and: height - 1)
     }
 
+    public func contains(x: Int, y: Int) -> Bool {
+        (0 ..< width).contains(x) && (0 ..< height).contains(y)
+    }
+
     public subscript(_ point: Point2D) -> Cell {
         get {
             guard contains(point) else { fatalError("Out of bounds: \(point)") }
@@ -38,6 +42,21 @@ public struct Grid<Cell> {
         set {
             guard contains(point) else { fatalError("Out of bounds: \(point)") }
             cells[point.y][point.x] = newValue
+        }
+    }
+
+    public subscript(x: Int, y: Int) -> Cell {
+        get {
+            guard contains(x: x, y: y) else {
+                fatalError("Out of bounds: (\(x), \(y))")
+            }
+            return cells[y][x]
+        }
+        set {
+            guard contains(x: x, y: y) else {
+                fatalError("Out of bounds: (\(x), \(y))")
+            }
+            cells[y][x] = newValue
         }
     }
 

@@ -19,15 +19,15 @@ struct TransparentOrigami: Puzzle {
         return format(dots)
     }
 
-    private func parseInput() -> (dots: Set<Point>, folds: [Fold]) {
+    private func parseInput() -> (dots: Set<Point2D>, folds: [Fold]) {
         let parts = input().lines.split(whereSeparator: \.isEmpty)
-        let dots = parts[0].map(Point.init)
+        let dots = parts[0].map(Point2D.init)
         let folds = parts[1].map(Fold.init)
         return (Set(dots), folds)
     }
 }
 
-private func perform(fold: Fold, using dots: inout Set<Point>) {
+private func perform(fold: Fold, using dots: inout Set<Point2D>) {
     switch fold {
         case let .up(y):
             foldUp(at: y, dots: &dots)
@@ -36,38 +36,30 @@ private func perform(fold: Fold, using dots: inout Set<Point>) {
     }
 }
 
-private func foldUp(at y: Int, dots: inout Set<Point>) {
+private func foldUp(at y: Int, dots: inout Set<Point2D>) {
     for dot in dots where dot.y > y {
         dots.remove(dot)
-        dots.insert(Point(x: dot.x, y: 2 * y - dot.y))
+        dots.insert(Point2D(x: dot.x, y: 2 * y - dot.y))
     }
 }
 
-private func foldLeft(at x: Int, dots: inout Set<Point>) {
+private func foldLeft(at x: Int, dots: inout Set<Point2D>) {
     for dot in dots where dot.x > x {
         dots.remove(dot)
-        dots.insert(Point(x: 2 * x - dot.x, y: dot.y))
+        dots.insert(Point2D(x: 2 * x - dot.x, y: dot.y))
     }
 }
 
-private func format(_ points: Set<Point>) -> String {
+private func format(_ points: Set<Point2D>) -> String {
     guard let height = points.map(\.y).max(), let width = points.map(\.x).max() else {
         fatalError()
     }
     return (0 ... height).map { y in
-        (0 ... width).map { x in points.contains(Point(x: x, y: y)) ? "#" : " " }.joined()
+        (0 ... width).map { x in points.contains(Point2D(x: x, y: y)) ? "#" : " " }.joined()
     }.joined(separator: "\n")
 }
 
-private struct Point: Hashable {
-    let x: Int
-    let y: Int
-
-    init(x: Int, y: Int) {
-        self.x = x
-        self.y = y
-    }
-
+private extension Point2D {
     init(line: Line) {
         let parts = line.csvWords
         guard let x = parts[0].integer else {
@@ -76,8 +68,7 @@ private struct Point: Hashable {
         guard let y = parts[1].integer else {
             fatalError("Unable to parse y coordinate: \(parts[1])")
         }
-        self.x = x
-        self.y = y
+        self.init(x, y)
     }
 }
 

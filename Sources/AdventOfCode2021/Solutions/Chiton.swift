@@ -40,27 +40,20 @@ private struct Cave {
 
     func riskOfBestPath() -> Int {
         let pathfinder = DijkstraPathfinder(self)
-        let start = GridPoint(0, 0)
-        let goal = GridPoint(grid.width - 1, grid.height - 1)
+        let start = Point2D(0, 0)
+        let goal = Point2D(grid.width - 1, grid.height - 1)
         let path = pathfinder.path(from: start, to: goal)
         return path.map { grid[$0] }.sum
     }
 }
 
 extension Cave: DijkstraPathfindingGraph {
-    func nextStates(from state: GridPoint) -> [GridPoint] {
-        state.neighbors.filter { grid.contains($0) }
+    func nextStates(from state: Point2D) -> [Point2D] {
+        state.orthogonalNeighbors.filter { grid.contains($0) }
     }
 
-    func costToMove(from: GridPoint, to: GridPoint) -> Int {
+    func costToMove(from: Point2D, to: Point2D) -> Int {
         grid[to]
-    }
-}
-
-private extension GridPoint {
-    var neighbors: [Self] {
-        let offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        return offsets.map(offsetBy)
     }
 }
 

@@ -22,8 +22,6 @@ struct Amphipod: Puzzle {
     }
 }
 
-private typealias Point = GridPoint
-
 private extension Character {
     var value: Int {
         guard let value = asciiValue else { fatalError() }
@@ -40,14 +38,14 @@ private extension Character {
 }
 
 private extension Grid where Cell == Character {
-    func isOccupied(_ point: Point) -> Bool {
+    func isOccupied(_ point: Point2D) -> Bool {
         Burrow.types.contains(self[point])
     }
 
-    func isTypeCompleted(at point: Point) -> Bool {
+    func isTypeCompleted(at point: Point2D) -> Bool {
         let type = self[point]
         return point.x == type.roomColumn &&
-            (point.y + 1 ..< height - 1).allSatisfy { self[$0][point.x] == type }
+            (point.y + 1 ..< height - 1).allSatisfy { self[point.x, $0] == type }
     }
 }
 
@@ -72,7 +70,8 @@ private struct Burrow: DijkstraPathfindingGraph {
     func cost(toOrganize grid: Grid<Character>) -> Int {
         DijkstraPathfinder(self).path(from: State(grid)) { state -> Bool in
             zip(Self.types, Self.rooms).allSatisfy { type, col in
-                (2 ..< state.grid.height - 1).allSatisfy { row in state.grid[row][col] == type }
+                (2 ..< state.grid.height - 1)
+                    .allSatisfy { row in state.grid[col, row] == type }
             }
         }.map(\.cost).sum
     }
@@ -95,23 +94,22 @@ private struct Burrow: DijkstraPathfindingGraph {
             }
     }
 
-    private typealias Move = (destination: Point, distance: Int)
+    private typealias Move = (destination: Point2D, distance: Int)
 
-    private func nextMoves(from origin: Point, in grid: Grid<Character>) -> [Move] {
+    private func nextMoves(from origin: Point2D, in grid: Grid<Character>) -> [Move] {
         reachablePoints(from: origin, in: grid)
             .filter { moveIsPermitted(from: origin, to: $0.key, in: grid) }
             .map { ($0.key, $0.value) }
     }
 
-    private func reachablePoints(from point: Point, in grid: Grid<Character>) -> [Point: Int] {
-        var costs: [Point: Int] = [:]
-        func canMove(to point: Point) -> Bool {
+    private func reachablePoints(from point: Point2D, in grid: Grid<Character>) -> [Point2D: Int] {
+        var costs: [Point2D: Int] = [:]
+        func canMove(to point: Point2D) -> Bool {
             grid.contains(point) && grid[point] == "." && costs[point] == nil
         }
-        func fillDistances(from point: Point, _ distance: Int = 0) {
+        func fillDistances(from point: Point2D, _ distance: Int = 0) {
             if canMove(to: point) { costs[point] = distance }
-            let offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)].map(point.offsetBy)
-            for dest in offsets where canMove(to: dest) {
+            for dest in point.orthogonalNeighbors where canMove(to: dest) {
                 fillDistances(from: dest, distance + 1)
             }
         }
@@ -120,7 +118,7 @@ private struct Burrow: DijkstraPathfindingGraph {
         return costs
     }
 
-    private func moveIsPermitted(from: Point, to: Point, in grid: Grid<Character>) -> Bool {
+    private func moveIsPermitted(from: Point2D, to: Point2D, in grid: Grid<Character>) -> Bool {
         func isDestinationInHall() -> Bool { to.y == 1 }
         func isCorrectRoom() -> Bool {
             to.y > 1 && to.x == grid[from].roomColumn
@@ -128,11 +126,11 @@ private struct Burrow: DijkstraPathfindingGraph {
         func noStrangersInRoom() -> Bool {
             let type = grid[from]
             return (2 ..< grid.height - 1)
-                .map { y in grid[y][type.roomColumn] }
+                .map { y in grid[type.roomColumn, y] }
                 .allSatisfy { [".", type].contains($0) }
         }
         func isLowestAvailableSpot() -> Bool {
-            ["#", grid[from]].contains(grid[to.y + 1][to.x])
+            ["#", grid[from]].contains(grid[to.x, to.y + 1])
         }
         func isDestinationAdjacentToRoom() -> Bool {
             to.y == 1 && [3, 5, 7, 9].contains(to.x)

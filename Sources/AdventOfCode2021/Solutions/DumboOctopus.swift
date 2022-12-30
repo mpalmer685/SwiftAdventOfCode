@@ -23,15 +23,15 @@ struct DumboOctopus: Puzzle {
     }
 }
 
-private let adjacentCells = [
-    (-1, -1),
-    (0, -1),
-    (1, -1),
-    (-1, 0),
-    (1, 0),
-    (-1, 1),
-    (0, 1),
-    (1, 1),
+private let adjacentVectors = [
+    Vector2D(-1, -1),
+    Vector2D(0, -1),
+    Vector2D(1, -1),
+    Vector2D(-1, 0),
+    Vector2D(1, 0),
+    Vector2D(-1, 1),
+    Vector2D(0, 1),
+    Vector2D(1, 1),
 ]
 
 private func countFlashes(in grid: inout Grid<Int>) -> Int {
@@ -39,14 +39,14 @@ private func countFlashes(in grid: inout Grid<Int>) -> Int {
         grid[point] += 1
     }
 
-    var flashed = Set<GridPoint>()
+    var flashed = Set<Point2D>()
     while true {
         var hasFlashed = false
         for point in grid.points where grid[point] > 9 && !flashed.contains(point) {
             flashed.insert(point)
             hasFlashed = true
-            for (dx, dy) in adjacentCells {
-                let adjacent = point.offsetBy(dx, dy)
+            for v in adjacentVectors {
+                let adjacent = point.offset(by: v)
                 guard grid.contains(adjacent) else { continue }
                 grid[adjacent] += 1
             }

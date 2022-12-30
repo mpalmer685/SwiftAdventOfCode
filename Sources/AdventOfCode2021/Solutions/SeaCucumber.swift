@@ -40,21 +40,21 @@ private extension Grid where Cell == Location {
         points.contains(where: canMove)
     }
 
-    func canMove(at position: GridPoint) -> Bool {
+    func canMove(at position: Point2D) -> Bool {
         guard let next = nextPosition(for: position) else { return false }
         return self[next] == .empty
     }
 
-    private func nextPosition(for position: GridPoint) -> GridPoint? {
+    private func nextPosition(for position: Point2D) -> Point2D? {
         switch self[position] {
             case .empty: return nil
-            case .east: return wrap(position.offsetBy(1, 0))
-            case .south: return wrap(position.offsetBy(0, 1))
+            case .east: return wrap(position + .x)
+            case .south: return wrap(position + .y)
         }
     }
 
-    private func wrap(_ position: GridPoint) -> GridPoint {
-        GridPoint(position.x % width, position.y % height)
+    private func wrap(_ position: Point2D) -> Point2D {
+        Point2D(position.x % width, position.y % height)
     }
 }
 

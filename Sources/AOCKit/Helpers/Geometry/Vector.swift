@@ -1,4 +1,7 @@
-public protocol VectorProtocol: Dimensioned {}
+public protocol VectorProtocol: Dimensioned {
+    static var adjacents: [Self] { get }
+    static var orthogonalAdjacents: [Self] { get }
+}
 
 public extension VectorProtocol {
     static var descriptionWrappers: (String, String) {
@@ -22,15 +25,11 @@ public extension VectorProtocol {
 
 internal extension VectorProtocol {
     static func adjacents(
-        orthogonalOnly: Bool,
         includingSelf: Bool = false,
         length: Int = 3
     ) -> [Self] {
         let combos = combos(count: Self.numberOfDimensions, length: length)
         var all = combos.map(Self.init)
-        if orthogonalOnly {
-            all = all.filter(\.isOrthogonal)
-        }
         if !includingSelf {
             all = all.filter(\.isNotZero)
         }
@@ -83,6 +82,9 @@ public struct Vector2D: VectorProtocol {
         Self.assertComponents(components)
         self.init(components[0], components[1])
     }
+
+    public static let adjacents: [Self] = adjacents()
+    public static let orthogonalAdjacents = adjacents.filter(\.isOrthogonal)
 }
 
 public struct Vector3D: VectorProtocol {
@@ -116,4 +118,7 @@ public struct Vector3D: VectorProtocol {
         Self.assertComponents(components)
         self.init(components[0], components[1], components[2])
     }
+
+    public static let adjacents: [Self] = adjacents()
+    public static let orthogonalAdjacents: [Self] = adjacents.filter(\.isOrthogonal)
 }

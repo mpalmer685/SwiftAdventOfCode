@@ -71,12 +71,6 @@ private func volume<C: Collection>(of cuboids: C) -> Int where C.Element == Cubo
 
 private typealias Instruction = (ClosedRange<Int>, ClosedRange<Int>, ClosedRange<Int>, Bool)
 
-private struct Point3D: Hashable {
-    let x: Int
-    let y: Int
-    let z: Int
-}
-
 private struct Cuboid: Hashable {
     var xRange: ClosedRange<Int>
     var yRange: ClosedRange<Int>
