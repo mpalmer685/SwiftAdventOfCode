@@ -48,12 +48,10 @@ private struct Cave {
 }
 
 extension Cave: DijkstraPathfindingGraph {
-    func nextStates(from state: Point2D) -> [Point2D] {
-        state.orthogonalNeighbors.filter { grid.contains($0) }
-    }
-
-    func costToMove(from: Point2D, to: Point2D) -> Int {
-        grid[to]
+    func nextStates(from state: Point2D) -> [(Point2D, Int)] {
+        state.orthogonalNeighbors
+            .filter { grid.contains($0) }
+            .map { ($0, grid[$0]) }
     }
 }
 

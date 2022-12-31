@@ -1,13 +1,8 @@
-public protocol DijkstraPathfindingGraph: PathfindingGraph {
+public protocol DijkstraPathfindingGraph {
+    associatedtype State: Equatable & Hashable
     associatedtype Cost: Numeric & Comparable
 
-    func costToMove(from: State, to: State) -> Cost
-}
-
-public extension DijkstraPathfindingGraph {
-    func costToMove(from: State, to: State) -> Cost {
-        1
-    }
+    func nextStates(from state: State) -> [(State, Cost)]
 }
 
 public final class DijkstraPathfinder<Graph: DijkstraPathfindingGraph> {
@@ -40,8 +35,35 @@ public final class DijkstraPathfinder<Graph: DijkstraPathfindingGraph> {
 
     public func path(
         from start: Graph.State,
-        goalReached: (Graph.State) -> Bool
+        until goalReached: (Graph.State) -> Bool
     ) -> [Graph.State] {
+        let (finalNode, _) = explorePaths(from: start, until: goalReached)
+        guard let finalNode else { return [] }
+        return finalNode.path
+    }
+
+    public func costOfPath(from start: Graph.State, to end: Graph.State) -> Graph.Cost {
+        costOfPath(from: start) { $0 == end }
+    }
+
+    public func costOfPath(
+        from start: Graph.State,
+        until goalReached: (Graph.State) -> Bool
+    ) -> Graph.Cost {
+        let (finalNode, _) = explorePaths(from: start, until: goalReached)
+        guard let finalNode else { return 0 }
+        return finalNode.costFromStart
+    }
+
+    public func calculateCosts(from start: Graph.State) -> [Graph.State: Graph.Cost] {
+        let (_, costs) = explorePaths(from: start)
+        return costs
+    }
+
+    private func explorePaths(
+        from start: Graph.State,
+        until goalReached: (Graph.State) -> Bool = never
+    ) -> (Node?, [Graph.State: Graph.Cost]) {
         var frontier = Heap<Node>.minHeap()
         frontier.insert(Node(start))
 
@@ -52,14 +74,14 @@ public final class DijkstraPathfinder<Graph: DijkstraPathfindingGraph> {
             let currentState = currentNode.state
 
             if goalReached(currentState) {
-                return currentNode.path
+                return (currentNode, explored)
             }
 
-            for nextState in graph.nextStates(from: currentState) {
+            for (nextState, cost) in graph.nextStates(from: currentState) {
                 let node = Node(
                     nextState,
                     parent: currentNode,
-                    moveCost: graph.costToMove(from: currentState, to: nextState)
+                    moveCost: cost
                 )
 
                 if let bestCost = explored[nextState], bestCost <= node.costFromStart {
@@ -71,35 +93,8 @@ public final class DijkstraPathfinder<Graph: DijkstraPathfindingGraph> {
             }
         }
 
-        return []
-    }
-
-    public func calculateCosts(from start: Graph.State) -> [Graph.State: Graph.Cost] {
-        var frontier = Heap<Node>.minHeap()
-        frontier.insert(Node(start))
-
-        var explored = [Graph.State: Graph.Cost]()
-        explored[start] = 0
-
-        while let currentNode = frontier.remove() {
-            let currentState = currentNode.state
-
-            for nextState in graph.nextStates(from: currentState) {
-                let node = Node(
-                    nextState,
-                    parent: currentNode,
-                    moveCost: graph.costToMove(from: currentState, to: nextState)
-                )
-
-                if let bestCost = explored[nextState], bestCost <= node.costFromStart {
-                    continue
-                }
-
-                explored[nextState] = node.costFromStart
-                frontier.insert(node)
-            }
-        }
-
-        return explored
+        return (nil, explored)
     }
 }
+
+private func never<T>(_: T) -> Bool { false }

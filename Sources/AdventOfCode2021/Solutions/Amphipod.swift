@@ -53,43 +53,25 @@ private struct Burrow: DijkstraPathfindingGraph {
     fileprivate static let types = Array("ABCD")
     fileprivate static let rooms = [3, 5, 7, 9]
 
-    struct State: Hashable, Comparable {
-        let grid: Grid<Character>
-        let cost: Int
-
-        init(_ grid: Grid<Character>, cost: Int = 0) {
-            self.grid = grid
-            self.cost = cost
-        }
-
-        static func < (lhs: Self, rhs: Self) -> Bool {
-            lhs.cost < rhs.cost
-        }
-    }
-
     func cost(toOrganize grid: Grid<Character>) -> Int {
-        DijkstraPathfinder(self).path(from: State(grid)) { state -> Bool in
+        DijkstraPathfinder(self).costOfPath(from: grid) { grid -> Bool in
             zip(Self.types, Self.rooms).allSatisfy { type, col in
-                (2 ..< state.grid.height - 1)
-                    .allSatisfy { row in state.grid[col, row] == type }
+                (2 ..< grid.height - 1)
+                    .allSatisfy { row in grid[col, row] == type }
             }
-        }.map(\.cost).sum
+        }
     }
 
-    func costToMove(from: State, to: State) -> Int {
-        to.cost
-    }
-
-    func nextStates(from state: State) -> [State] {
-        state.grid.points
-            .filter { state.grid.isOccupied($0) && !state.grid.isTypeCompleted(at: $0) }
+    func nextStates(from state: Grid<Character>) -> [(Grid<Character>, Int)] {
+        state.points
+            .filter { state.isOccupied($0) && !state.isTypeCompleted(at: $0) }
             .flatMap { p in
-                nextMoves(from: p, in: state.grid).map { destination, distance in
-                    var tempGrid = state.grid
+                nextMoves(from: p, in: state).map { destination, distance in
+                    var tempGrid = state
                     tempGrid[p] = "."
-                    tempGrid[destination] = state.grid[p]
+                    tempGrid[destination] = state[p]
 
-                    return State(tempGrid, cost: state.grid[p].costPerStep * distance)
+                    return (tempGrid, state[p].costPerStep * distance)
                 }
             }
     }
