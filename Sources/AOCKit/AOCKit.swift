@@ -1,3 +1,6 @@
+@_exported import Algorithms
+@_exported import Foundation
+
 public extension AdventOfCode {
     func run() {
         do {

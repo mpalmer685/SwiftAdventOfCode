@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct BeaconScanner: Puzzle {
     static let day = 19

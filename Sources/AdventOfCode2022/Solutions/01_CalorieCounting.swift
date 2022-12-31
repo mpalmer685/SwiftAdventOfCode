@@ -1,4 +1,3 @@
-import Algorithms
 import AOCKit
 
 struct CalorieCounting: Puzzle {

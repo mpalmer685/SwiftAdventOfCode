@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 class NotEnoughMinerals: Puzzle {
     static let day = 19

@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct ArithmeticLogicUnit: Puzzle {
     static let day = 24

@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct BinaryBoarding: Puzzle {
     static let day = 5

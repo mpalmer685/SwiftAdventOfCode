@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 private let seaMonster: [(row: Int, col: Int)] = [
     "                  # ",

@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct RainRisk: Puzzle {
     static let day = 12

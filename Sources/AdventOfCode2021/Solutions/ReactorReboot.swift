@@ -1,6 +1,4 @@
-import Algorithms
 import AOCKit
-import Foundation
 
 struct ReactorReboot: Puzzle {
     static let day = 22

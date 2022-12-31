@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 private typealias Passport = [String: String]
 private typealias FieldSet = Set<String>

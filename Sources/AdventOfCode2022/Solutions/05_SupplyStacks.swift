@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 private typealias Stack = [Character]
 private typealias Instruction = (Int, Int, Int)

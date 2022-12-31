@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 class MonkeyInTheMiddle: Puzzle {
     static let day = 11

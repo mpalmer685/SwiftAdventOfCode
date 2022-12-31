@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct MonsterMessages: Puzzle {
     static let day = 19

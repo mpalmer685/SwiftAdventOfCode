@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct DockingData: Puzzle {
     static let day = 14

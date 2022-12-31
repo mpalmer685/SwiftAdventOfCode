@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct TransparentOrigami: Puzzle {
     static let day = 13

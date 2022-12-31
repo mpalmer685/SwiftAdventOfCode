@@ -41,11 +41,12 @@ let package = Package(
         .target(
             name: "AOCKit",
             dependencies: [
+                .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "Files", package: "Files"),
-                .product(name: "Rainbow", package: "Rainbow"),
                 .product(name: "CLISpinner", package: "CLISpinner"),
                 .product(name: "Codextended", package: "Codextended"),
+                .product(name: "Files", package: "Files"),
+                .product(name: "Rainbow", package: "Rainbow"),
             ]
         ),
         .executableTarget(
@@ -55,18 +56,12 @@ let package = Package(
         ),
         .executableTarget(
             name: "AdventOfCode2021",
-            dependencies: [
-                "AOCKit",
-                .product(name: "Algorithms", package: "swift-algorithms"),
-            ],
+            dependencies: ["AOCKit"],
             exclude: inputFiles(for: 2021)
         ),
         .executableTarget(
             name: "AdventOfCode2022",
-            dependencies: [
-                "AOCKit",
-                .product(name: "Algorithms", package: "swift-algorithms"),
-            ],
+            dependencies: ["AOCKit"],
             exclude: inputFiles(for: 2022)
         ),
     ]

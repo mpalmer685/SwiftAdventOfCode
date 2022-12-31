@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct PasswordPhilosophy: Puzzle {
     static let day = 2

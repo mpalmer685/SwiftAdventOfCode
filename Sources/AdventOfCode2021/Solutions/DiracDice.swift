@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct DiracDice: Puzzle {
     static let day = 21

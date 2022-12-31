@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 class DistressSignal: Puzzle {
     static let day = 13

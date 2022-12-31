@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 private let inputPattern = NSRegularExpression("(\\d+)-(\\d+),(\\d+)-(\\d+)")
 

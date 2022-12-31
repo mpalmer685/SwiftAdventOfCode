@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct HandyHaversacks: Puzzle {
     static let day = 7

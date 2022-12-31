@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct Amphipod: Puzzle {
     static let day = 23

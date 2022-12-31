@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 struct Snailfish: Puzzle {
     static let day = 18

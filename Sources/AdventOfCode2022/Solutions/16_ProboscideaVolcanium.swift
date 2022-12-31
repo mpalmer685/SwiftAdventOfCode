@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 class ProboscideaVolcanium: Puzzle {
     static let day = 16
@@ -111,12 +110,10 @@ private final class Path {
 }
 
 private struct RoomsCollection: DijkstraPathfindingGraph {
-    typealias Cost = Int
-
     let roomsByName: RoomsByName
 
-    func nextStates(from state: Room) -> [Room] {
-        state.neighbors.map { roomsByName[$0]! }
+    func nextStates(from state: Room) -> [(Room, Int)] {
+        state.neighbors.map { (roomsByName[$0]!, 1) }
     }
 }
 

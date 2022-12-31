@@ -1,5 +1,4 @@
 import AOCKit
-import Foundation
 
 private typealias ScanData = (scanner: Point2D, beacon: Point2D, distance: Int)
 
