@@ -130,3 +130,41 @@ public struct Point3D: PointProtocol {
         self.init(components[0], components[1], components[2])
     }
 }
+
+public struct Point4D: PointProtocol {
+    public typealias Vector = Vector4D
+
+    public static let numberOfDimensions = 4
+
+    public var w: Int
+    public var x: Int
+    public var y: Int
+    public var z: Int
+
+    public var components: [Int] {
+        get { [w, x, y, z] }
+        set {
+            Self.assertComponents(newValue)
+            w = newValue[0]
+            x = newValue[1]
+            y = newValue[2]
+            z = newValue[3]
+        }
+    }
+
+    public init(w: Int, x: Int, y: Int, z: Int) {
+        self.w = w
+        self.x = x
+        self.y = y
+        self.z = z
+    }
+
+    public init(_ w: Int, _ x: Int, _ y: Int, _ z: Int) {
+        self.init(w: w, x: x, y: y, z: z)
+    }
+
+    public init(_ components: [Int]) {
+        Self.assertComponents(components)
+        self.init(components[0], components[1], components[2], components[3])
+    }
+}

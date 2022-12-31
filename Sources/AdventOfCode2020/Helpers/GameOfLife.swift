@@ -25,7 +25,7 @@ enum GameOfLife {
 
     private static func flip<P: GameOfLifePosition>(_ cells: [P], in grid: inout Grid<P>) {
         for p in cells {
-            grid[p] = !grid[p, default: false]
+            grid[p, default: false].toggle()
         }
     }
 }

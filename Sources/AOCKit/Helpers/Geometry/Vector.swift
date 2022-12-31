@@ -122,3 +122,42 @@ public struct Vector3D: VectorProtocol {
     public static let adjacents: [Self] = adjacents()
     public static let orthogonalAdjacents: [Self] = adjacents.filter(\.isOrthogonal)
 }
+
+public struct Vector4D: VectorProtocol {
+    public static let numberOfDimensions = 4
+
+    public var dw: Int
+    public var dx: Int
+    public var dy: Int
+    public var dz: Int
+
+    public var components: [Int] {
+        get { [dw, dx, dy, dz] }
+        set {
+            Self.assertComponents(newValue)
+            dw = newValue[0]
+            dx = newValue[1]
+            dy = newValue[2]
+            dz = newValue[3]
+        }
+    }
+
+    public init(dw: Int, dx: Int, dy: Int, dz: Int) {
+        self.dw = dw
+        self.dx = dx
+        self.dy = dy
+        self.dz = dz
+    }
+
+    public init(_ dw: Int, _ dx: Int, _ dy: Int, _ dz: Int) {
+        self.init(dw: dw, dx: dx, dy: dy, dz: dz)
+    }
+
+    public init(_ components: [Int]) {
+        Self.assertComponents(components)
+        self.init(components[0], components[1], components[2], components[3])
+    }
+
+    public static let adjacents: [Self] = adjacents()
+    public static let orthogonalAdjacents: [Self] = adjacents.filter(\.isOrthogonal)
+}
