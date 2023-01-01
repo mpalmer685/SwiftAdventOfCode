@@ -71,7 +71,7 @@ struct AllergenAssessment: Puzzle {
         var ingredients = [Int: [String]]()
         var allergens = [Int: [String]]()
 
-        let lines = input().lines.filter(\.isNotEmpty)
+        let lines = input().lines
         for (id, line) in lines.enumerated() {
             let parts = line.words(separatedBy: " (contains ")
             let ingredientsList = parts[0].words(separatedBy: .whitespaces).raw

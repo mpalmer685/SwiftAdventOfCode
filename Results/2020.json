@@ -163,7 +163,7 @@
     "9" : {
       "partOneAnswer" : "1212510616",
       "partOneDebugTime" : {
-        "nanoseconds" : 14597906,
+        "nanoseconds" : 13830285,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -192,7 +192,7 @@
       },
       "partTwoAnswer" : "9256148959232",
       "partTwoDebugTime" : {
-        "nanoseconds" : 805993,
+        "nanoseconds" : 745204,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {

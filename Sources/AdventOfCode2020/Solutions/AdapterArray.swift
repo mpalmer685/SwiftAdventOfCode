@@ -4,23 +4,10 @@ struct AdapterArray: Puzzle {
     static let day = 10
 
     func part1() throws -> Int {
-        let adapters = getAdapters().sorted()
-        var differencesOfOne = 0
-        var differencesOfThree = 0
-
-        for i in 1 ..< adapters.count {
-            let difference = adapters[i] - adapters[i - 1]
-            guard difference < 4 else { throw AdapterArrayError.unexpectedInput }
-
-            switch difference {
-                case 1:
-                    differencesOfOne += 1
-                case 3:
-                    differencesOfThree += 1
-                default:
-                    break
-            }
-        }
+        let adapters = getAdapters().sorted(by: >)
+        let differences = adapters.adjacentPairs().map(-)
+        let differencesOfOne = differences.count(of: 1)
+        let differencesOfThree = differences.count(of: 3)
 
         return differencesOfOne * differencesOfThree
     }
@@ -30,7 +17,7 @@ struct AdapterArray: Puzzle {
         var scores = [Int](repeating: 0, count: adapters.count)
         scores[0] = 1
 
-        for i in 0 ..< adapters.count - 1 {
+        for i in adapters.indices {
             let value = adapters[i]
             let score = scores[i]
 
@@ -50,4 +37,10 @@ struct AdapterArray: Puzzle {
 
 enum AdapterArrayError: Error {
     case unexpectedInput
+}
+
+private extension Collection where Element: Equatable {
+    func count(of element: Element) -> Int {
+        count(where: { $0 == element })
+    }
 }

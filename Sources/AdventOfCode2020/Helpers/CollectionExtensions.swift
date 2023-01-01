@@ -1,6 +1,6 @@
 extension Collection where Element == Int {
     func findPair(totaling goal: Int) -> (Int, Int)? {
-        let sorted = self.sorted()
+        let sorted = sorted()
         var low = sorted.startIndex
         var high = sorted.endIndex - 1
 
@@ -23,7 +23,7 @@ extension Collection where Element == Int {
 
     func findContiguousRange(totaling goal: Int) -> SubSequence? {
         var low = startIndex
-        var high = index(startIndex, offsetBy: 1)
+        var high = index(after: startIndex)
 
         while high < endIndex {
             let range = self[low ... high]

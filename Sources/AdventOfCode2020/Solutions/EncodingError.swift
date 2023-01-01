@@ -19,18 +19,16 @@ struct EncodingError: Puzzle {
 
     private func findInvalidNumber(in data: [Int]) -> Int {
         let preambleLength = 25
-        for index in preambleLength ..< data.count where !isValid(
-            value: data[index],
-            in: data[index - preambleLength ... index - 1]
-        ) {
-            return data[index]
+        let index = (preambleLength ..< data.count).first { i in
+            !data[i - preambleLength ..< i].containsPair(totaling: data[i])
         }
-        fatalError()
+        guard let index else { fatalError() }
+        return data[index]
     }
+}
 
-    private func isValid<T: Collection>(value: Int, in collection: T) -> Bool
-        where T.Element == Int
-    {
-        collection.findPair(totaling: value) != nil
+private extension Collection where Element == Int {
+    func containsPair(totaling target: Int) -> Bool {
+        findPair(totaling: target) != nil
     }
 }
