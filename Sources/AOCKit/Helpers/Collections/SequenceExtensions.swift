@@ -40,6 +40,38 @@ public extension Sequence {
         }
         return final
     }
+
+    func map<T>(as type: T.Type) -> [T] where T: RawRepresentable, T.RawValue == Element {
+        compactMap(T.init(rawValue:))
+    }
+
+    func sorted<T: Comparable>(using getValue: (Element) -> T) -> [Element] {
+        sorted(by: { l, r in
+            getValue(l) < getValue(r)
+        })
+    }
+
+    func sum<N: Numeric>(of element: (Element) -> N) -> N {
+        var sum: N = 0
+        for i in self {
+            sum += element(i)
+        }
+        return sum
+    }
+
+    func product<N: Numeric>(of element: (Element) -> N) -> N {
+        var prod: N = 1
+        for i in self {
+            prod *= element(i)
+        }
+        return prod
+    }
+}
+
+public extension Sequence where Element: Equatable {
+    func count(of element: Element) -> Int {
+        count(where: { $0 == element })
+    }
 }
 
 public extension Sequence where Element: Numeric {

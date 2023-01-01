@@ -23,6 +23,25 @@ public extension Collection {
             }
         }
     }
+
+    subscript(offset offset: Int) -> Element {
+        let i = index(startIndex, offsetBy: offset)
+        return self[i]
+    }
+}
+
+public extension Collection where Element: Comparable {
+    var extremes: (min: Element, max: Element) {
+        var minElement = self[startIndex]
+        var maxElement = self[startIndex]
+
+        for element in dropFirst() {
+            minElement = Swift.min(minElement, element)
+            maxElement = Swift.max(maxElement, element)
+        }
+
+        return (minElement, maxElement)
+    }
 }
 
 public extension Collection where Element: Collection, Element.Element: Hashable {
