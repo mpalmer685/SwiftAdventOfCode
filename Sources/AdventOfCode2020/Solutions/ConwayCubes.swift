@@ -51,14 +51,4 @@ private extension Array {
         guard index < count else { return defaultValue() }
         return self[index]
     }
-
-    func padded(toLength length: Int, with filler: Element) -> Self {
-        guard length > count else { return self }
-
-        var padded = Self(repeating: filler, count: length)
-        for i in indices {
-            padded[i] = self[i]
-        }
-        return padded
-    }
 }

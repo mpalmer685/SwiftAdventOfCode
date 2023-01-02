@@ -21,8 +21,7 @@ struct JurassicJigsaw: Puzzle {
         let tiles = parseInput()
         return tiles
             .filter { neighbors(of: $0, in: tiles).count == 2 }
-            .map(\.id)
-            .reduce(1, *)
+            .product(of: \.id)
     }
 
     func part2() throws -> Int {
@@ -41,7 +40,7 @@ struct JurassicJigsaw: Puzzle {
 
         func place(_ tile: Tile, at row: Int, _ col: Int) {
             grid[row, col] = tile
-            remove(tile, in: &neighborsByTile)
+            neighborsByTile.remove(instancesOf: tile)
         }
 
         var topLeftTile = neighborsByTile.first { $0.value.count == 2 }!.key
@@ -120,7 +119,7 @@ struct JurassicJigsaw: Puzzle {
             fatalError("Could not find an image alignment")
         }
 
-        let totalFilledPixels = image.reduce(0) { $0 + $1.count { $0 == "#" } }
+        let totalFilledPixels = image.sum { $0.count { $0 == "#" } }
         return totalFilledPixels - matches * seaMonsterPixels
     }
 
@@ -278,12 +277,14 @@ private class Grid<T> {
     }
 }
 
-private func remove<Value: Equatable>(_ item: Value, in dict: inout [Value: [Value]]) {
-    for (key, value) in dict {
-        if value.count == 1, value.first! == item {
-            dict[key] = nil
-        } else {
-            dict[key] = value.removing(item)
+private extension Dictionary where Value == [Key], Value.Element: Equatable {
+    mutating func remove(instancesOf element: Value.Element) {
+        for (key, value) in self {
+            if value.count == 1, value.first == element {
+                removeValue(forKey: key)
+            } else {
+                self[key] = value.removing(element)
+            }
         }
     }
 }

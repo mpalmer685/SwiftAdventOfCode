@@ -54,13 +54,3 @@ extension Array where Element: Equatable {
         return copy
     }
 }
-
-extension Collection {
-    func extent<T: Comparable>(of keyPath: KeyPath<Element, T>) -> (T, T)? {
-        let elements = map { $0[keyPath: keyPath] }
-        guard elements.count > 0 else { return nil }
-        guard elements.count > 1 else { return (elements.first!, elements.first!) }
-
-        return (elements.min()!, elements.max()!)
-    }
-}

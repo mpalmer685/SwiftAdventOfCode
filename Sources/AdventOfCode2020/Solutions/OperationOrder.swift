@@ -6,13 +6,13 @@ struct OperationOrder: Puzzle {
     func part1() throws -> Int {
         try input().lines.raw
             .map { try evaluate(string: $0, using: .part1) }
-            .reduce(0, +)
+            .sum
     }
 
     func part2() throws -> Int {
         try input().lines.raw
             .map { try evaluate(string: $0, using: .part2) }
-            .reduce(0, +)
+            .sum
     }
 
     private func evaluate(string: String, using operatorSet: Operator.OperatorSet) throws -> Int {

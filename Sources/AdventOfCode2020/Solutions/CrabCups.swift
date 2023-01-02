@@ -5,14 +5,16 @@ struct CrabCups: Puzzle {
     static let rawInput: String? = "253149867"
 
     func part1() throws -> String {
-        let (result, _) = play(100, roundsWith: parseInput())
-        return result
+        var game = Game(cups: parseInput())
+        game.play(rounds: 100)
+        return game.stringResult
     }
 
     func part2() throws -> Int {
         let cups = parseInput()
-        let (_, result) = play(10_000_000, roundsWith: cups + Array(cups.max()! + 1 ... 1_000_000))
-        return result
+        var game = Game(cups: cups + Array(cups.max()! + 1 ... 1_000_000))
+        game.play(rounds: 10_000_000)
+        return game.intResult
     }
 
     private func parseInput() -> [Int] {
@@ -20,21 +22,12 @@ struct CrabCups: Puzzle {
     }
 }
 
-private func play(_ moveCount: Int, roundsWith cups: [Int]) -> (String, Int) {
-    let maxValue = cups.max()!
-    var cupRing = getNextAddresses(for: cups)
+private struct Game {
+    private let maxValue: Int
+    private var cupRing: [Int]
+    private let cups: [Int]
 
-    func removedCups(_ currentCup: Int) -> [Int] {
-        var removed: [Int] = []
-        var current = currentCup
-        while removed.count < 3 {
-            current = cupRing[current]
-            removed.append(current)
-        }
-        return removed
-    }
-
-    func stringResult() -> String {
+    var stringResult: String {
         var label = cupRing[1]
         var result = ""
         while label != 1 {
@@ -44,47 +37,62 @@ private func play(_ moveCount: Int, roundsWith cups: [Int]) -> (String, Int) {
         return result
     }
 
-    func intResult() -> Int {
+    var intResult: Int {
         let first = cupRing[1]
         let second = cupRing[first]
         return first * second
     }
 
-    var currentCup = cups[0]
-    for _ in 0 ..< moveCount {
-        let removed = removedCups(currentCup)
-
-        var destination = currentCup
-        repeat {
-            destination -= 1
-            if destination == 0 {
-                destination = maxValue
-            }
-        } while removed.contains(destination)
-
-        rotate(removed, in: &cupRing, from: currentCup, to: destination)
-
-        currentCup = cupRing[currentCup]
+    init(cups: [Int]) {
+        maxValue = cups.max()!
+        cupRing = Self.getNextAddresses(for: cups)
+        self.cups = cups
     }
 
-    return (stringResult(), intResult())
-}
+    mutating func play(rounds: Int) {
+        var currentCup = cups[0]
+        for _ in 0 ..< rounds {
+            let removed = cupsToRemove(for: currentCup)
 
-private func getNextAddresses(for cups: [Int]) -> [Int] {
-    var next = Array(repeating: 0, count: cups.count + 1)
-    for i in 0 ..< cups.count {
-        next[cups[i]] = cups[(i + 1) % cups.count]
+            var destination = currentCup
+            repeat {
+                destination -= 1
+                if destination == 0 {
+                    destination = maxValue
+                }
+            } while removed.contains(destination)
+
+            rotate(removed, from: currentCup, to: destination)
+
+            currentCup = cupRing[currentCup]
+        }
     }
-    return next
-}
 
-private func rotate(
-    _ cups: [Int],
-    in cupRing: inout [Int],
-    from current: Int,
-    to destination: Int
-) {
-    cupRing[current] = cupRing[cups.last!]
-    cupRing[cups.last!] = cupRing[destination]
-    cupRing[destination] = cups.first!
+    private func cupsToRemove(for currentCup: Int) -> [Int] {
+        var removed: [Int] = []
+        var current = currentCup
+        while removed.count < 3 {
+            current = cupRing[current]
+            removed.append(current)
+        }
+        return removed
+    }
+
+    private mutating func rotate(
+        _ cups: [Int],
+        from current: Int,
+        to destination: Int
+    ) {
+        cupRing[current] = cupRing[cups.last!]
+        cupRing[cups.last!] = cupRing[destination]
+        cupRing[destination] = cups.first!
+    }
+
+    private static func getNextAddresses(for cups: [Int]) -> [Int] {
+        var next = Array(repeating: 0, count: cups.count + 1)
+        for i in 0 ..< cups.count {
+            next[cups[i]] = cups[(i + 1) % cups.count]
+        }
+        return next
+    }
 }

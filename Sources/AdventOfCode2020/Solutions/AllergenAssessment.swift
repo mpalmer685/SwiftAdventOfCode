@@ -10,9 +10,9 @@ struct AllergenAssessment: Puzzle {
             allergens: allergens
         )
         let allergenicIngredients = Set(ingredientsByAllergen.values)
-        return ingredients.values
-            .flatMap { $0.filter { !allergenicIngredients.contains($0) } }
-            .count
+        return ingredients.values.sum {
+            $0.count { !allergenicIngredients.contains($0) }
+        }
     }
 
     func part2() throws -> String {
@@ -21,7 +21,7 @@ struct AllergenAssessment: Puzzle {
             ingredients: ingredients,
             allergens: allergens
         )
-        return ingredientsByAllergen.sorted { $0.key < $1.key }
+        return ingredientsByAllergen.sorted(using: \.key)
             .map(\.value)
             .joined(separator: ",")
     }

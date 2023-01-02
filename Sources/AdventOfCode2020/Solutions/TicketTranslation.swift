@@ -7,7 +7,7 @@ struct TicketTranslation: Puzzle {
         let (rules, _, otherTickets) = parse()
         return otherTickets
             .flatMap { invalidFields(in: $0, using: rules) }
-            .reduce(0, +)
+            .sum
     }
 
     func part2() throws -> Int {
@@ -22,8 +22,7 @@ struct TicketTranslation: Puzzle {
         return fieldIndices.keys
             .filter { $0.starts(with: "departure") }
             .map { fieldIndices[$0]! }
-            .map { myTicket[$0] }
-            .reduce(1, *)
+            .product { myTicket[$0] }
     }
 
     private func invalidFields(in ticket: Ticket, using rules: [Rule]) -> [Int] {

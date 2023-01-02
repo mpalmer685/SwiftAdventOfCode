@@ -4,7 +4,7 @@ struct BinaryBoarding: Puzzle {
     static let day = 5
 
     func part1() throws -> UInt {
-        input().lines.raw.map(BoardingPass.init).map(\.seatId).max()!
+        input().lines.raw.map(BoardingPass.init).max(of: \.seatId)!
     }
 
     func part2() throws -> UInt {

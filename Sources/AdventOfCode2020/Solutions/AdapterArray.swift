@@ -38,9 +38,3 @@ struct AdapterArray: Puzzle {
 enum AdapterArrayError: Error {
     case unexpectedInput
 }
-
-private extension Collection where Element: Equatable {
-    func count(of element: Element) -> Int {
-        count(where: { $0 == element })
-    }
-}
