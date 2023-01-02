@@ -102,14 +102,8 @@ private extension Vector2D {
 }
 
 private extension Point2D {
-    var allNeighbors: [Self] {
-        let vectors = (-1 ... 1).flatMap { dx in (-1 ... 1).map { dy in Vector(dx, dy) } }
-            .reject { $0.dx == 0 && $0.dy == 0 }
-        return vectors.map { apply($0) }
-    }
-
     func hasNeighbors<C: Collection>(in collection: C) -> Bool where C.Element == Self {
-        allNeighbors.contains(where: { collection.contains($0) })
+        neighbors.contains(where: { collection.contains($0) })
     }
 
     func hasNeighbor<C: Collection>(in collection: C, checking vectors: [Vector]) -> Bool

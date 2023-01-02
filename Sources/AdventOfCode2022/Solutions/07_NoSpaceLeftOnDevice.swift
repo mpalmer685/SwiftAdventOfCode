@@ -16,8 +16,7 @@ class NoSpaceLeftOnDevice: Puzzle {
 
         return directories
             .filter { $0.size >= neededSpace }
-            .min(by: \.size)!
-            .size
+            .min(of: \.size)!
     }
 
     private lazy var filesystem: [Node<Entry>] = {

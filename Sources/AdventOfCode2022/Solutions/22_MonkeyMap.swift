@@ -24,7 +24,7 @@ class MonkeyMap: Puzzle {
         var scanningSteps = true
         while scanner.hasMore {
             let instruction: Instruction = scanningSteps
-                ? .steps(scanner.scanInt())
+                ? .steps(scanner.scanInt()!)
                 : .turn(scanner.scanDirection())
             path.append(instruction)
             scanningSteps.toggle()
@@ -216,35 +216,10 @@ private extension Vector2D {
     }
 }
 
-private struct Scanner {
-    private let data: String
-
-    var cursor: String.Index
-
-    var hasMore: Bool { cursor < data.endIndex }
-
-    init(_ data: String) {
-        self.data = data
-        cursor = data.startIndex
-    }
-
-    mutating func scanInt() -> Int {
-        let digits = scan(while: \.isNumber)
-        return Int(String(digits))!
-    }
-
-    private mutating func scan(while matches: (Character) -> Bool) -> Substring {
-        let start = cursor
-        while hasMore, matches(data[cursor]) {
-            cursor = data.index(after: cursor)
-        }
-        return data[start ..< cursor]
-    }
-
+private extension Scanner where C.Element == Character {
     mutating func scanDirection() -> Direction {
-        guard hasMore else { fatalError("Reached the end") }
-        defer { cursor = data.index(after: cursor) }
-        return Direction(rawValue: data[cursor])!
+        assert(hasMore, "Reached the end")
+        return Direction(rawValue: next())!
     }
 }
 

@@ -137,7 +137,7 @@ extension Valley: AStarPathfindingGraph {
         distance(from: from, to: to) + to.time
     }
 
-    public func estimatedCost(from: SearchState, to: SearchState) -> Int {
+    func estimatedCost(from: SearchState, to: SearchState) -> Int {
         distance(from: from, to: to)
     }
 
@@ -158,30 +158,4 @@ private extension Valley {
         }
         return path.count
     }
-}
-
-private func lcm<I: FixedWidthInteger>(_ values: I...) -> I {
-    lcm(of: values)
-}
-
-private func lcm<C: Collection>(of values: C) -> C.Element where C.Element: FixedWidthInteger {
-    let v = values.first!
-    let r = values.dropFirst()
-    guard r.isNotEmpty else { return v }
-
-    let lcmR = lcm(of: r)
-    return v / gcd(v, lcmR) * lcmR
-}
-
-private func gcd<I: FixedWidthInteger>(_ m: I, _ n: I) -> I {
-    var a: I = 0
-    var b: I = max(m, n)
-    var r: I = min(m, n)
-
-    while r != 0 {
-        a = b
-        b = r
-        r = a % b
-    }
-    return b
 }

@@ -49,9 +49,9 @@ struct TreetopTreeHouse: Puzzle {
             return count
         }
 
-        return trees.points.map { point in
+        return trees.points.max { point in
             Vector2D.directions.map { countVisibleTrees(from: point, moving: $0) }.product
-        }.max()!
+        }!
     }
 }
 

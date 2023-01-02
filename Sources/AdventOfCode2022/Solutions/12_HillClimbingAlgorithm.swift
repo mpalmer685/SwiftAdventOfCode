@@ -11,9 +11,8 @@ class HillClimbingAlgorithm: Puzzle {
         let starts = heightMap.grid.points.filter { heightMap.grid[$0] == "a" }
         return starts
             .map { heightMap.shortestPath(from: $0) }
-            .map(\.count)
-            .filter { $0 != 0 }
-            .min()!
+            .filter(\.isNotEmpty)
+            .min(of: \.count)!
     }
 
     private lazy var heightMap: HeightMap = {

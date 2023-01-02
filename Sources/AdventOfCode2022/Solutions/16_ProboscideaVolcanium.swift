@@ -184,13 +184,3 @@ private func maxPressure(
 private extension CharacterSet {
     static let semicolon = CharacterSet(charactersIn: ";")
 }
-
-private extension Collection {
-    func sorted<C: Comparable>(using value: (Element) -> C) -> [Element] {
-        sorted(by: { l, r in
-            let lValue = value(l)
-            let rValue = value(r)
-            return lValue < rValue
-        })
-    }
-}

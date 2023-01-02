@@ -8,9 +8,9 @@ class DistressSignal: Puzzle {
     }()
 
     func part1() throws -> Int {
-        packets.pairs().enumerated().map { offset, pair -> Int in
+        packets.pairs().enumerated().sum { offset, pair -> Int in
             pair.0 < pair.1 ? offset + 1 : 0
-        }.sum
+        }
     }
 
     func part2() throws -> Int {
@@ -26,7 +26,7 @@ class DistressSignal: Puzzle {
     }
 
     private func parsePacket(_ line: String) -> Packet {
-        func parsePacket(_ scanner: inout Scanner) -> Packet? {
+        func parsePacket(_ scanner: inout Scanner<String>) -> Packet? {
             guard scanner.hasMore, scanner.peek() != "]" else { return nil }
             if scanner.peek() == "[" {
                 scanner.next()
@@ -38,7 +38,7 @@ class DistressSignal: Puzzle {
                 scanner.expect("]")
                 return .list(list)
             } else {
-                let value = scanner.scanInt()
+                let value = scanner.scanInt()!
                 return .integer(value)
             }
         }
@@ -88,67 +88,6 @@ extension Packet: CustomStringConvertible {
         switch self {
             case let .integer(i): return i.description
             case let .list(l): return "[" + l.map(\.description).joined(separator: ",") + "]"
-        }
-    }
-}
-
-private struct Scanner {
-    private let data: String
-
-    var cursor: String.Index
-
-    var hasMore: Bool { cursor < data.endIndex }
-
-    init(_ data: String) {
-        self.data = data
-        cursor = data.startIndex
-    }
-
-    func peek() -> Character {
-        assertMore()
-        return data[cursor]
-    }
-
-    @discardableResult
-    mutating func next() -> Character {
-        assertMore()
-        defer { cursor = data.index(after: cursor) }
-        return data[cursor]
-    }
-
-    mutating func expect(_ char: Character) {
-        assertMore()
-        if data[cursor] != char {
-            fatalError(
-                "Expected next character to be '\(char)' but got '\(data[cursor])'"
-            )
-        }
-        cursor = data.index(after: cursor)
-    }
-
-    mutating func skip(_ char: Character) {
-        assertMore()
-        if data[cursor] == char {
-            cursor = data.index(after: cursor)
-        }
-    }
-
-    mutating func scanInt() -> Int {
-        let digits = scan(while: \.isNumber)
-        return Int(String(digits))!
-    }
-
-    private mutating func scan(while matches: (Character) -> Bool) -> Substring {
-        let start = cursor
-        while hasMore, matches(data[cursor]) {
-            cursor = data.index(after: cursor)
-        }
-        return data[start ..< cursor]
-    }
-
-    private func assertMore() {
-        guard hasMore else {
-            fatalError("Reached the end")
         }
     }
 }

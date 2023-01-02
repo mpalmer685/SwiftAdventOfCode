@@ -39,8 +39,8 @@ class RegolithReservoir: Puzzle {
                     return false
                 }
 
-                let downLeft = s.move(.down).move(.left)
-                let downRight = s.move(.down).move(.right)
+                let downLeft = s.move(.down + .left)
+                let downRight = s.move(.down + .right)
 
                 if cave[downLeft] == nil {
                     s = downLeft
@@ -78,8 +78,8 @@ class RegolithReservoir: Puzzle {
                 // move back up 1 to the empty spot
                 s = s.move(.up)
 
-                let downLeft = s.move(.down).move(.left)
-                let downRight = s.move(.down).move(.right)
+                let downLeft = s.move(.down + .left)
+                let downRight = s.move(.down + .right)
 
                 if cave[downLeft] == nil, downLeft.y < floor {
                     s = downLeft
@@ -136,10 +136,10 @@ private extension Point2D {
 }
 
 private extension Vector2D {
-    static let up = Self(dx: 0, dy: -1)
-    static let down = Self(dx: 0, dy: 1)
-    static let left = Self(dx: -1, dy: 0)
-    static let right = Self(dx: 1, dy: 0)
+    static let up: Self = -y
+    static let down: Self = y
+    static let left: Self = -x
+    static let right: Self = x
 }
 
 private extension Dictionary where Key == Point2D {

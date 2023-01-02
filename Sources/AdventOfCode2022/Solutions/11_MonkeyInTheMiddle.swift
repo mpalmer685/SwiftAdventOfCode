@@ -24,8 +24,7 @@ class MonkeyInTheMiddle: Puzzle {
             }
         }
 
-        let sorted = monkeyCounts.sorted(by: >)
-        return sorted[0] * sorted[1]
+        return monkeyCounts.max(count: 2).product
     }
 
     func part2() throws -> Int {
@@ -50,8 +49,7 @@ class MonkeyInTheMiddle: Puzzle {
             }
         }
 
-        let sorted = monkeyCounts.sorted(by: >)
-        return sorted[0] * sorted[1]
+        return monkeyCounts.max(count: 2).product
     }
 
     private lazy var monkeys = {

@@ -9,16 +9,16 @@ class BoilingBoulders: Puzzle {
 
     func part1() throws -> Int {
         let droplet = Set<Point3D>(cubes)
-        return cubes.reduce(0) { count, cube in
-            count + cube.orthogonalNeighbors.count { !droplet.contains($0) }
+        return cubes.sum { cube in
+            cube.orthogonalNeighbors.count { !droplet.contains($0) }
         }
     }
 
     func part2() throws -> Int {
         let droplet = Set<Point3D>(cubes)
         let air = findAir(around: droplet)
-        return cubes.reduce(0) { count, cube in
-            count + cube.orthogonalNeighbors.count { air.contains($0) }
+        return cubes.sum { cube in
+            cube.orthogonalNeighbors.count { air.contains($0) }
         }
     }
 
