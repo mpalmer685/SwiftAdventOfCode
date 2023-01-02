@@ -3,6 +3,10 @@ public struct Stack<Element> {
 
     public var isEmpty: Bool { elements.isEmpty }
 
+    public init() {}
+
+    public func peek() -> Element? { elements.last }
+
     public mutating func push(_ el: Element) {
         elements.append(el)
     }

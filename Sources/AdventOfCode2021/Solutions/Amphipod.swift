@@ -130,16 +130,6 @@ private struct Burrow: DijkstraPathfindingGraph {
 }
 
 private extension Array {
-    func padded(toLength length: Int, with filler: @autoclosure () -> Element) -> Self {
-        let padding: Self = {
-            let paddingLength = length - count
-            guard paddingLength > 0 else { return [] }
-            return Array(repeating: filler(), count: paddingLength)
-        }()
-
-        return self + padding
-    }
-
     func slice(_ start: Int, _ end: Int) -> SubSequence {
         let startIndex = index(startIndex, offsetBy: start)
         let endIndex = end >= 0

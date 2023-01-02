@@ -41,9 +41,3 @@ private func countFish(_ fish: [Int: Int], forDays days: Int) -> Int {
 
     return fish.values.reduce(0, +)
 }
-
-private extension Int {
-    init?(_ s: ArraySlice<Character>) {
-        self.init(String(s))
-    }
-}

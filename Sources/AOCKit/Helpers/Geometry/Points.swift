@@ -31,9 +31,29 @@ public extension PointProtocol {
         lhs + -rhs
     }
 
-    static func - (lhs: Self, rhs: Self) -> Vector {
+    static func -= (lhs: inout Self, rhs: Vector) {
+        // swiftlint:disable:next shorthand_operator
+        lhs = lhs - rhs
+    }
+
+    static func + (lhs: Self, rhs: Self) -> Self {
+        let new = zip(lhs.components, rhs.components).map(+)
+        return Self(new)
+    }
+
+    static func - (lhs: Self, rhs: Self) -> Self {
         let new = zip(lhs.components, rhs.components).map(-)
-        return Vector(new)
+        return Self(new)
+    }
+
+    static func * (lhs: Self, rhs: Int) -> Self {
+        let new = lhs.components.map { $0 * rhs }
+        return Self(new)
+    }
+
+    static func *= (lhs: inout Self, rhs: Int) {
+        // swiftlint:disable:next shorthand_operator
+        lhs = lhs * rhs
     }
 }
 

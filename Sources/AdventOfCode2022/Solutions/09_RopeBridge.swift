@@ -24,8 +24,7 @@ struct RopeBridge: Puzzle {
 
                 for (lead, follow) in rope.indices.adjacentPairs() {
                     if rope[lead].touches(rope[follow]) { continue }
-                    let delta = rope[lead] - rope[follow]
-                    rope[follow] += delta.unit
+                    rope[follow] += rope[lead].vector(towards: rope[follow]).unit
                 }
 
                 tailVisited.insert(rope.last!)

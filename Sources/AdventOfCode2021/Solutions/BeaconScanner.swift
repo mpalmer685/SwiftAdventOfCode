@@ -16,30 +16,10 @@ struct BeaconScanner: Puzzle {
     }
 }
 
-private struct Position: Hashable {
-    let x: Int
-    let y: Int
-    let z: Int
+private typealias Position = Point3D
 
-    static let origin = Position(0, 0, 0)
-
-    init(_ x: Int, _ y: Int, _ z: Int) {
-        self.x = x
-        self.y = y
-        self.z = z
-    }
-
-    func manhattanDistance(to other: Position) -> Int {
-        abs(x - other.x) + abs(y - other.y) + abs(z - other.z)
-    }
-
-    static func + (lhs: Position, rhs: Position) -> Position {
-        Position(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z)
-    }
-
-    static func - (lhs: Position, rhs: Position) -> Position {
-        Position(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z)
-    }
+private extension Position {
+    static let origin: Self = .zero
 }
 
 private typealias Scanner = [Position]

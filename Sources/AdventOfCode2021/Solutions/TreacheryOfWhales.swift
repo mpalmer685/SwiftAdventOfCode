@@ -73,4 +73,4 @@ private typealias CostCalculator = (Int) -> Int
 
 private let identityCost: CostCalculator = { $0 }
 // https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
-private let triangleCost: CostCalculator = { ($0 * ($0 + 1)) / 2 }
+private let triangleCost: CostCalculator = { $0.triangle }

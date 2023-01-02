@@ -58,7 +58,7 @@ private struct Board {
     private var groups: [[Int]]
 
     var currentScore: Int {
-        groups.reduce(0) { $0 + $1.reduce(0, +) } / 2
+        groups.map(\.sum).sum / 2
     }
 
     var hasWon: Bool {

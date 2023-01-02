@@ -71,26 +71,6 @@ private enum LineState {
     case incomplete(remaining: Stack<Character>)
 }
 
-private struct Stack<Element> {
-    private var items: [Element] = []
-
-    var count: Int { items.count }
-
-    var isEmpty: Bool { items.isEmpty }
-
-    mutating func push(_ item: Element) {
-        items.append(item)
-    }
-
-    mutating func pop() -> Element? {
-        items.popLast()
-    }
-
-    func peek() -> Element? {
-        items.last
-    }
-}
-
 private extension Character {
     var isOpeningCharacter: Bool {
         ["(", "[", "{", "<"].contains(self)

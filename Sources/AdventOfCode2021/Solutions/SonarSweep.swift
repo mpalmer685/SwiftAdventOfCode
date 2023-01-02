@@ -9,7 +9,7 @@ struct SonarSweep: Puzzle {
     }
 
     func part2() throws -> Int {
-        let measurements = getMeasurements().windowed(3).map(sum)
+        let measurements = getMeasurements().windows(ofCount: 3).map(\.sum)
         return countIncreases(in: measurements)
     }
 
@@ -19,15 +19,5 @@ struct SonarSweep: Puzzle {
 }
 
 private func countIncreases(in measurements: [Int]) -> Int {
-    measurements.indices.count { $0 > 0 && measurements[$0] > measurements[$0 - 1] }
-}
-
-private func sum(_ values: [Int]) -> Int {
-    values.reduce(0, +)
-}
-
-private extension Array {
-    func windowed(_ windowSize: Int) -> [[Element]] {
-        (0 ... count - windowSize).map { Array(self[$0 ..< $0 + windowSize]) }
-    }
+    measurements.adjacentPairs().count(where: <)
 }

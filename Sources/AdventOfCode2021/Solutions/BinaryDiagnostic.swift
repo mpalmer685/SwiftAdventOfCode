@@ -83,7 +83,7 @@ private let selectMax: ElementSelector<Character, Int> = { $0.max(by: \.value) }
 
 private func selectValue(
     in digits: [Character],
-    using select: ([Character: Int]) -> Dictionary<Character, Int>.Element?,
+    using select: ElementSelector<Character, Int>,
     withTieBreaker tieBreaker: Character = " "
 ) throws -> Character {
     let counts: [Character: Int] = digits.reduce(into: [:]) { counts, digit in
