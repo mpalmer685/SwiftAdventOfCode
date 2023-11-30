@@ -1,4 +1,4 @@
-// swift-tools-version:5.7
+// swift-tools-version:5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import Foundation
@@ -23,6 +23,10 @@ let package = Package(
         .executable(
             name: "aoc2022",
             targets: ["AdventOfCode2022"]
+        ),
+        .executable(
+            name: "aoc2023",
+            targets: ["AdventOfCode2023"]
         ),
     ],
     dependencies: [
@@ -51,28 +55,19 @@ let package = Package(
         ),
         .executableTarget(
             name: "AdventOfCode2020",
-            dependencies: ["AOCKit"],
-            exclude: inputFiles(for: 2020)
+            dependencies: ["AOCKit"]
         ),
         .executableTarget(
             name: "AdventOfCode2021",
-            dependencies: ["AOCKit"],
-            exclude: inputFiles(for: 2021)
+            dependencies: ["AOCKit"]
         ),
         .executableTarget(
             name: "AdventOfCode2022",
-            dependencies: ["AOCKit"],
-            exclude: inputFiles(for: 2022)
+            dependencies: ["AOCKit"]
+        ),
+        .executableTarget(
+            name: "AdventOfCode2023",
+            dependencies: ["AOCKit"]
         ),
     ]
 )
-
-func inputFiles(for year: Int) -> [String] {
-    let sourceDirectory = URL(fileURLWithPath: #file).deletingLastPathComponent()
-    return (1 ... 25).compactMap { day in
-        let fragment = "Inputs/day\(day)"
-        let path = sourceDirectory.appendingPathComponent("Sources/AdventOfCode\(year)/\(fragment)")
-        if FileManager.default.fileExists(atPath: path.path) { return fragment }
-        return nil
-    }
-}
