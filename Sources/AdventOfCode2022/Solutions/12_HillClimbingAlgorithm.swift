@@ -3,11 +3,12 @@ import AOCKit
 class HillClimbingAlgorithm: Puzzle {
     static let day = 12
 
-    func part1() throws -> Int {
-        heightMap.shortestPath().count
+    func part1(input: Input) throws -> Int {
+        heightMap(from: input).shortestPath().count
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
+        let heightMap = heightMap(from: input)
         let starts = heightMap.grid.points.filter { heightMap.grid[$0] == "a" }
         return starts
             .map { heightMap.shortestPath(from: $0) }
@@ -15,11 +16,11 @@ class HillClimbingAlgorithm: Puzzle {
             .min(of: \.count)!
     }
 
-    private lazy var heightMap: HeightMap = {
+    private func heightMap(from input: Input) -> HeightMap {
         var start = Point2D.zero
         var end = Point2D.zero
 
-        let cells = input().lines.enumerated().map { row, line in
+        let cells = input.lines.enumerated().map { row, line in
             line.characters.enumerated().map { col, char -> Character in
                 if char == "S" {
                     start = Point2D(col, row)
@@ -34,7 +35,7 @@ class HillClimbingAlgorithm: Puzzle {
         }
 
         return .init(grid: Grid(cells), start: start, end: end)
-    }()
+    }
 }
 
 private struct HeightMap: PathfindingGraph {

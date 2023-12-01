@@ -3,15 +3,15 @@ import AOCKit
 class GrovePositioningSystem: Puzzle {
     static let day = 20
 
-    func part1() throws -> Int {
-        let numbers = input().lines.integers
+    func part1(input: Input) throws -> Int {
+        let numbers = input.lines.integers
         let list = CircularList(numbers)
         list.mix()
         return list.groveCoordinates.sum
     }
 
-    func part2() throws -> Int {
-        let numbers = input().lines.integers
+    func part2(input: Input) throws -> Int {
+        let numbers = input.lines.integers
         let list = CircularList(numbers, key: 811_589_153)
         for _ in 0 ..< 10 {
             list.mix()

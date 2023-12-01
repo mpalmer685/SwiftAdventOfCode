@@ -3,20 +3,14 @@ import AOCKit
 class MonkeyMath: Puzzle {
     static let day = 21
 
-    private lazy var monkeys: [String: Monkey] = {
-        input().lines.reduce(into: [:]) { monkeys, line in
-            let (name, monkey) = Monkey.from(line: line)
-            monkeys[name] = monkey
-        }
-    }()
-
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
+        let monkeys = monkeys(from: input)
         let root = monkeys["root"]!
         return Int(root.yell(using: monkeys))
     }
 
-    func part2() throws -> Int {
-        var monkeys = monkeys
+    func part2(input: Input) throws -> Int {
+        var monkeys = monkeys(from: input)
         var root = monkeys["root"]!
         if case let .op(l, r, _) = root {
             root = .op(l, r, -)
@@ -41,6 +35,13 @@ class MonkeyMath: Puzzle {
         }
 
         return range.lowerBound
+    }
+
+    private func monkeys(from input: Input) -> [String: Monkey] {
+        input.lines.reduce(into: [:]) { monkeys, line in
+            let (name, monkey) = Monkey.from(line: line)
+            monkeys[name] = monkey
+        }
     }
 }
 

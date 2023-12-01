@@ -22,17 +22,18 @@ class BeaconExclusionZone: Puzzle {
 //    Sensor at x=20, y=1: closest beacon is at x=15, y=3
 //    """
 
-    private lazy var scanData: [ScanData] = {
-        input().lines.map(\.integers).map { values -> ScanData in
+    private func scanData(from input: Input) -> [ScanData] {
+        input.lines.map(\.integers).map { values -> ScanData in
             let scanner = Point2D(values[0], values[1])
             let beacon = Point2D(values[2], values[3])
             let distance = scanner.manhattanDistance(to: beacon)
             return (scanner, beacon, distance)
         }
-    }()
+    }
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         let y = 2_000_000
+        let scanData = scanData(from: input)
 
         var scanned = Set<Int>()
         for (scanner, _, distance) in scanData where distance >= abs(y - scanner.y) {
@@ -48,8 +49,9 @@ class BeaconExclusionZone: Puzzle {
         return scanned.count
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         let range = 0 ... 4_000_000
+        let scanData = scanData(from: input)
 
         for (scanner, _, distance) in scanData {
             let corners = [

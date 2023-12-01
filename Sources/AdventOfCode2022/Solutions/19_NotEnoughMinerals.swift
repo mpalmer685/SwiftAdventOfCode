@@ -3,24 +3,24 @@ import AOCKit
 class NotEnoughMinerals: Puzzle {
     static let day = 19
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         func quality(of blueprint: Blueprint) -> Int {
             let factory = Factory(blueprint, minutesToRun: 24)
             let geodes = findMaxGeodes(for: factory)
             return blueprint.id * geodes
         }
 
-        let blueprints = input().lines.map(Blueprint.init)
+        let blueprints = input.lines.map(Blueprint.init)
         return blueprints.map { quality(of: $0) }.sum
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         func geodesCollected(by blueprint: Blueprint) -> Int {
             let factory = Factory(blueprint, minutesToRun: 32)
             return findMaxGeodes(for: factory)
         }
 
-        let blueprints = input().lines[0 ..< 3].map(Blueprint.init)
+        let blueprints = input.lines[0 ..< 3].map(Blueprint.init)
         return blueprints.map { geodesCollected(by: $0) }.product
     }
 

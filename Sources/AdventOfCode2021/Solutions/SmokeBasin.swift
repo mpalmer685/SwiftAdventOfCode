@@ -11,21 +11,21 @@ private let testInput = """
 struct SmokeBasin: Puzzle {
     static let day = 9
 
-    func part1() throws -> Int {
-        let grid = parseGrid()
+    func part1(input: Input) throws -> Int {
+        let grid = parseGrid(from: input)
         return grid.lowPoints.sum { 1 + grid.height(at: $0) }
     }
 
-    func part2() throws -> Int {
-        let grid = parseGrid()
+    func part2(input: Input) throws -> Int {
+        let grid = parseGrid(from: input)
         return grid.lowPoints
             .map { grid.basinSize(startingAt: $0) }
             .max(count: 3)
             .product
     }
 
-    private func parseGrid() -> Grid<Int> {
-        Grid(input().lines.digits)
+    private func parseGrid(from input: Input) -> Grid<Int> {
+        Grid(input.lines.digits)
     }
 }
 

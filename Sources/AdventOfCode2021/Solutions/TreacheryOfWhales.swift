@@ -5,8 +5,8 @@ private let testInput = "16,1,2,0,4,2,7,1,2,14"
 struct TreacheryOfWhales: Puzzle {
     static let day = 7
 
-    func part1() throws -> Int {
-        let positions = getPositions(from: input())
+    func part1(input: Input) throws -> Int {
+        let positions = getPositions(from: input)
         return getBestDestination(
             for: positions,
             startingAt: median(of: positions),
@@ -14,8 +14,8 @@ struct TreacheryOfWhales: Puzzle {
         )
     }
 
-    func part2() throws -> Int {
-        let positions = getPositions(from: input())
+    func part2(input: Input) throws -> Int {
+        let positions = getPositions(from: input)
         return getBestDestination(
             for: positions,
             startingAt: mean(of: positions),

@@ -3,13 +3,13 @@ import AOCKit
 struct DumboOctopus: Puzzle {
     static let day = 11
 
-    func part1() throws -> Int {
-        var grid = parseGrid()
+    func part1(input: Input) throws -> Int {
+        var grid = parseGrid(from: input)
         return (0 ..< 100).reduce(0) { flashes, _ in flashes + countFlashes(in: &grid) }
     }
 
-    func part2() throws -> Int {
-        var grid = parseGrid()
+    func part2(input: Input) throws -> Int {
+        var grid = parseGrid(from: input)
         var cycles = 0
         repeat {
             cycles += 1
@@ -17,8 +17,8 @@ struct DumboOctopus: Puzzle {
         return cycles
     }
 
-    private func parseGrid() -> Grid<Int> {
-        let cells = input().lines.digits
+    private func parseGrid(from input: Input) -> Grid<Int> {
+        let cells = input.lines.digits
         return Grid(cells)
     }
 }

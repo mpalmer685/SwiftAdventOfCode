@@ -5,15 +5,15 @@ private typealias Floor = [Position: Bool]
 struct LobbyLayout: Puzzle {
     static let day = 24
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         var floor = Floor()
-        flipTiles(in: &floor, at: parseInput())
+        flipTiles(in: &floor, at: parse(input))
         return floor.values.count(where: \.isTrue)
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         var floor = Floor()
-        flipTiles(in: &floor, at: parseInput())
+        flipTiles(in: &floor, at: parse(input))
 
         for _ in 0 ..< 100 {
             GameOfLife.playRound(on: &floor, using: willCellBeActive)
@@ -37,7 +37,7 @@ struct LobbyLayout: Puzzle {
         }
     }
 
-    private func parseInput() -> [Position] {
+    private func parse(_ input: Input) -> [Position] {
         func parsePosition(from line: Line) -> Position {
             let characters = line.characters
 
@@ -58,7 +58,7 @@ struct LobbyLayout: Puzzle {
             return position
         }
 
-        return input().lines.map(parsePosition)
+        return input.lines.map(parsePosition)
     }
 }
 

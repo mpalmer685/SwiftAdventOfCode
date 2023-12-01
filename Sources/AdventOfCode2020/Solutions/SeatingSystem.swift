@@ -3,13 +3,13 @@ import AOCKit
 struct SeatingSystem: Puzzle {
     static let day = 11
 
-    func part1() throws -> Int {
-        let chart = SeatingChart(lines: input().lines.raw)
+    func part1(input: Input) throws -> Int {
+        let chart = SeatingChart(lines: input.lines.raw)
         return settle(chart, using: .adjacentSeatingStrategy(chart)).occupiedSeats
     }
 
-    func part2() throws -> Int {
-        let chart = SeatingChart(lines: input().lines.raw)
+    func part2(input: Input) throws -> Int {
+        let chart = SeatingChart(lines: input.lines.raw)
         return settle(chart, using: .visibleSeatingStrategy(chart)).occupiedSeats
     }
 

@@ -11,14 +11,14 @@ private let testInput7 = "A0016C880162017C3686B18A3D4780"
 struct PacketDecoder: Puzzle {
     static let day = 16
 
-    func part1() throws -> Int {
-        var scanner = Scanner(bits(from: input()))
+    func part1(input: Input) throws -> Int {
+        var scanner = Scanner(bits(from: input))
         let packet = scanner.scanPacket()
         return packet.versionSum
     }
 
-    func part2() throws -> Int {
-        var scanner = Scanner(bits(from: input()))
+    func part2(input: Input) throws -> Int {
+        var scanner = Scanner(bits(from: input))
         let packet = scanner.scanPacket()
         return packet.value
     }

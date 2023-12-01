@@ -3,7 +3,7 @@
     "1" : {
       "partOneAnswer" : "71924",
       "partOneDebugTime" : {
-        "nanoseconds" : 6832671,
+        "nanoseconds" : 6329372,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -43,7 +43,7 @@
     "3" : {
       "partOneAnswer" : "8105",
       "partOneDebugTime" : {
-        "nanoseconds" : 6448626,
+        "nanoseconds" : 6112353,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -63,7 +63,7 @@
     "4" : {
       "partOneAnswer" : "483",
       "partOneDebugTime" : {
-        "nanoseconds" : 10681829,
+        "nanoseconds" : 10033388,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -123,7 +123,7 @@
     "7" : {
       "partOneAnswer" : "1783610",
       "partOneDebugTime" : {
-        "nanoseconds" : 10975019,
+        "nanoseconds" : 10307528,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -183,7 +183,7 @@
     "10" : {
       "partOneAnswer" : "12980",
       "partOneDebugTime" : {
-        "nanoseconds" : 2502689,
+        "nanoseconds" : 1575180,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -192,7 +192,7 @@
       },
       "partTwoAnswer" : "###..###....##.#....####.#..#.#....###..\n#..#.#..#....#.#....#....#..#.#....#..#.\n###..#..#....#.#....###..#..#.#....#..#.\n#..#.###.....#.#....#....#..#.#....###..\n#..#.#.#..#..#.#....#....#..#.#....#....\n###..#..#..##..####.#.....##..####.#....",
       "partTwoDebugTime" : {
-        "nanoseconds" : 1552057,
+        "nanoseconds" : 1308569,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -203,7 +203,7 @@
     "11" : {
       "partOneAnswer" : "112221",
       "partOneDebugTime" : {
-        "nanoseconds" : 6536875,
+        "nanoseconds" : 5441055,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -483,7 +483,7 @@
     "25" : {
       "partOneAnswer" : "20-1-11==0-=0112-222",
       "partOneDebugTime" : {
-        "nanoseconds" : 2272050,
+        "nanoseconds" : 1879482,
         "seconds" : 0
       },
       "partOneReleaseTime" : {

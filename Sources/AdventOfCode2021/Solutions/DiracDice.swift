@@ -3,8 +3,8 @@ import AOCKit
 struct DiracDice: Puzzle {
     static let day = 21
 
-    func part1() throws -> Int {
-        let (p1Start, p2Start) = parseInput()
+    func part1(input: Input) throws -> Int {
+        let (p1Start, p2Start) = parse(input)
         var die = DeterministicDie()
         var game = GameState(player1Position: p1Start, player2Position: p2Start)
         while !game.hasWinner(forScore: 1000) {
@@ -13,7 +13,7 @@ struct DiracDice: Puzzle {
         return game.losingScore * die.rolls
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         /*
          If you roll a 3-sided die 3 times, the minimum you can roll is 3 and the max is 9.
          The distribution of (score, number of combinations that add to score) is:
@@ -58,14 +58,14 @@ struct DiracDice: Puzzle {
             return answer
         }
 
-        let (p1Start, p2Start) = parseInput()
+        let (p1Start, p2Start) = parse(input)
         let start = GameState(player1Position: p1Start, player2Position: p2Start)
         let (p1wins, p2wins) = countWins(from: start)
         return max(p1wins, p2wins)
     }
 
-    private func parseInput() -> (Int, Int) {
-        let numbers = input().lines.compactMap { $0.integers.last! }
+    private func parse(_ input: Input) -> (Int, Int) {
+        let numbers = input.lines.compactMap { $0.integers.last! }
         guard numbers.count == 2 else { fatalError() }
         return (numbers[0], numbers[1])
     }

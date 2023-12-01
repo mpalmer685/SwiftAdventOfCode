@@ -3,13 +3,13 @@ import AOCKit
 struct EncodingError: Puzzle {
     static let day = 9
 
-    func part1() throws -> Int {
-        let data = input().lines.integers
+    func part1(input: Input) throws -> Int {
+        let data = input.lines.integers
         return findInvalidNumber(in: data)
     }
 
-    func part2() throws -> Int {
-        let data = input().lines.integers
+    func part2(input: Input) throws -> Int {
+        let data = input.lines.integers
         let invalidNumber = findInvalidNumber(in: data)
         guard let range = data.findContiguousRange(totaling: invalidNumber) else {
             fatalError()

@@ -17,15 +17,15 @@ private let tileIdPattern = NSRegularExpression("^Tile (\\d+):")
 struct JurassicJigsaw: Puzzle {
     static let day = 20
 
-    func part1() throws -> Int {
-        let tiles = parseInput()
+    func part1(input: Input) throws -> Int {
+        let tiles = parse(input)
         return tiles
             .filter { neighbors(of: $0, in: tiles).count == 2 }
             .product(of: \.id)
     }
 
-    func part2() throws -> Int {
-        let tiles = parseInput()
+    func part2(input: Input) throws -> Int {
+        let tiles = parse(input)
         let grid = assemble(tiles)
         return findMonsters(in: grid)
     }
@@ -151,12 +151,12 @@ struct JurassicJigsaw: Puzzle {
             }
     }
 
-    private func parseInput() -> [Tile] {
+    private func parse(_ input: Input) -> [Tile] {
         var tiles = [Tile]()
         var tileId = 0
         var rows = [String]()
 
-        let lines = input().lines.filter(\.isNotEmpty).raw
+        let lines = input.lines.filter(\.isNotEmpty).raw
         for line in lines {
             if let match = tileIdPattern.match(line) {
                 if !rows.isEmpty {

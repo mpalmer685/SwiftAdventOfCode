@@ -16,12 +16,16 @@ extension AdventOfCode {
         savedResults.answer(for: day, part) != nil
     }
 
-    func runPuzzle(for day: Int, part: PuzzlePart) throws -> String {
+    func puzzle(for day: Int) throws -> any Puzzle {
         guard let puzzle = puzzles.first(where: { type(of: $0).day == day }) else {
             throw PuzzleError.dayNotImplemented(day)
         }
 
-        let runPuzzle = part == .partOne ? puzzle.part1 : puzzle.part2
-        return try runPuzzle().description
+        return puzzle
+    }
+
+    func run(_ puzzle: any Puzzle, part: PuzzlePart, with input: Input) throws -> String {
+        let runPuzzle = part == .partOne ? puzzle.part1(input:) : puzzle.part2(input:)
+        return try runPuzzle(input).description
     }
 }

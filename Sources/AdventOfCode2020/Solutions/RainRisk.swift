@@ -3,15 +3,15 @@ import AOCKit
 struct RainRisk: Puzzle {
     static let day = 12
 
-    func part1() throws -> Int {
-        let instructions = input().lines.raw.map(Instruction.init)
+    func part1(input: Input) throws -> Int {
+        let instructions = input.lines.raw.map(Instruction.init)
         let state = ShipState()
         instructions.forEach(state.execute)
         return state.manhattanDistance
     }
 
-    func part2() throws -> Int {
-        let instructions = input().lines.raw.map(Instruction.init)
+    func part2(input: Input) throws -> Int {
+        let instructions = input.lines.raw.map(Instruction.init)
         let state = WaypointShipState()
         instructions.forEach(state.execute)
         return state.manhattanDistance

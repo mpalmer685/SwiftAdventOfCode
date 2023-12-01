@@ -3,18 +3,18 @@ import AOCKit
 struct SevenSegmentSearch: Puzzle {
     static let day = 8
 
-    func part1() throws -> Int {
-        let outputDigits = parseInput().flatMap(\.output)
+    func part1(input: Input) throws -> Int {
+        let outputDigits = parse(input).flatMap(\.output)
         let uniqueDigitLengths = [2, 3, 4, 7]
         return outputDigits.count { uniqueDigitLengths.contains($0.count) }
     }
 
-    func part2() throws -> Int {
-        parseInput().map(decode).compactMap(Int.init).reduce(0, +)
+    func part2(input: Input) throws -> Int {
+        parse(input).map(decode).compactMap(Int.init).reduce(0, +)
     }
 
-    private func parseInput() -> [Entry] {
-        input().lines.map { line in
+    private func parse(_ input: Input) -> [Entry] {
+        input.lines.map { line in
             let parts = line.words(separatedBy: " | ")
             let patterns = parts[0].words(separatedBy: .whitespaces)
             let output = parts[1].words(separatedBy: .whitespaces)

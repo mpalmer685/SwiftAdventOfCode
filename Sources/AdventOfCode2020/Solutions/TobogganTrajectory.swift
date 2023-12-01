@@ -3,13 +3,13 @@ import AOCKit
 struct TobogganTrajectory: Puzzle {
     static let day = 3
 
-    func part1() throws -> Int {
-        let field = input().lines.characters
+    func part1(input: Input) throws -> Int {
+        let field = input.lines.characters
         return traverse(field, dx: 3, dy: 1)
     }
 
-    func part2() throws -> Int {
-        let field = input().lines.characters
+    func part2(input: Input) throws -> Int {
+        let field = input.lines.characters
         let slopes: [(dx: Int, dy: Int)] = [
             (dx: 1, dy: 1),
             (dx: 3, dy: 1),

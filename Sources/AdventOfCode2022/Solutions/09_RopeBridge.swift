@@ -3,19 +3,19 @@ import AOCKit
 struct RopeBridge: Puzzle {
     static let day = 9
 
-    func part1() throws -> Int {
-        moveRope(ofLength: 2)
+    func part1(input: Input) throws -> Int {
+        moveRope(ofLength: 2, using: input)
     }
 
-    func part2() throws -> Int {
-        moveRope(ofLength: 10)
+    func part2(input: Input) throws -> Int {
+        moveRope(ofLength: 10, using: input)
     }
 
-    private func moveRope(ofLength length: Int) -> Int {
+    private func moveRope(ofLength length: Int, using input: Input) -> Int {
         var rope = Array(repeating: Point2D.zero, count: length)
         var tailVisited = Set([rope.last!])
 
-        for words in input().lines.words {
+        for words in input.lines.words {
             let direction = Vector2D.from(words[0].raw)
             let count = words[1].integer!
 
@@ -24,7 +24,7 @@ struct RopeBridge: Puzzle {
 
                 for (lead, follow) in rope.indices.adjacentPairs() {
                     if rope[lead].touches(rope[follow]) { continue }
-                    rope[follow] += rope[lead].vector(towards: rope[follow]).unit
+                    rope[follow] += rope[follow].vector(towards: rope[lead]).unit
                 }
 
                 tailVisited.insert(rope.last!)

@@ -3,8 +3,8 @@ import AOCKit
 struct ShuttleSearch: Puzzle {
     static let day = 13
 
-    func part1() throws -> Int {
-        let lines = input().lines
+    func part1(input: Input) throws -> Int {
+        let lines = input.lines
         guard lines.count == 2 else { fatalError() }
         let earliestDepartureTime = lines[0].integer!
         let ids = lines[1].csvWords.integers
@@ -15,8 +15,8 @@ struct ShuttleSearch: Puzzle {
         return id * (nextDeparture - earliestDepartureTime)
     }
 
-    func part2() throws -> Int {
-        let lines = input().lines
+    func part2(input: Input) throws -> Int {
+        let lines = input.lines
         let buses = lines[1].csvWords
             .enumerated()
             .filter { $0.element.integer != nil }

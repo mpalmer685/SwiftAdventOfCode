@@ -3,8 +3,8 @@ import AOCKit
 struct CathodeRayTube: Puzzle {
     static let day = 10
 
-    func part1() throws -> Int {
-        let circuit = ClockCircuit(input: input())
+    func part1(input: Input) throws -> Int {
+        let circuit = ClockCircuit(input: input)
         let cyclesToObserve = [20, 60, 100, 140, 180, 220]
 
         var observedCycles: [Int: Int] = [:]
@@ -20,8 +20,8 @@ struct CathodeRayTube: Puzzle {
             .sum
     }
 
-    func part2() throws -> String {
-        let circuit = ClockCircuit(input: input())
+    func part2(input: Input) throws -> String {
+        let circuit = ClockCircuit(input: input)
         var output: [[Character]] = Array(repeating: Array(repeating: ".", count: 40), count: 6)
 
         circuit.run { cycle, x in

@@ -3,23 +3,23 @@ import AOCKit
 struct TransparentOrigami: Puzzle {
     static let day = 13
 
-    func part1() throws -> Int {
-        var (dots, folds) = parseInput()
+    func part1(input: Input) throws -> Int {
+        var (dots, folds) = parse(input)
         guard let firstFold = folds.first else { fatalError() }
         perform(fold: firstFold, using: &dots)
         return dots.count
     }
 
-    func part2() throws -> String {
-        var (dots, folds) = parseInput()
+    func part2(input: Input) throws -> String {
+        var (dots, folds) = parse(input)
         for fold in folds {
             perform(fold: fold, using: &dots)
         }
         return format(dots)
     }
 
-    private func parseInput() -> (dots: Set<Point2D>, folds: [Fold]) {
-        let parts = input().lines.split(whereSeparator: \.isEmpty)
+    private func parse(_ input: Input) -> (dots: Set<Point2D>, folds: [Fold]) {
+        let parts = input.lines.split(whereSeparator: \.isEmpty)
         let dots = parts[0].map(Point2D.init)
         let folds = parts[1].map(Fold.init)
         return (Set(dots), folds)

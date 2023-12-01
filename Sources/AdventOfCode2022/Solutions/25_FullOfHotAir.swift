@@ -3,8 +3,8 @@ import AOCKit
 struct FullOfHotAir: Puzzle {
     static let day = 25
 
-    func part1() throws -> String {
-        let numbers = input().lines.raw.map { Int(snafu: $0) }
+    func part1(input: Input) throws -> String {
+        let numbers = input.lines.raw.map { Int(snafu: $0) }
         return numbers.sum.snafuValue
     }
 }

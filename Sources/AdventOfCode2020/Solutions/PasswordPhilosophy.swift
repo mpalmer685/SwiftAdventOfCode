@@ -3,16 +3,16 @@ import AOCKit
 struct PasswordPhilosophy: Puzzle {
     static let day = 2
 
-    func part1() throws -> Int {
-        count(entries: parseEntries(), using: Entry.characterCountPolicy)
+    func part1(input: Input) throws -> Int {
+        count(entries: parseEntries(from: input), using: Entry.characterCountPolicy)
     }
 
-    func part2() throws -> Int {
-        count(entries: parseEntries(), using: Entry.characterPositionPolicy)
+    func part2(input: Input) throws -> Int {
+        count(entries: parseEntries(from: input), using: Entry.characterPositionPolicy)
     }
 
-    private func parseEntries() -> [Entry] {
-        input().lines
+    private func parseEntries(from input: Input) -> [Entry] {
+        input.lines
             .compactMap { Entry.pattern.match($0.raw) }
             .map(Entry.init)
     }

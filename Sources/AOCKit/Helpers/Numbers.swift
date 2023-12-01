@@ -15,8 +15,8 @@ public extension FixedWidthInteger {
 }
 
 public extension Int {
-    init?(bits: String) {
-        self.init(bits, radix: 2)
+    static func fromBits(_ bits: String) -> Self? {
+        Self(bits, radix: 2)
     }
 
     init<C: Collection>(bits: C) where C.Element == Bool {

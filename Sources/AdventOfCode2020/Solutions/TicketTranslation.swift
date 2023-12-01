@@ -3,15 +3,15 @@ import AOCKit
 struct TicketTranslation: Puzzle {
     static let day = 16
 
-    func part1() throws -> Int {
-        let (rules, _, otherTickets) = parse()
+    func part1(input: Input) throws -> Int {
+        let (rules, _, otherTickets) = parse(input)
         return otherTickets
             .flatMap { invalidFields(in: $0, using: rules) }
             .sum
     }
 
-    func part2() throws -> Int {
-        let (rules, myTicket, otherTickets) = parse()
+    func part2(input: Input) throws -> Int {
+        let (rules, myTicket, otherTickets) = parse(input)
         let validTickets = otherTickets.filter { invalidFields(in: $0, using: rules).isEmpty }
         let fieldIndices = getFieldMapping(for: rules, using: validTickets)
 
@@ -61,8 +61,8 @@ struct TicketTranslation: Puzzle {
         }
     }
 
-    private func parse() -> ([Rule], Ticket, [Ticket]) {
-        let lines = input().lines.filter(\.isNotEmpty)
+    private func parse(_ input: Input) -> ([Rule], Ticket, [Ticket]) {
+        let lines = input.lines.filter(\.isNotEmpty)
         let yourTicketLabelIndex = lines.firstIndex { $0.raw == "your ticket:" }!
         let nearbyTicketsLabelIndex = lines.firstIndex { $0.raw == "nearby tickets:" }!
 
@@ -87,7 +87,7 @@ private struct Rule {
         ranges = parts.last!
             .components(separatedBy: " or ")
             .map { range in
-                let pair = range.components(separatedBy: "-").compactMap(Int.init)
+                let pair = range.components(separatedBy: "-").compactMap { Int($0) }
                 return pair.first! ... pair.last!
             }
     }

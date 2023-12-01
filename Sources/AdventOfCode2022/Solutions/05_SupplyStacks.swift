@@ -6,9 +6,9 @@ private typealias Instruction = (Int, Int, Int)
 class SupplyStacks: Puzzle {
     static let day = 5
 
-    func part1() throws -> String {
-        var stacks = startingState
-        for (number, source, dest) in instructions {
+    func part1(input: Input) throws -> String {
+        var stacks = startingState(from: input)
+        for (number, source, dest) in instructions(from: input) {
             let stack = stacks[source]
 
             let removed = stack[0 ..< number]
@@ -22,9 +22,9 @@ class SupplyStacks: Puzzle {
         return String(tops)
     }
 
-    func part2() throws -> String {
-        var stacks = startingState
-        for (number, source, dest) in instructions {
+    func part2(input: Input) throws -> String {
+        var stacks = startingState(from: input)
+        for (number, source, dest) in instructions(from: input) {
             let stack = stacks[source]
 
             let removed = stack[0 ..< number]
@@ -38,8 +38,8 @@ class SupplyStacks: Puzzle {
         return String(tops)
     }
 
-    private lazy var startingState: [Stack] = {
-        let crateLines = input().lines.raw.split(whereSeparator: \.isEmpty).first!
+    private func startingState(from input: Input) -> [Stack] {
+        let crateLines = input.lines.raw.split(whereSeparator: \.isEmpty).first!
 
         // make sure the lines are all the same length
         let longestLine = crateLines.max(of: \.count)!
@@ -48,11 +48,11 @@ class SupplyStacks: Puzzle {
         return stride(from: 1, to: longestLine, by: 4).map { offset in
             padded.map { $0[offset: offset] }.filter(\.isLetter)
         }
-    }()
+    }
 
-    private lazy var instructions: [Instruction] = {
+    private func instructions(from input: Input) -> [Instruction] {
         let pattern = NSRegularExpression("move (\\d+) from (\\d+) to (\\d+)")
-        return input().lines.raw.compactMap { line -> Instruction? in
+        return input.lines.raw.compactMap { line -> Instruction? in
             guard let match = pattern.match(line) else { return nil }
             // convert from 1-indexed instructions to 0-indexed arrays
             return (
@@ -61,5 +61,5 @@ class SupplyStacks: Puzzle {
                 Int(match[3])! - 1
             )
         }
-    }()
+    }
 }

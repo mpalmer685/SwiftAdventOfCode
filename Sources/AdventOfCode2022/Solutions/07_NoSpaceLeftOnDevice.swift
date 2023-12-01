@@ -3,12 +3,12 @@ import AOCKit
 class NoSpaceLeftOnDevice: Puzzle {
     static let day = 7
 
-    func part1() throws -> Int {
-        filesystem.filter(\.isDirectory).filter { $0.size <= 100_000 }.map(\.size).sum
+    func part1(input: Input) throws -> Int {
+        filesystem(from: input).filter(\.isDirectory).filter { $0.size <= 100_000 }.map(\.size).sum
     }
 
-    func part2() throws -> Int {
-        let directories = filesystem.filter(\.isDirectory)
+    func part2(input: Input) throws -> Int {
+        let directories = filesystem(from: input).filter(\.isDirectory)
         let root = directories.first { $0.name == "/" }!
 
         let availableSpace = 70_000_000 - root.size
@@ -19,11 +19,11 @@ class NoSpaceLeftOnDevice: Puzzle {
             .min(of: \.size)!
     }
 
-    private lazy var filesystem: [Node<Entry>] = {
+    private func filesystem(from input: Input) -> [Node<Entry>] {
         let root = Node<Entry>(value: .folder("/"))
         var current = root
 
-        for line in input().lines.dropFirst() {
+        for line in input.lines.dropFirst() {
             if line.raw.hasPrefix("$ cd ") {
                 let folder = line.raw.dropFirst(5)
                 if folder == ".." {
@@ -45,7 +45,7 @@ class NoSpaceLeftOnDevice: Puzzle {
         }
 
         return root.flattened()
-    }()
+    }
 }
 
 private enum Entry {

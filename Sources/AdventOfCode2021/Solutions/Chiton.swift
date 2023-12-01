@@ -16,18 +16,18 @@ private let testInput = """
 struct Chiton: Puzzle {
     static let day = 15
 
-    func part1() throws -> Int {
-        let grid = Grid(parseInput())
+    func part1(input: Input) throws -> Int {
+        let grid = Grid(parse(input))
         return Cave(grid).riskOfBestPath()
     }
 
-    func part2() throws -> Int {
-        let grid = Grid(fill(grid: parseInput()))
+    func part2(input: Input) throws -> Int {
+        let grid = Grid(fill(grid: parse(input)))
         return Cave(grid).riskOfBestPath()
     }
 
-    private func parseInput() -> [[Int]] {
-        input().lines.digits
+    private func parse(_ input: Input) -> [[Int]] {
+        input.lines.digits
     }
 }
 

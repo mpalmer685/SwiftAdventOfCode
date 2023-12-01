@@ -3,10 +3,10 @@ import AOCKit
 class RegolithReservoir: Puzzle {
     static let day = 14
 
-    private lazy var cave: Cave = {
+    private func cave(from input: Input) -> Cave {
         var cave = Cave()
 
-        for line in input().lines {
+        for line in input.lines {
             let positions = line.words(separatedBy: " -> ")
             for (start, end) in positions.adjacentPairs() {
                 let start = Point2D(start)
@@ -19,9 +19,9 @@ class RegolithReservoir: Puzzle {
         }
 
         return cave
-    }()
+    }
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         let start = Point2D(500, 0)
 
         func dropSand(into cave: inout Cave, floor: Int) -> Bool {
@@ -53,7 +53,7 @@ class RegolithReservoir: Puzzle {
             }
         }
 
-        var cave = cave
+        var cave = cave(from: input)
         let floor = cave.maxY
 
         var count = 0
@@ -64,7 +64,7 @@ class RegolithReservoir: Puzzle {
         return count
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         let start = Point2D(500, 0)
 
         func dropSand(into cave: inout Cave, floor: Int) {
@@ -92,7 +92,7 @@ class RegolithReservoir: Puzzle {
             }
         }
 
-        var cave = cave
+        var cave = cave(from: input)
         let floor = cave.maxY + 2
 
         let source = Point2D(500, 0)

@@ -3,14 +3,14 @@ import AOCKit
 struct BeaconScanner: Puzzle {
     static let day = 19
 
-    func part1() throws -> Int {
-        let scanners = parse(input())
+    func part1(input: Input) throws -> Int {
+        let scanners = parse(input)
         let transforms = getTransforms(toAlign: scanners)
         return countUniqueBeacons(in: scanners, using: transforms)
     }
 
-    func part2() throws -> Int {
-        let scanners = parse(input())
+    func part2(input: Input) throws -> Int {
+        let scanners = parse(input)
         let transforms = getTransforms(toAlign: scanners)
         return findMaxDistance(between: scanners, using: transforms)
     }

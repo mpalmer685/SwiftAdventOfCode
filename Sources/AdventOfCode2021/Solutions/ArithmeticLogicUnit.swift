@@ -3,18 +3,18 @@ import AOCKit
 struct ArithmeticLogicUnit: Puzzle {
     static let day = 24
 
-    func part1() throws -> Int {
-        let parameters = parseInput()
+    func part1(input: Input) throws -> Int {
+        let parameters = parse(input)
         return findModelNumber(using: parameters, choosingNextValueWith: max)
     }
 
-    func part2() throws -> Int {
-        let parameters = parseInput()
+    func part2(input: Input) throws -> Int {
+        let parameters = parse(input)
         return findModelNumber(using: parameters, choosingNextValueWith: min)
     }
 
-    private func parseInput() -> [(Int, Int, Int)] {
-        let operations = input().lines.map(Operation.init)
+    private func parse(_ input: Input) -> [(Int, Int, Int)] {
+        let operations = input.lines.map(Operation.init)
 
         var parameters = [(Int, Int, Int)]()
         for i in stride(from: 0, to: 18 * 14, by: 18) {

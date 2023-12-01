@@ -6,16 +6,6 @@ private typealias Direction = Vector2D
 class UnstableDiffusion: Puzzle {
     static let day = 23
 
-    private lazy var elves: Set<Point2D> = {
-        var elves = Set<Point2D>()
-        for (y, line) in input().lines.characters.enumerated() {
-            for (x, c) in line.enumerated() where c == "#" {
-                elves.insert(.init(x, y))
-            }
-        }
-        return elves
-    }()
-
     private let decisions: [Decision] = [
         (.north, [.north, .northeast, .northwest]),
         (.south, [.south, .southeast, .southwest]),
@@ -23,8 +13,8 @@ class UnstableDiffusion: Puzzle {
         (.east, [.east, .northeast, .southeast]),
     ]
 
-    func part1() throws -> Int {
-        var elves = elves
+    func part1(input: Input) throws -> Int {
+        var elves = elves(from: input)
         var decisions = decisions
 
         for _ in 0 ..< 10 {
@@ -35,8 +25,8 @@ class UnstableDiffusion: Puzzle {
         return elves.bounds.area - elves.count
     }
 
-    func part2() throws -> Int {
-        var elves = elves
+    func part2(input: Input) throws -> Int {
+        var elves = elves(from: input)
         var decisions = decisions
 
         for round in 1 ... Int.max {
@@ -50,6 +40,16 @@ class UnstableDiffusion: Puzzle {
         }
 
         fatalError("No solution found")
+    }
+
+    private func elves(from input: Input) -> Set<Point2D> {
+        var elves = Set<Point2D>()
+        for (y, line) in input.lines.characters.enumerated() {
+            for (x, c) in line.enumerated() where c == "#" {
+                elves.insert(.init(x, y))
+            }
+        }
+        return elves
     }
 
     private func move(_ elves: Set<Point2D>, using decisions: [Decision]) -> Set<Point2D> {

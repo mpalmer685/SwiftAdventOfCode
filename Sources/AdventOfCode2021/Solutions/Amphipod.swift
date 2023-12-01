@@ -3,13 +3,13 @@ import AOCKit
 struct Amphipod: Puzzle {
     static let day = 23
 
-    func part1() throws -> Int {
-        Burrow().cost(toOrganize: parse(lines: input().lines))
+    func part1(input: Input) throws -> Int {
+        Burrow().cost(toOrganize: parse(lines: input.lines))
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         let extraLines = ["  #D#C#B#A#  ", "  #D#B#A#C#  "].map(Line.init)
-        var lines = input().lines
+        var lines = input.lines
         lines.insert(contentsOf: extraLines, at: 3)
         return Burrow().cost(toOrganize: parse(lines: lines))
     }

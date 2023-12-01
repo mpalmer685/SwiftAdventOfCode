@@ -8,14 +8,14 @@ private typealias ValidatorBuilder = (String) -> (Passport) -> Bool
 struct PassportProcessing: Puzzle {
     static let day = 4
 
-    func part1() throws -> Int {
-        let passports = try parsePassports()
+    func part1(input: Input) throws -> Int {
+        let passports = try parsePassports(from: input)
         let validator = PassportValidator()
         return validate(passports, using: validator.containsRequiredKeys)
     }
 
-    func part2() throws -> Int {
-        let passports = try parsePassports()
+    func part2(input: Input) throws -> Int {
+        let passports = try parsePassports(from: input)
         let validator = PassportValidator()
         return validate(passports, using: validator.allFieldsValid)
     }
@@ -24,8 +24,8 @@ struct PassportProcessing: Puzzle {
         passports.filter(isValid).count
     }
 
-    private func parsePassports() throws -> [Passport] {
-        let lines = input().lines
+    private func parsePassports(from input: Input) throws -> [Passport] {
+        let lines = input.lines
 
         var passports: [Passport] = []
         var current = Passport()

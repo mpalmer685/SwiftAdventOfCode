@@ -3,8 +3,8 @@ import AOCKit
 struct TreetopTreeHouse: Puzzle {
     static let day = 8
 
-    func part1() throws -> Int {
-        let trees = Grid(input().lines.digits)
+    func part1(input: Input) throws -> Int {
+        let trees = Grid(input.lines.digits)
 
         func isVisible(at position: Point2D, moving direction: Vector2D) -> Bool {
             let height = trees[position]
@@ -32,8 +32,8 @@ struct TreetopTreeHouse: Puzzle {
         }
     }
 
-    func part2() throws -> Int {
-        let trees = Grid(input().lines.digits)
+    func part2(input: Input) throws -> Int {
+        let trees = Grid(input.lines.digits)
 
         func countVisibleTrees(from position: Point2D, moving direction: Vector2D) -> Int {
             let height = trees[position]

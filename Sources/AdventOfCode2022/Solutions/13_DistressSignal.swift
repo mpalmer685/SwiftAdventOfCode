@@ -3,21 +3,21 @@ import AOCKit
 class DistressSignal: Puzzle {
     static let day = 13
 
-    private lazy var packets: [Packet] = {
-        input().lines.raw.filter(\.isNotEmpty).map(parsePacket)
-    }()
+    private func packets(from input: Input) -> [Packet] {
+        input.lines.raw.filter(\.isNotEmpty).map(parsePacket)
+    }
 
-    func part1() throws -> Int {
-        packets.pairs().enumerated().sum { offset, pair -> Int in
+    func part1(input: Input) throws -> Int {
+        packets(from: input).pairs().enumerated().sum { offset, pair -> Int in
             pair.0 < pair.1 ? offset + 1 : 0
         }
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         let divider1 = parsePacket("[[2]]")
         let divider2 = parsePacket("[[6]]")
 
-        let sortedPackets = (packets + [divider1, divider2]).sorted(by: <)
+        let sortedPackets = (packets(from: input) + [divider1, divider2]).sorted(by: <)
 
         let divider1Index = sortedPackets.firstIndex(of: divider1)! + 1
         let divider2Index = sortedPackets.firstIndex(of: divider2)! + 1

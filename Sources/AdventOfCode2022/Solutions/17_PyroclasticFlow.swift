@@ -3,13 +3,9 @@ import AOCKit
 class PyroclasticFlow: Puzzle {
     static let day = 17
 
-    private lazy var winds: [Vector2D] = {
-        input().characters.map(Vector2D.init(character:))
-    }()
-
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         let shaft = Shaft(width: 7)
-        var winds = winds.cycled().makeIterator()
+        var winds = winds(from: input).cycled().makeIterator()
 
         for rock in Rock.order.cycled().prefix(2022) {
             drop(rock, in: shaft) { winds.next()! }
@@ -18,7 +14,7 @@ class PyroclasticFlow: Puzzle {
         return shaft.maxY
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         struct Key: Hashable {
             let skyline: [Int]
             let windIndex: Int
@@ -29,7 +25,8 @@ class PyroclasticFlow: Puzzle {
         let shaft = Shaft(width: 7)
 
         var rocks = Rock.order.cycled().makeIterator()
-        var winds = winds.cycled().makeIterator()
+        let windOrder = winds(from: input)
+        var winds = windOrder.cycled().makeIterator()
 
         var windIndex = 0
         var seen = [Key: (Int, Int)]()
@@ -42,7 +39,7 @@ class PyroclasticFlow: Puzzle {
 
             let key = Key(
                 skyline: shaft.skyline,
-                windIndex: windIndex % self.winds.count,
+                windIndex: windIndex % windOrder.count,
                 rockIndex: (r - 1) % Rock.order.count
             )
             guard let (start, height) = seen[key] else {
@@ -64,6 +61,10 @@ class PyroclasticFlow: Puzzle {
         }
 
         fatalError("No solution found")
+    }
+
+    private func winds(from input: Input) -> [Vector2D] {
+        input.characters.map(Vector2D.init(character:))
     }
 
     private func drop(_ rock: Rock, in shaft: Shaft, using nextWind: () -> Vector2D) {

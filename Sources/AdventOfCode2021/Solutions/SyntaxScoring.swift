@@ -3,7 +3,7 @@ import AOCKit
 struct SyntaxScoring: Puzzle {
     static let day = 10
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         let characterScores: [Character: Int] = [
             ")": 3,
             "]": 57,
@@ -11,7 +11,7 @@ struct SyntaxScoring: Puzzle {
             ">": 25137,
         ]
 
-        return input().lines
+        return input.lines
             .map { process(line: $0) }
             .reduce(0) { total, state in
                 guard case let .corrupted(c) = state else { return total }
@@ -22,7 +22,7 @@ struct SyntaxScoring: Puzzle {
             }
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         let characterScores: [Character: Int] = [
             ")": 1,
             "]": 2,
@@ -42,7 +42,7 @@ struct SyntaxScoring: Puzzle {
             return totalScore
         }
 
-        let scores: [Int] = input().lines
+        let scores: [Int] = input.lines
             .map { process(line: $0) }
             .reduce(into: []) { scores, state in
                 guard case let .incomplete(remaining) = state else { return }

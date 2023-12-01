@@ -3,18 +3,18 @@ import AOCKit
 struct MonsterMessages: Puzzle {
     static let day = 19
 
-    func part1() throws -> Int {
-        let (rules, messages) = parseInput()
+    func part1(input: Input) throws -> Int {
+        let (rules, messages) = parse(input)
         return messages.count { isMessageValid($0, for: [0], given: rules) }
     }
 
-    func part2() throws -> Int {
-        let (rules, messages) = parseInput(overrides: ["8: 42 | 42 8", "11: 42 31 | 42 11 31"])
+    func part2(input: Input) throws -> Int {
+        let (rules, messages) = parse(input, overrides: ["8: 42 | 42 8", "11: 42 31 | 42 11 31"])
         return messages.count { isMessageValid($0, for: [0], given: rules) }
     }
 
-    private func parseInput(overrides: [String] = []) -> ([Int: Rule], [String]) {
-        let lines = input().lines.raw
+    private func parse(_ input: Input, overrides: [String] = []) -> ([Int: Rule], [String]) {
+        let lines = input.lines.raw
         let splitIndex = lines.firstIndex(where: \.isEmpty)!
 
         let ruleLines = lines[...(splitIndex - 1)] + overrides

@@ -4,13 +4,13 @@ struct RambunctiousRecitation: Puzzle {
     static let day = 15
     static let rawInput: String? = "5,1,9,18,13,8,0"
 
-    func part1() throws -> Int {
-        let startingNumbers = input().csvWords.integers
+    func part1(input: Input) throws -> Int {
+        let startingNumbers = input.csvWords.integers
         return play(turns: 2020, startingWith: startingNumbers)
     }
 
-    func part2() throws -> Int {
-        let startingNumbers = input().csvWords.integers
+    func part2(input: Input) throws -> Int {
+        let startingNumbers = input.csvWords.integers
         return play(turns: 30_000_000, startingWith: startingNumbers)
     }
 

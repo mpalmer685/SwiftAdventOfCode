@@ -3,8 +3,8 @@ import AOCKit
 struct RockPaperScissors: Puzzle {
     static let day = 2
 
-    func part1() throws -> Int {
-        input().lines.map { line in
+    func part1(input: Input) throws -> Int {
+        input.lines.map { line in
             let moves = line.words.raw.map(Shape.fromInput)
             guard moves.count == 2 else { fatalError() }
 
@@ -15,8 +15,8 @@ struct RockPaperScissors: Puzzle {
         }.sum
     }
 
-    func part2() throws -> Int {
-        input().lines.map { line in
+    func part2(input: Input) throws -> Int {
+        input.lines.map { line in
             let parts = line.words.raw
             guard parts.count == 2 else { fatalError() }
 

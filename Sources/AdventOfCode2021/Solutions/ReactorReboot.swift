@@ -3,10 +3,10 @@ import AOCKit
 struct ReactorReboot: Puzzle {
     static let day = 22
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         let activeRange = (-50 ... 50)
 
-        let instructions = parseInput().filter { i in
+        let instructions = parse(input).filter { i in
             let (x, y, z, _) = i
             return activeRange.overlaps(x) && activeRange.overlaps(y) && activeRange.overlaps(z)
         }
@@ -29,8 +29,8 @@ struct ReactorReboot: Puzzle {
         return onCubes.count
     }
 
-    func part2() throws -> Int {
-        let cuboids = parseInput().map(Cuboid.init)
+    func part2(input: Input) throws -> Int {
+        let cuboids = parse(input).map(Cuboid.init)
         return cuboids.indexed()
             .filter(\.element.isOn)
             .reduce(0) { v, pair in
@@ -42,12 +42,12 @@ struct ReactorReboot: Puzzle {
             }
     }
 
-    private func parseInput() -> [Instruction] {
+    private func parse(_ input: Input) -> [Instruction] {
         let pattern =
             NSRegularExpression(
                 "(on|off) x=(-?\\d+\\.\\.-?\\d+),y=(-?\\d+\\.\\.-?\\d+),z=(-?\\d+\\.\\.-?\\d+)"
             )
-        return input().lines.raw.map { line in
+        return input.lines.raw.map { line in
             guard let match = pattern.match(line) else { fatalError() }
             let xs = match[2].components(separatedBy: "..").compactMap(Int.init)
             let ys = match[3].components(separatedBy: "..").compactMap(Int.init)

@@ -3,8 +3,8 @@ import AOCKit
 struct HydrothermalVenture: Puzzle {
     static let day = 5
 
-    func part1() throws -> Int {
-        let lines = parseInput()
+    func part1(input: Input) throws -> Int {
+        let lines = parse(input)
         var field = Field()
 
         for line in lines where !line.isDiagonal {
@@ -16,8 +16,8 @@ struct HydrothermalVenture: Puzzle {
         return field.count { $0.value > 1 }
     }
 
-    func part2() throws -> Int {
-        let lines = parseInput()
+    func part2(input: Input) throws -> Int {
+        let lines = parse(input)
         var field = Field()
 
         for line in lines {
@@ -29,8 +29,8 @@ struct HydrothermalVenture: Puzzle {
         return field.count { $0.value > 1 }
     }
 
-    private func parseInput() -> [Line] {
-        input().lines.map(Line.init)
+    private func parse(_ input: Input) -> [Line] {
+        input.lines.map(Line.init)
     }
 }
 

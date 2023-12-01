@@ -1,5 +1,6 @@
 import ArgumentParser
 import CLISpinner
+import Files
 import Rainbow
 
 struct RunCommand: ParsableCommand {
@@ -58,9 +59,22 @@ struct RunCommand: ParsableCommand {
 }
 
 private extension AdventOfCode {
+    func loadInput(for puzzle: any Puzzle) throws -> Input {
+        let puzzleStatic = type(of: puzzle)
+        if let input = puzzleStatic.rawInput {
+            return Input(input)
+        }
+
+        let inputPath = "Inputs/\(year)/day\(puzzleStatic.day)"
+        let file = try File(path: inputPath)
+        return Input(try file.readAsString())
+    }
+
     func generateResult(for day: Int, part: PuzzlePart) throws {
+        let puzzle = try puzzle(for: day)
+        let input = try loadInput(for: puzzle)
         let (result, duration) = try measure {
-            try runPuzzle(for: day, part: part)
+            try run(puzzle, part: part, with: input)
         }
         copyToClipboard(result)
         print("\(result) \("(took \(duration))".blue)")
@@ -79,7 +93,9 @@ private extension AdventOfCode {
         spinner.start()
 
         do {
-            let (result, newDuration) = try measure { try runPuzzle(for: day, part: part) }
+            let puzzle = try puzzle(for: day)
+            let input = try loadInput(for: puzzle)
+            let (result, newDuration) = try measure { try run(puzzle, part: part, with: input) }
             guard result == savedAnswer else {
                 spinner.fail()
                 print("Expected \(savedAnswer) but got \(result).")

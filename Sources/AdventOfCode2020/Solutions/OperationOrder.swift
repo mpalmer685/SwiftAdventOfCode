@@ -3,14 +3,14 @@ import AOCKit
 struct OperationOrder: Puzzle {
     static let day = 18
 
-    func part1() throws -> Int {
-        try input().lines.raw
+    func part1(input: Input) throws -> Int {
+        try input.lines.raw
             .map { try evaluate(string: $0, using: .part1) }
             .sum
     }
 
-    func part2() throws -> Int {
-        try input().lines.raw
+    func part2(input: Input) throws -> Int {
+        try input.lines.raw
             .map { try evaluate(string: $0, using: .part2) }
             .sum
     }

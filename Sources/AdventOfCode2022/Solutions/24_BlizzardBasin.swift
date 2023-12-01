@@ -3,13 +3,13 @@ import AOCKit
 class BlizzardBasin: Puzzle {
     static let day = 24
 
-    func part1() throws -> Int {
-        let valley = Valley(input())
+    func part1(input: Input) throws -> Int {
+        let valley = Valley(input)
         return valley.timeToTravel(from: valley.start, to: valley.end)
     }
 
-    func part2() throws -> Int {
-        let valley = Valley(input())
+    func part2(input: Input) throws -> Int {
+        let valley = Valley(input)
 
         let firstTrip = valley.timeToTravel(from: valley.start, to: valley.end)
         let returnTrip = valley.timeToTravel(

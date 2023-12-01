@@ -3,18 +3,8 @@ import AOCKit
 class ProboscideaVolcanium: Puzzle {
     static let day = 16
 
-    private lazy var rooms: [Room] = {
-        input().lines.words.map { words -> Room in
-            let name = words[1].raw
-            let flow = words[4].trimmingCharacters(in: .semicolon).words(separatedBy: "=")[1]
-                .integer!
-            let neighbors = words[9...].map { $0.trimmingCharacters(in: .comma) }.raw
-            return Room(name: name, flow: flow, neighbors: neighbors)
-        }
-    }()
-
-    func part1() throws -> Int {
-        let (destinations, costsByOrigin, roomsByName) = startingState()
+    func part1(input: Input) throws -> Int {
+        let (destinations, costsByOrigin, roomsByName) = startingState(with: input)
         return maxPressure(
             forRooms: destinations,
             time: 30,
@@ -23,8 +13,8 @@ class ProboscideaVolcanium: Puzzle {
         )
     }
 
-    func part2() throws -> Int {
-        let (destinations, costsByOrigin, roomsByName) = startingState()
+    func part2(input: Input) throws -> Int {
+        let (destinations, costsByOrigin, roomsByName) = startingState(with: input)
 
         var maxPressureReleased = 0
         for myValves in destinations.combinations(ofCount: destinations.count / 2) {
@@ -46,7 +36,18 @@ class ProboscideaVolcanium: Puzzle {
         return maxPressureReleased
     }
 
-    private func startingState() -> ([Room], CostsByOrigin, RoomsByName) {
+    private func rooms(from input: Input) -> [Room] {
+        input.lines.words.map { words -> Room in
+            let name = words[1].raw
+            let flow = words[4].trimmingCharacters(in: .semicolon).words(separatedBy: "=")[1]
+                .integer!
+            let neighbors = words[9...].map { $0.trimmingCharacters(in: .comma) }.raw
+            return Room(name: name, flow: flow, neighbors: neighbors)
+        }
+    }
+
+    private func startingState(with input: Input) -> ([Room], CostsByOrigin, RoomsByName) {
+        let rooms = rooms(from: input)
         let roomsByName = rooms.reduce(into: RoomsByName()) { $0[$1.name] = $1 }
 
         let startingRoom = roomsByName["AA"]!

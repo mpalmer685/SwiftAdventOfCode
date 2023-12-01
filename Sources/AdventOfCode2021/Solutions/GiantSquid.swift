@@ -3,8 +3,8 @@ import AOCKit
 struct GiantSquid: Puzzle {
     static let day = 4
 
-    func part1() throws -> Int {
-        var (numbers, boards) = parseInput()
+    func part1(input: Input) throws -> Int {
+        var (numbers, boards) = parse(input)
 
         for number in numbers {
             for i in boards.indices {
@@ -18,8 +18,8 @@ struct GiantSquid: Puzzle {
         fatalError("Didn't find a solution.")
     }
 
-    func part2() throws -> Int {
-        var (numbers, boards) = parseInput()
+    func part2(input: Input) throws -> Int {
+        var (numbers, boards) = parse(input)
 
         var lastPlayedNumber: Int?
         var lastWinningBoard: Board?
@@ -43,8 +43,8 @@ struct GiantSquid: Puzzle {
         return lastPlayedNumber * lastWinningBoard.currentScore
     }
 
-    private func parseInput() -> ([Int], [Board]) {
-        let groups = input().lines.split(whereSeparator: \.isEmpty)
+    private func parse(_ input: Input) -> ([Int], [Board]) {
+        let groups = input.lines.split(whereSeparator: \.isEmpty)
 
         let numbers = groups[0][0].csvWords.integers
 

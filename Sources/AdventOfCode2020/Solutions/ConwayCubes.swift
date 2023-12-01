@@ -3,8 +3,8 @@ import AOCKit
 struct ConwayCubes: Puzzle {
     static let day = 17
 
-    func part1() throws -> Int {
-        var field: [Point3D: Bool] = try parseInput()
+    func part1(input: Input) throws -> Int {
+        var field: [Point3D: Bool] = try parse(input)
         for _ in 0 ..< 6 {
             GameOfLife.playRound(on: &field, using: willCellBeActive)
         }
@@ -12,8 +12,8 @@ struct ConwayCubes: Puzzle {
         return field.count { $0.value }
     }
 
-    func part2() throws -> Int {
-        var field: [Point4D: Bool] = try parseInput()
+    func part2(input: Input) throws -> Int {
+        var field: [Point4D: Bool] = try parse(input)
         for _ in 0 ..< 6 {
             GameOfLife.playRound(on: &field, using: willCellBeActive)
         }
@@ -21,9 +21,9 @@ struct ConwayCubes: Puzzle {
         return field.count { $0.value }
     }
 
-    private func parseInput<T: Position>() throws -> [T: Bool] {
+    private func parse<T: Position>(_ input: Input) throws -> [T: Bool] {
         var field: [T: Bool] = [:]
-        for (y, line) in input().lines.enumerated() {
+        for (y, line) in input.lines.enumerated() {
             for (x, cell) in line.characters.enumerated() {
                 field[T([x, y].padded(toLength: T.numberOfDimensions, with: 0))] = cell == "#"
             }

@@ -3,7 +3,7 @@ import AOCKit
 struct Dive: Puzzle {
     static let day = 2
 
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
         struct SimplePosition: Position {
             let x: Int
             let depth: Int
@@ -22,12 +22,12 @@ struct Dive: Puzzle {
             }
         }
 
-        let commands = try parseInput()
+        let commands = try parse(input)
         let finalPosition = follow(commands, startingAt: SimplePosition.origin)
         return finalPosition.x * finalPosition.depth
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
         struct AimedPosition: Position {
             let x: Int
             let depth: Int
@@ -51,13 +51,13 @@ struct Dive: Puzzle {
             }
         }
 
-        let commands = try parseInput()
+        let commands = try parse(input)
         let finalPosition = follow(commands, startingAt: AimedPosition.origin)
         return finalPosition.x * finalPosition.depth
     }
 
-    private func parseInput() throws -> [Command] {
-        try input().lines.filter(\.isNotEmpty).map(Command.parse)
+    private func parse(_ input: Input) throws -> [Command] {
+        try input.lines.filter(\.isNotEmpty).map(Command.parse)
     }
 
     private func follow<P: Position>(_ commands: [Command], startingAt origin: P) -> P {

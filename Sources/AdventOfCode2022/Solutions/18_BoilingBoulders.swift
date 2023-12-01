@@ -3,23 +3,25 @@ import AOCKit
 class BoilingBoulders: Puzzle {
     static let day = 18
 
-    private lazy var cubes: [Point3D] = {
-        input().lines.map { Point3D($0.csvWords.integers) }
-    }()
-
-    func part1() throws -> Int {
+    func part1(input: Input) throws -> Int {
+        let cubes = cubes(from: input)
         let droplet = Set<Point3D>(cubes)
         return cubes.sum { cube in
             cube.orthogonalNeighbors.count { !droplet.contains($0) }
         }
     }
 
-    func part2() throws -> Int {
+    func part2(input: Input) throws -> Int {
+        let cubes = cubes(from: input)
         let droplet = Set<Point3D>(cubes)
         let air = findAir(around: droplet)
         return cubes.sum { cube in
             cube.orthogonalNeighbors.count { air.contains($0) }
         }
+    }
+
+    private func cubes(from input: Input) -> [Point3D] {
+        input.lines.map { Point3D($0.csvWords.integers) }
     }
 
     private func findAir(around droplet: Set<Point3D>) -> Set<Point3D> {

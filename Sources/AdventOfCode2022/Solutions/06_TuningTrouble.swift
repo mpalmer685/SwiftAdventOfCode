@@ -3,12 +3,12 @@ import AOCKit
 struct TuningTrouble: Puzzle {
     static let day = 6
 
-    func part1() throws -> Int {
-        input().characters.windows(ofCount: 4).first(where: \.allUnique)!.endIndex
+    func part1(input: Input) throws -> Int {
+        input.characters.windows(ofCount: 4).first(where: \.allUnique)!.endIndex
     }
 
-    func part2() throws -> Int {
-        input().characters.windows(ofCount: 14).first(where: \.allUnique)!.endIndex
+    func part2(input: Input) throws -> Int {
+        input.characters.windows(ofCount: 14).first(where: \.allUnique)!.endIndex
     }
 }
 

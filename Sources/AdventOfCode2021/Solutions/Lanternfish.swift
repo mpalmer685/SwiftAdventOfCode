@@ -5,18 +5,18 @@ private let testInput = "3,4,3,1,2"
 struct Lanternfish: Puzzle {
     static let day = 6
 
-    func part1() throws -> Int {
-        let fish = parseInput()
+    func part1(input: Input) throws -> Int {
+        let fish = parse(input)
         return countFish(fish, forDays: 80)
     }
 
-    func part2() throws -> Int {
-        let fish = parseInput()
+    func part2(input: Input) throws -> Int {
+        let fish = parse(input)
         return countFish(fish, forDays: 256)
     }
 
-    private func parseInput() -> [Int: Int] {
-        input().csvWords.integers
+    private func parse(_ input: Input) -> [Int: Int] {
+        input.csvWords.integers
             .reduce(into: [:]) { fishByAge, age in
                 fishByAge[age, default: 0] += 1
             }

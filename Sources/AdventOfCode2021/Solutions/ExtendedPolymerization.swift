@@ -24,24 +24,24 @@ CN -> C
 struct ExtendedPolymerization: Puzzle {
     static let day = 14
 
-    func part1() throws -> Int {
-        var (polymer, rules) = parseInput()
+    func part1(input: Input) throws -> Int {
+        var (polymer, rules) = parse(input)
         run(reactions: 10, on: &polymer, using: rules)
         let (_, mostCommon) = polymer.mostCommonElement
         let (_, leastCommon) = polymer.leastCommonElement
         return mostCommon - leastCommon
     }
 
-    func part2() throws -> Int {
-        var (polymer, rules) = parseInput()
+    func part2(input: Input) throws -> Int {
+        var (polymer, rules) = parse(input)
         run(reactions: 40, on: &polymer, using: rules)
         let (_, mostCommon) = polymer.mostCommonElement
         let (_, leastCommon) = polymer.leastCommonElement
         return mostCommon - leastCommon
     }
 
-    private func parseInput() -> (Polymer, RuleCollection) {
-        let parts = input().lines.split(whereSeparator: \.isEmpty)
+    private func parse(_ input: Input) -> (Polymer, RuleCollection) {
+        let parts = input.lines.split(whereSeparator: \.isEmpty)
         let rules = parseRules(from: Array(parts[1]))
         return (Polymer(parts[0][0].raw), rules)
     }

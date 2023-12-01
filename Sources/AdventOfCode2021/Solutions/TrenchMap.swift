@@ -3,8 +3,8 @@ import AOCKit
 struct TrenchMap: Puzzle {
     static let day = 20
 
-    func part1() throws -> Int {
-        var (algorithm, image) = parseInput()
+    func part1(input: Input) throws -> Int {
+        var (algorithm, image) = parse(input)
 
         for round in 0 ..< 2 {
             let defaultPixel = round.isEven
@@ -16,8 +16,8 @@ struct TrenchMap: Puzzle {
         return image.pixels.count
     }
 
-    func part2() throws -> Int {
-        var (algorithm, image) = parseInput()
+    func part2(input: Input) throws -> Int {
+        var (algorithm, image) = parse(input)
 
         for round in 0 ..< 50 {
             let defaultPixel = round.isEven
@@ -29,8 +29,8 @@ struct TrenchMap: Puzzle {
         return image.pixels.count
     }
 
-    private func parseInput() -> (EnhancementAlgorithm, Image) {
-        let parts = input().lines.split(whereSeparator: \.isEmpty)
+    private func parse(_ input: Input) -> (EnhancementAlgorithm, Image) {
+        let parts = input.lines.split(whereSeparator: \.isEmpty)
 
         guard parts.count == 2 else { fatalError() }
         guard parts[0].count == 1 else { fatalError() }

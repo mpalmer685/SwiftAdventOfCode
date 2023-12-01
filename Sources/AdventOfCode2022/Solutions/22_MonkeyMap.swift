@@ -3,45 +3,15 @@ import AOCKit
 class MonkeyMap: Puzzle {
     static let day = 22
 
-    private lazy var monkeyNotes: (Map, [Instruction]) = {
-        let parts = input().lines.split(whereSeparator: \.isEmpty)
-        assert(parts.count == 2)
-
-        var map = Map()
-        for (row, line) in parts[0].enumerated() {
-            for (col, char) in line.characters.enumerated() {
-                let point = Point2D(col, row)
-                if char == "#" {
-                    map[point] = .wall
-                } else if char == "." {
-                    map[point] = .open
-                }
-            }
-        }
-
-        var scanner = Scanner(Array(parts[1])[0].raw)
-        var path = [Instruction]()
-        var scanningSteps = true
-        while scanner.hasMore {
-            let instruction: Instruction = scanningSteps
-                ? .steps(scanner.scanInt()!)
-                : .turn(scanner.scanDirection())
-            path.append(instruction)
-            scanningSteps.toggle()
-        }
-
-        return (map, path)
-    }()
-
-    func part1() throws -> Int {
-        let (map, instructions) = monkeyNotes
+    func part1(input: Input) throws -> Int {
+        let (map, instructions) = monkeyNotes(from: input)
         let walker = Walker(map)
         walker.follow(instructions)
         return walker.password
     }
 
-    func part2() throws -> Int {
-        let (map, instructions) = monkeyNotes
+    func part2(input: Input) throws -> Int {
+        let (map, instructions) = monkeyNotes(from: input)
         let faces = createFaces(sideLength: 50)
         let walker = Walker(map)
         walker.follow(instructions) { _, position, heading in
@@ -79,6 +49,36 @@ class MonkeyMap: Puzzle {
             return (nextPosition, nextHeading)
         }
         return walker.password
+    }
+
+    private func monkeyNotes(from input: Input) -> (Map, [Instruction]) {
+        let parts = input.lines.split(whereSeparator: \.isEmpty)
+        assert(parts.count == 2)
+
+        var map = Map()
+        for (row, line) in parts[0].enumerated() {
+            for (col, char) in line.characters.enumerated() {
+                let point = Point2D(col, row)
+                if char == "#" {
+                    map[point] = .wall
+                } else if char == "." {
+                    map[point] = .open
+                }
+            }
+        }
+
+        var scanner = Scanner(Array(parts[1])[0].raw)
+        var path = [Instruction]()
+        var scanningSteps = true
+        while scanner.hasMore {
+            let instruction: Instruction = scanningSteps
+                ? .steps(scanner.scanInt()!)
+                : .turn(scanner.scanDirection())
+            path.append(instruction)
+            scanningSteps.toggle()
+        }
+
+        return (map, path)
     }
 }
 

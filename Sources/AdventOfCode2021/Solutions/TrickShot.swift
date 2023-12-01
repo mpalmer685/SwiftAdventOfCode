@@ -6,24 +6,24 @@ struct TrickShot: Puzzle {
     static let day = 17
     static let rawInput: String? = "target area: x=185..221, y=-122..-74"
 
-    func part1() throws -> Int {
-        let bounds = parseInput()
+    func part1(input: Input) throws -> Int {
+        let bounds = parse(input)
         let heights = findMaxHeights(landingIn: bounds)
         guard let maxHeight = heights.values.max() else { fatalError() }
 
         return maxHeight
     }
 
-    func part2() throws -> Int {
-        let bounds = parseInput()
+    func part2(input: Input) throws -> Int {
+        let bounds = parse(input)
         let heights = findMaxHeights(landingIn: bounds)
         return heights.count
     }
 
-    private func parseInput() -> Bounds {
+    private func parse(_ input: Input) -> Bounds {
         let pattern =
             NSRegularExpression("target area: x=(-?\\d+)\\.{2}(-?\\d+), y=(-?\\d+)\\.{2}(-?\\d+)")
-        guard let match = pattern.match(input().raw) else { fatalError() }
+        guard let match = pattern.match(input.raw) else { fatalError() }
         guard let xMin = Int(match[1]) else { fatalError() }
         guard let xMax = Int(match[2]) else { fatalError() }
         guard let yMin = Int(match[3]) else { fatalError() }

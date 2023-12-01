@@ -47,19 +47,19 @@ start-RW
 struct PassagePathing: Puzzle {
     static let day = 12
 
-    func part1() throws -> Int {
-        let startCave = parseCaves()
+    func part1(input: Input) throws -> Int {
+        let startCave = parseCaves(from: input)
         return countPaths(from: startCave, using: VisitOnceHistory())
     }
 
-    func part2() throws -> Int {
-        let startCave = parseCaves()
+    func part2(input: Input) throws -> Int {
+        let startCave = parseCaves(from: input)
         return countPaths(from: startCave, using: VisitOneTwiceHistory())
     }
 
-    private func parseCaves() -> Cave {
+    private func parseCaves(from input: Input) -> Cave {
         var caves: [Cave.CaveType: Cave] = [:]
-        for line in input().lines {
+        for line in input.lines {
             let names = line.words(separatedBy: "-")
             let firstType = Cave.CaveType(name: names[0].raw)
             let secondType = Cave.CaveType(name: names[1].raw)

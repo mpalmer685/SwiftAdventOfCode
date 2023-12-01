@@ -3,8 +3,8 @@ import AOCKit
 struct AllergenAssessment: Puzzle {
     static let day = 21
 
-    func part1() throws -> Int {
-        let (ingredients, allergens) = parseInput()
+    func part1(input: Input) throws -> Int {
+        let (ingredients, allergens) = parse(input)
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
             allergens: allergens
@@ -15,8 +15,8 @@ struct AllergenAssessment: Puzzle {
         }
     }
 
-    func part2() throws -> String {
-        let (ingredients, allergens) = parseInput()
+    func part2(input: Input) throws -> String {
+        let (ingredients, allergens) = parse(input)
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
             allergens: allergens
@@ -67,11 +67,11 @@ struct AllergenAssessment: Puzzle {
         }
     }
 
-    private func parseInput() -> FoodList {
+    private func parse(_ input: Input) -> FoodList {
         var ingredients = [Int: [String]]()
         var allergens = [Int: [String]]()
 
-        let lines = input().lines
+        let lines = input.lines
         for (id, line) in lines.enumerated() {
             let parts = line.words(separatedBy: " (contains ")
             let ingredientsList = parts[0].words(separatedBy: .whitespaces).raw

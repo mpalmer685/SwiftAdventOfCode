@@ -3,8 +3,8 @@ import AOCKit
 class MonkeyInTheMiddle: Puzzle {
     static let day = 11
 
-    func part1() throws -> Int {
-        var monkeys = monkeys
+    func part1(input: Input) throws -> Int {
+        var monkeys = monkeys(from: input)
         var monkeyCounts = Array(repeating: 0, count: monkeys.count)
 
         for _ in 0 ..< 20 {
@@ -27,8 +27,8 @@ class MonkeyInTheMiddle: Puzzle {
         return monkeyCounts.max(count: 2).product
     }
 
-    func part2() throws -> Int {
-        var monkeys = monkeys
+    func part2(input: Input) throws -> Int {
+        var monkeys = monkeys(from: input)
         var monkeyCounts = Array(repeating: 0, count: monkeys.count)
 
         let divisor = monkeys.map(\.divisibleByTest).product
@@ -52,8 +52,8 @@ class MonkeyInTheMiddle: Puzzle {
         return monkeyCounts.max(count: 2).product
     }
 
-    private lazy var monkeys = {
-        input().lines.split(whereSeparator: \.isEmpty).map { slice -> Monkey in
+    private func monkeys(from input: Input) -> [Monkey] {
+        input.lines.split(whereSeparator: \.isEmpty).map { slice -> Monkey in
             let lines = Array(slice)
             let operand = lines[2].integers.first
             let op = lines[2].raw.first(where: \.isOperator)!
@@ -76,7 +76,7 @@ class MonkeyInTheMiddle: Puzzle {
                 falseDest: lines[5].integers[0]
             )
         }
-    }()
+    }
 }
 
 private struct Monkey {

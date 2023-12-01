@@ -4,21 +4,21 @@ struct CrabCups: Puzzle {
     static let day = 23
     static let rawInput: String? = "253149867"
 
-    func part1() throws -> String {
-        var game = Game(cups: parseInput())
+    func part1(input: Input) throws -> String {
+        var game = Game(cups: parse(input))
         game.play(rounds: 100)
         return game.stringResult
     }
 
-    func part2() throws -> Int {
-        let cups = parseInput()
+    func part2(input: Input) throws -> Int {
+        let cups = parse(input)
         var game = Game(cups: cups + Array(cups.max()! + 1 ... 1_000_000))
         game.play(rounds: 10_000_000)
         return game.intResult
     }
 
-    private func parseInput() -> [Int] {
-        input().digits
+    private func parse(_ input: Input) -> [Int] {
+        input.digits
     }
 }
 
