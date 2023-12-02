@@ -16,6 +16,13 @@ public struct Scanner<C: Collection> {
         return data[cursor]
     }
 
+    public func peek(next count: Int) -> C.SubSequence? {
+        guard let end = data.index(cursor, offsetBy: count, limitedBy: data.endIndex) else {
+            return nil
+        }
+        return data[cursor ..< end]
+    }
+
     @discardableResult
     public mutating func next() -> C.Element {
         assert(hasMore, "Reached the end")
@@ -73,7 +80,7 @@ public extension Scanner where C.Element: Equatable {
         let start = cursor
         var iterator = other.makeIterator()
         while let next = iterator.next() {
-            if peek() != next {
+            if !hasMore || peek() != next {
                 cursor = start
                 return false
             }
@@ -81,9 +88,24 @@ public extension Scanner where C.Element: Equatable {
         }
         return true
     }
+
+    func starts<O: Collection>(with other: O) -> Bool where O.Element == C.Element {
+        guard let next = peek(next: other.count) else { return false }
+
+        for (expected, actual) in zip(other, next) where expected != actual {
+            return false
+        }
+
+        return true
+    }
 }
 
 public extension Scanner where C.Element == Character {
+    mutating func scanInt() -> Int? {
+        let digits = scan(while: \.isNumber)
+        return Int(String(digits))
+    }
+
     mutating func tryScanInt() -> Int? {
         let start = cursor
         if let int = scanInt() { return int }
@@ -91,8 +113,17 @@ public extension Scanner where C.Element == Character {
         return nil
     }
 
-    mutating func scanInt() -> Int? {
-        let digits = scan(while: \.isNumber)
-        return Int(String(digits))
+    mutating func tryScanDigit() -> Int? {
+        peek().isNumber ? Int(String(next())) : nil
+    }
+}
+
+public extension Scanner where C == String {
+    func starts(with other: String) -> Bool {
+        guard let next = peek(next: other.count) else {
+            return false
+        }
+
+        return next == other
     }
 }

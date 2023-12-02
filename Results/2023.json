@@ -1,0 +1,16 @@
+{
+  "resultsByDay" : {
+    "1" : {
+      "partOneAnswer" : "54630",
+      "partOneDebugTime" : {
+        "nanoseconds" : 15201141,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "54770",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 144437223,
+        "seconds" : 0
+      }
+    }
+  }
+}
