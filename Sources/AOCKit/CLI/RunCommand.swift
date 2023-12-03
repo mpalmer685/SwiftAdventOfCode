@@ -1,3 +1,5 @@
+import Foundation
+
 import ArgumentParser
 import CLISpinner
 import Files
@@ -59,20 +61,77 @@ struct RunCommand: ParsableCommand {
 }
 
 private extension AdventOfCode {
-    func loadInput(for puzzle: any Puzzle) throws -> Input {
+    func input(for puzzle: any Puzzle) throws -> Input {
         let puzzleStatic = type(of: puzzle)
         if let input = puzzleStatic.rawInput {
             return Input(input)
         }
+        if let input = try readInput(for: puzzleStatic.day) {
+            return input
+        }
+        if let input = try downloadInput(for: puzzleStatic.day) {
+            return input
+        }
+        throw PuzzleError.noPuzzleInput(puzzleStatic.day)
+    }
 
-        let inputPath = "Inputs/\(year)/day\(puzzleStatic.day)"
-        let file = try File(path: inputPath)
-        return Input(try file.readAsString())
+    private var inputFolder: Folder? {
+        try? Folder(path: "Inputs/\(year)")
+    }
+
+    private func readInput(for day: Int) throws -> Input? {
+        guard let inputFolder = inputFolder,
+              let inputFile = try? inputFolder.file(named: "day\(day)"),
+              let content = try? inputFile.readAsString()
+        else {
+            return nil
+        }
+        return Input(content)
+    }
+
+    private func downloadInput(for day: Int) throws -> Input? {
+        guard let inputFolder = inputFolder,
+              let token = authToken,
+              let url = URL(string: "https://adventofcode.com/\(year)/day/\(day)/input"),
+              let cookie = HTTPCookie(properties: [
+                  .domain: "adventofcode.com",
+                  .path: "/",
+                  .name: "session",
+                  .value: token,
+              ])
+        else {
+            return nil
+        }
+
+        URLSession.shared.configuration.httpCookieStorage?.setCookie(cookie)
+
+        do {
+            let str = try String(contentsOf: url)
+            let file = try inputFolder.createFile(named: "day\(day)")
+            try file.write(str)
+
+            return Input(str)
+        } catch {
+            return nil
+        }
+    }
+
+    private var authToken: String? {
+        guard let file = try? File(path: "auth_token"),
+              let content = try? file.readAsString()
+        else {
+            return nil
+        }
+        let token = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard token.isNotEmpty else {
+            return nil
+        }
+        return token
     }
 
     func generateResult(for day: Int, part: PuzzlePart) throws {
         let puzzle = try puzzle(for: day)
-        let input = try loadInput(for: puzzle)
+        let input = try input(for: puzzle)
         let (result, duration) = try measure {
             try run(puzzle, part: part, with: input)
         }
@@ -94,7 +153,7 @@ private extension AdventOfCode {
 
         do {
             let puzzle = try puzzle(for: day)
-            let input = try loadInput(for: puzzle)
+            let input = try input(for: puzzle)
             let (result, newDuration) = try measure { try run(puzzle, part: part, with: input) }
             guard result == savedAnswer else {
                 spinner.fail()
