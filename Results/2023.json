@@ -23,6 +23,18 @@
         "nanoseconds" : 29821730,
         "seconds" : 0
       }
+    },
+    "3" : {
+      "partOneAnswer" : "527369",
+      "partOneDebugTime" : {
+        "nanoseconds" : 80452837,
+        "seconds" : 0
+      },
+      "partTwoAnswer" : "73074886",
+      "partTwoDebugTime" : {
+        "nanoseconds" : 157169762,
+        "seconds" : 0
+      }
     }
   }
 }

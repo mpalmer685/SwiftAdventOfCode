@@ -15,7 +15,11 @@ public extension FixedWidthInteger {
 }
 
 public extension Int {
-    static func fromBits(_ bits: String) -> Self? {
+    static func from(digit: Character) -> Self? {
+        Self(String(digit))
+    }
+
+    static func from(bits: String) -> Self? {
         Self(bits, radix: 2)
     }
 
