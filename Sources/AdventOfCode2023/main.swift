@@ -5,4 +5,5 @@ AdventOfCode(year: 2023, puzzles: [
     CubeConundrum(),
     GearRatios(),
     Scratchcards(),
+    Seeds(),
 ]).run()
