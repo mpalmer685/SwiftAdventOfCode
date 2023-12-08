@@ -8,4 +8,5 @@ AdventOfCode(year: 2023, puzzles: [
     Seeds(),
     WaitForIt(),
     CamelCards(),
+    HauntedWasteland(),
 ]).run()

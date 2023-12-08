@@ -44,6 +44,16 @@ public struct Scanner<C: Collection> {
         return data[start ..< cursor]
     }
 
+    @discardableResult
+    public mutating func skip(while matches: (C.Element) -> Bool) -> Bool {
+        scan(while: matches).isNotEmpty
+    }
+
+    @discardableResult
+    public mutating func skip(count: Int) -> Bool {
+        scan(count: count).isNotEmpty
+    }
+
     private mutating func advance() {
         cursor = data.index(after: cursor)
     }
