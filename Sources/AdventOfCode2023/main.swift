@@ -7,4 +7,5 @@ AdventOfCode(year: 2023, puzzles: [
     Scratchcards(),
     Seeds(),
     WaitForIt(),
+    CamelCards(),
 ]).run()
