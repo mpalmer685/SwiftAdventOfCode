@@ -9,4 +9,5 @@ AdventOfCode(year: 2023, puzzles: [
     WaitForIt(),
     CamelCards(),
     HauntedWasteland(),
+    MirageMaintenance(),
 ]).run()
