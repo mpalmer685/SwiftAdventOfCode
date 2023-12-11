@@ -10,4 +10,5 @@ AdventOfCode(year: 2023, puzzles: [
     CamelCards(),
     HauntedWasteland(),
     MirageMaintenance(),
+    PipeMaze(),
 ]).run()
