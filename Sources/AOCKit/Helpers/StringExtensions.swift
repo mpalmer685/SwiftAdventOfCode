@@ -6,6 +6,17 @@ public extension String {
     subscript(offset: Int) -> Character {
         self[index(startIndex, offsetBy: offset)]
     }
+
+    subscript(from start: Int, to end: Int? = nil) -> String {
+        let substringStart = index(startIndex, offsetBy: start)
+        let substringEnd = if let end = end {
+            index(startIndex, offsetBy: end)
+        } else {
+            endIndex
+        }
+        let substring = self[substringStart ..< substringEnd]
+        return Self(substring)
+    }
 }
 
 // MARK: - String padding

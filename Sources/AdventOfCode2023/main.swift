@@ -12,4 +12,5 @@ AdventOfCode(year: 2023, puzzles: [
     MirageMaintenance(),
     PipeMaze(),
     CosmicExpansion(),
+    HotSprings(),
 ]).run()
