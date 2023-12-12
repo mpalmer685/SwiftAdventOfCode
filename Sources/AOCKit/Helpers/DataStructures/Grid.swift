@@ -73,6 +73,24 @@ public struct Grid<Cell> {
         }
         return cells.map { $0[column] }
     }
+
+    public mutating func insertRow(_ row: [Cell], at rowIndex: Int) {
+        guard row.count == width else {
+            fatalError("Expected row of length \(width) but got \(row.count)")
+        }
+
+        cells.insert(row, at: rowIndex)
+    }
+
+    public mutating func insertColumn(_ column: [Cell], at columnIndex: Int) {
+        guard column.count == height else {
+            fatalError("Expected column of length \(height) but got \(column.count)")
+        }
+
+        for row in 0 ..< height {
+            cells[row].insert(column[row], at: columnIndex)
+        }
+    }
 }
 
 extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
