@@ -74,6 +74,14 @@ public struct Grid<Cell> {
         return cells.map { $0[column] }
     }
 
+    public subscript(rows rows: Range<Int>) -> [[Cell]] {
+        Array(cells[rows])
+    }
+
+    public subscript(columns columns: Range<Int>) -> [[Cell]] {
+        columns.map { self[column: $0] }
+    }
+
     public mutating func insertRow(_ row: [Cell], at rowIndex: Int) {
         guard row.count == width else {
             fatalError("Expected row of length \(width) but got \(row.count)")
