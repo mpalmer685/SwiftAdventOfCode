@@ -14,4 +14,5 @@ AdventOfCode(year: 2023, puzzles: [
     CosmicExpansion(),
     HotSprings(),
     PointOfIncidence(),
+    ParabolicReflectorDish(),
 ]).run()
