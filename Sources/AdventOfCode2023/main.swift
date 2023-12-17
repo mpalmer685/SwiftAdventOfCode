@@ -16,4 +16,5 @@ AdventOfCode(year: 2023, puzzles: [
     PointOfIncidence(),
     ParabolicReflectorDish(),
     LensLibrary(),
+    TheFloorWillBeLava(),
 ]).run()
