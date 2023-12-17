@@ -3,24 +3,24 @@
     "1" : {
       "partOneAnswer" : "54630",
       "partOneDebugTime" : {
-        "nanoseconds" : 15201141,
+        "nanoseconds" : 13973285,
         "seconds" : 0
       },
       "partTwoAnswer" : "54770",
       "partTwoDebugTime" : {
-        "nanoseconds" : 144437223,
+        "nanoseconds" : 120887783,
         "seconds" : 0
       }
     },
     "2" : {
       "partOneAnswer" : "2512",
       "partOneDebugTime" : {
-        "nanoseconds" : 32537902,
+        "nanoseconds" : 29177291,
         "seconds" : 0
       },
       "partTwoAnswer" : "67335",
       "partTwoDebugTime" : {
-        "nanoseconds" : 29821730,
+        "nanoseconds" : 27429952,
         "seconds" : 0
       }
     },
@@ -39,7 +39,7 @@
     "4" : {
       "partOneAnswer" : "25231",
       "partOneDebugTime" : {
-        "nanoseconds" : 43996703,
+        "nanoseconds" : 35123295,
         "seconds" : 0
       },
       "partTwoAnswer" : "9721255",
@@ -63,7 +63,7 @@
     "6" : {
       "partOneAnswer" : "131376",
       "partOneDebugTime" : {
-        "nanoseconds" : 3709336,
+        "nanoseconds" : 230907,
         "seconds" : 0
       },
       "partTwoAnswer" : "34123437",
@@ -87,12 +87,12 @@
     "8" : {
       "partOneAnswer" : "14681",
       "partOneDebugTime" : {
-        "nanoseconds" : 21372283,
+        "nanoseconds" : 20090731,
         "seconds" : 0
       },
       "partTwoAnswer" : "14321394058031",
       "partTwoDebugTime" : {
-        "nanoseconds" : 104668175,
+        "nanoseconds" : 91443020,
         "seconds" : 0
       }
     },
@@ -147,7 +147,7 @@
     "13" : {
       "partOneAnswer" : "30802",
       "partOneDebugTime" : {
-        "nanoseconds" : 19885679,
+        "nanoseconds" : 16864630,
         "seconds" : 0
       },
       "partTwoAnswer" : "37876",
@@ -171,7 +171,7 @@
     "15" : {
       "partOneAnswer" : "515495",
       "partOneDebugTime" : {
-        "nanoseconds" : 17154257,
+        "nanoseconds" : 12240633,
         "seconds" : 0
       },
       "partTwoAnswer" : "229349",
