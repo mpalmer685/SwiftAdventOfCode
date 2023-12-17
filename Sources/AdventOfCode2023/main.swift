@@ -17,4 +17,5 @@ AdventOfCode(year: 2023, puzzles: [
     ParabolicReflectorDish(),
     LensLibrary(),
     TheFloorWillBeLava(),
+    ClumsyCrucible(),
 ]).run()
