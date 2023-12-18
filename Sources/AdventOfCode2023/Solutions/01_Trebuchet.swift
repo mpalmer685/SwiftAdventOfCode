@@ -33,12 +33,10 @@ struct Trebuchet: Puzzle {
                     continue scanning
                 }
 
-                for (number, digit) in numbers {
-                    if scanner.starts(with: number) {
-                        digits.append(digit)
-                        scanner.next()
-                        continue scanning
-                    }
+                for (number, digit) in numbers where scanner.starts(with: number) {
+                    digits.append(digit)
+                    scanner.next()
+                    continue scanning
                 }
 
                 scanner.next()

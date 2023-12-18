@@ -135,9 +135,9 @@ private struct Image {
     private func algorithmIndex(for point: Point2D, withDefault defaultPixel: Bool) -> Int {
         let binary = point.neighbors.map { p in
             if bounds.contains(p) {
-                return pixels.contains(p) ? "1" : "0"
+                pixels.contains(p) ? "1" : "0"
             } else {
-                return defaultPixel ? "1" : "0"
+                defaultPixel ? "1" : "0"
             }
         }.joined()
         guard let index = Int(binary, radix: 2) else { fatalError("Got \(binary)") }
@@ -150,7 +150,6 @@ private extension Int {
     var isOdd: Bool { self % 2 == 1 }
 }
 
-// swiftlint:disable line_length
 private let testInput = """
 ..#.#..#####.#.#.#.###.##.....###.##.#..###.####..#####..#....#..#..##..###..######.###...####..#..#####..##..#.#####...##.#.#..#.##..#.#......#.###.######.###.####...#.##.##..#..#..#####.....#.#....###..#.##......#.....#..#..#..##..#...##.######.####.####.#.#...#.......#..#.#.#...####.##.#......#..#...##.#.##..#...##.#.##..###.#......#.#.......#.#.#.####.###.##...#.....####.#..#..#.##.#....##..#.####....##...##..#...#......#.#.......#.......##..####..#...#.#.#...##..#.#..###..#####........#..####......#..#
 

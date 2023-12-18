@@ -20,7 +20,7 @@ struct RopeBridge: Puzzle {
             let count = words[1].integer!
 
             for _ in 0 ..< count {
-                rope[0] = rope[0] + direction
+                rope[0] += direction
 
                 for (lead, follow) in rope.indices.adjacentPairs() {
                     if rope[lead].touches(rope[follow]) { continue }
@@ -53,10 +53,10 @@ private extension Vector2D {
 
     static func from(_ input: String) -> Self {
         switch input {
-            case "D": return .down
-            case "U": return .up
-            case "L": return .left
-            case "R": return .right
+            case "D": .down
+            case "U": .up
+            case "L": .left
+            case "R": .right
             default: fatalError("Unknown direction input \(input)")
         }
     }

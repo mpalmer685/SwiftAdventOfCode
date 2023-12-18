@@ -23,7 +23,6 @@ public extension PointProtocol {
     }
 
     static func += (lhs: inout Self, rhs: Vector) {
-        // swiftlint:disable:next shorthand_operator
         lhs = lhs + rhs
     }
 
@@ -32,7 +31,6 @@ public extension PointProtocol {
     }
 
     static func -= (lhs: inout Self, rhs: Vector) {
-        // swiftlint:disable:next shorthand_operator
         lhs = lhs - rhs
     }
 
@@ -52,7 +50,6 @@ public extension PointProtocol {
     }
 
     static func *= (lhs: inout Self, rhs: Int) {
-        // swiftlint:disable:next shorthand_operator
         lhs = lhs * rhs
     }
 }
