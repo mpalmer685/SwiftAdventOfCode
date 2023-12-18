@@ -18,4 +18,5 @@ AdventOfCode(year: 2023, puzzles: [
     LensLibrary(),
     TheFloorWillBeLava(),
     ClumsyCrucible(),
+    LavaductLagoon(),
 ]).run()
