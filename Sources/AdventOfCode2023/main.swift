@@ -19,4 +19,5 @@ AdventOfCode(year: 2023, puzzles: [
     TheFloorWillBeLava(),
     ClumsyCrucible(),
     LavaductLagoon(),
+    Aplenty(),
 ]).run()
