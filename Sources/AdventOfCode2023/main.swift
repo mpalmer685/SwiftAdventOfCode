@@ -21,4 +21,5 @@ AdventOfCode(year: 2023, puzzles: [
     LavaductLagoon(),
     Aplenty(),
     PulsePropagation(),
+    StepCounter(),
 ]).run()

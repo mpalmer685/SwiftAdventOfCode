@@ -23,11 +23,11 @@ public extension Int {
         Self(bits, radix: 2)
     }
 
-    init<C: Collection>(bits: C) where C.Element == Bool {
+    init(bits: some Collection<Bool>) {
         self = bits.reduce(0) { $0 * 2 + ($1 ? 1 : 0) }
     }
 
-    init<C: Collection>(digits: C) where C.Element == Int {
+    init(digits: some Collection<Int>) {
         var i = 0
         for (power, digit) in digits.reversed().enumerated() {
             i += abs(digit) * Int(pow(10, Double(power)))
@@ -64,4 +64,9 @@ public func gcd<I: FixedWidthInteger>(_ m: I, _ n: I) -> I {
         r = a % b
     }
     return b
+}
+
+public extension FixedWidthInteger {
+    var isEven: Bool { self % 2 == 0 }
+    var isOdd: Bool { self % 2 == 1 }
 }
