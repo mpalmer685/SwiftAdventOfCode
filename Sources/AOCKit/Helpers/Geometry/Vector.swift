@@ -23,7 +23,7 @@ public extension VectorProtocol {
     }
 }
 
-internal extension VectorProtocol {
+extension VectorProtocol {
     static func adjacents(
         includingSelf: Bool = false,
         length: Int = 3
@@ -89,6 +89,10 @@ public struct Vector2D: VectorProtocol {
 
 public struct Vector3D: VectorProtocol {
     public static let numberOfDimensions = 3
+
+    public static let x = Self(1, 0, 0)
+    public static let y = Self(0, 1, 0)
+    public static let z = Self(0, 0, 1)
 
     public var dx: Int
     public var dy: Int

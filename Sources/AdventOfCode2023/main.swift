@@ -22,4 +22,5 @@ AdventOfCode(year: 2023, puzzles: [
     Aplenty(),
     PulsePropagation(),
     StepCounter(),
+    SandSlabs(),
 ]).run()
