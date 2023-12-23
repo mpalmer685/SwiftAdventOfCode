@@ -36,7 +36,7 @@ public final class BreadthFirstSearch<Graph: PathfindingGraph> {
 }
 
 public final class DepthFirstSearch<Graph: PathfindingGraph> {
-    private let graph: Graph
+    public let graph: Graph
 
     public init(_ graph: Graph) {
         self.graph = graph

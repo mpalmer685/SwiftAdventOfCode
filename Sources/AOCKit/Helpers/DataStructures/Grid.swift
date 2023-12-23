@@ -17,6 +17,11 @@ public struct Grid<Cell> {
         self.init(cells)
     }
 
+    public init<T>(data: [[T]], withTransform transform: (T) -> Cell) {
+        let cells = data.map { row in row.map(transform) }
+        self.init(cells)
+    }
+
     public var width: Int { cells[0].count }
     public var height: Int { cells.count }
 
