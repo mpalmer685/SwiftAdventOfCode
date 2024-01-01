@@ -1,5 +1,5 @@
 public protocol PointProtocol: Dimensioned {
-    associatedtype Vector: VectorProtocol
+    associatedtype Vector: VectorProtocol where Vector.Precision == Precision
 
     func apply(_ vector: Vector) -> Self
 }
@@ -44,18 +44,18 @@ public extension PointProtocol {
         return Self(new)
     }
 
-    static func * (lhs: Self, rhs: Int) -> Self {
+    static func * (lhs: Self, rhs: Precision) -> Self {
         let new = lhs.components.map { $0 * rhs }
         return Self(new)
     }
 
-    static func *= (lhs: inout Self, rhs: Int) {
+    static func *= (lhs: inout Self, rhs: Precision) {
         lhs = lhs * rhs
     }
 }
 
 public extension PointProtocol {
-    func manhattanDistance(to other: Self) -> Int {
+    func manhattanDistance(to other: Self) -> Precision {
         zip(components, other.components).reduce(0) { $0 + abs($1.0 - $1.1) }
     }
 

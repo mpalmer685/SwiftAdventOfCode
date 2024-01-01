@@ -23,7 +23,7 @@ public extension VectorProtocol {
     }
 }
 
-extension VectorProtocol {
+public extension VectorProtocol {
     static func adjacents(
         includingSelf: Bool = false,
         length: Int = 3
@@ -36,17 +36,17 @@ extension VectorProtocol {
         return all
     }
 
-    private static func combos(count: Int, length: Int) -> [[Int]] {
+    private static func combos(count: Int, length: Int) -> [[Precision]] {
         guard count > 0 else { return [] }
         let remainders = combos(count: count - 1, length: length)
 
         let lengthRange = (-length / 2) ... (-length / 2 + length - 1)
         if remainders.isEmpty {
-            return Array(lengthRange).map { [$0] }
+            return Array(lengthRange).map { [Precision(exactly: $0)!] }
         }
 
-        return lengthRange.flatMap { l -> [[Int]] in
-            remainders.map { [l] + $0 }
+        return lengthRange.flatMap { l -> [[Precision]] in
+            remainders.map { [Precision(exactly: l)!] + $0 }
         }
     }
 }

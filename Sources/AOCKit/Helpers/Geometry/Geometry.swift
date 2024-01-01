@@ -1,9 +1,11 @@
 public protocol Dimensioned: Hashable, CustomStringConvertible {
+    associatedtype Precision: SignedNumeric, CustomStringConvertible, Comparable
+
     static var numberOfDimensions: Int { get }
     static var descriptionWrappers: (String, String) { get }
 
-    var components: [Int] { get }
-    init(_ components: [Int])
+    var components: [Precision] { get }
+    init(_ components: [Precision])
 }
 
 public extension Dimensioned {
@@ -27,8 +29,8 @@ public extension Dimensioned {
     }
 }
 
-extension Dimensioned {
-    static func assertComponents(_ components: [Int], caller: StaticString = #function) {
+public extension Dimensioned {
+    static func assertComponents(_ components: [Precision], caller: StaticString = #function) {
         if components.count != numberOfDimensions {
             fatalError(
                 "Invalid components provided to \(caller). Expected \(numberOfDimensions), but got \(components.count)"

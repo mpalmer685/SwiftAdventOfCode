@@ -24,4 +24,6 @@ AdventOfCode(year: 2023, puzzles: [
     StepCounter(),
     SandSlabs(),
     LongWalk(),
+    NeverTellMeTheOdds(),
+    Snowverload(),
 ]).run()
