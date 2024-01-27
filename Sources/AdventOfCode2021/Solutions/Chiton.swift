@@ -39,16 +39,14 @@ private struct Cave {
     }
 
     func riskOfBestPath() -> Int {
-        let pathfinder = DijkstraPathfinder(self)
         let start = Point2D(0, 0)
         let goal = Point2D(grid.width - 1, grid.height - 1)
-        let path = pathfinder.path(from: start, to: goal)
-        return path.map { grid[$0] }.sum
+        return costOfPath(from: start, to: goal)
     }
 }
 
-extension Cave: DijkstraPathfindingGraph {
-    func nextStates(from state: Point2D) -> [(Point2D, Int)] {
+extension Cave: WeightedGraph {
+    func neighbors(of state: Point2D) -> [(Point2D, Int)] {
         state.orthogonalNeighbors
             .filter { grid.contains($0) }
             .map { ($0, grid[$0]) }

@@ -25,7 +25,10 @@ struct ConwayCubes: Puzzle {
         var field: [T: Bool] = [:]
         for (y, line) in input.lines.enumerated() {
             for (x, cell) in line.characters.enumerated() {
-                field[T([x, y].padded(toLength: T.numberOfDimensions, with: 0))] = cell == "#"
+                let components = [x, y]
+                    .compactMap(T.Precision.init(exactly:))
+                    .padded(toLength: T.numberOfDimensions, with: 0)
+                field[T(components)] = cell == "#"
             }
         }
         return field

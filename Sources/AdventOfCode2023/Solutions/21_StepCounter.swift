@@ -20,8 +20,8 @@ struct StepCounter: Puzzle {
     func part1(input: Input) throws -> Int {
         let targetStepCount = 64
         let (start, openSpots) = parse(input)
-        let pathfinder = DijkstraPathfinder(StepPathfinder(openPlots: openSpots))
-        let costs = pathfinder.calculateCosts(from: start)
+        let pathfinder = StepPathfinder(openPlots: openSpots)
+        let costs = pathfinder.nodesAccessible(from: start)
 
         return costs.values.count { steps in
             steps <= targetStepCount && steps.isEven == targetStepCount.isEven
@@ -34,8 +34,8 @@ struct StepCounter: Puzzle {
         let targetStepCount = 26_501_365
         let grid = Grid(input.lines.characters)
         let (start, openSpots) = parse(input)
-        let pathfinder = DijkstraPathfinder(StepPathfinder(openPlots: openSpots))
-        let costs = pathfinder.calculateCosts(from: start)
+        let pathfinder = StepPathfinder(openPlots: openSpots)
+        let costs = pathfinder.nodesAccessible(from: start)
 
         let evenCorners = costs.values.count { $0.isEven && $0 > 65 }
         let oddCorners = costs.values.count { $0.isOdd && $0 > 65 }
@@ -68,12 +68,10 @@ struct StepCounter: Puzzle {
     }
 }
 
-private struct StepPathfinder: DijkstraPathfindingGraph {
+private struct StepPathfinder: Graph {
     let openPlots: Set<Point2D>
 
-    func nextStates(from position: Point2D) -> [(Point2D, Int)] {
-        position.orthogonalNeighbors
-            .filter { openPlots.contains($0) }
-            .map { ($0, 1) }
+    func neighbors(of position: Point2D) -> [Point2D] {
+        position.orthogonalNeighbors.filter { openPlots.contains($0) }
     }
 }

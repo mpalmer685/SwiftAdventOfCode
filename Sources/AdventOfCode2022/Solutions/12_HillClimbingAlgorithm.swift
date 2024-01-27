@@ -38,12 +38,12 @@ class HillClimbingAlgorithm: Puzzle {
     }
 }
 
-private struct HeightMap: PathfindingGraph {
+private struct HeightMap: Graph {
     let grid: Grid<Character>
     let start: Point2D
     let end: Point2D
 
-    func nextStates(from state: Point2D) -> [Point2D] {
+    func neighbors(of state: Point2D) -> [Point2D] {
         let height = grid[state].alphabeticIndex!
         return state.orthogonalNeighbors.filter { neighbor in
             grid.contains(neighbor) && grid[neighbor].alphabeticIndex! <= height + 1
@@ -53,9 +53,4 @@ private struct HeightMap: PathfindingGraph {
     func shortestPath() -> [Point2D] { shortestPath(from: start, to: end) }
 
     func shortestPath(from start: Point2D) -> [Point2D] { shortestPath(from: start, to: end) }
-
-    private func shortestPath(from start: Point2D, to end: Point2D) -> [Point2D] {
-        let pathfinder = BreadthFirstSearch(self)
-        return pathfinder.path(from: start, to: end)
-    }
 }

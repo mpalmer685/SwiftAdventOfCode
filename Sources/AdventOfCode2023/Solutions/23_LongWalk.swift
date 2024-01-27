@@ -41,10 +41,7 @@ struct LongWalk: Puzzle {
             }
         }
 
-        let graph = Graph(map: map)
-        let pathfinder = DepthFirstSearch(graph)
-
-        return pathfinder.maximumPathLength(from: start, to: end)
+        return Graph(map: map).maximumPathLength(from: start, to: end)
     }
 
     func part2(input: Input) throws -> Int {
@@ -74,10 +71,7 @@ struct LongWalk: Puzzle {
             }
         }
 
-        let graph = Graph(map: map)
-        let pathfinder = DepthFirstSearch(graph)
-
-        return pathfinder.maximumPathLength(from: start, to: end)
+        return Graph(map: map).maximumPathLength(from: start, to: end)
     }
 }
 
@@ -140,22 +134,14 @@ private extension PathLengthGraphState {
     }
 }
 
-private protocol MapGraph: PathfindingGraph {
+private protocol MapGraph {
     var accessiblePoints: any Collection<Point2D> { get }
 
     func hasJunction(at: Point2D) -> Bool
     func neighbors(of: Point2D) -> [Point2D]
 }
 
-private extension MapGraph where State: PathLengthGraphState {
-    func nextStates(from state: State) -> [State] {
-        neighbors(of: state.last)
-            .filter { !state.points.contains($0) }
-            .map { state.next(movingTo: $0) }
-    }
-}
-
-private extension DepthFirstSearch where Graph: MapGraph, Graph.State: PathLengthGraphState {
+private extension MapGraph {
     func maximumPathLength(from start: Point2D, to end: Point2D) -> Int {
         let junctions = junctions(between: start, and: end)
         let paths = paths(between: junctions)
@@ -183,7 +169,7 @@ private extension DepthFirstSearch where Graph: MapGraph, Graph.State: PathLengt
     private func junctions(between start: Point2D, and end: Point2D) -> Set<Point2D> {
         var junctions: Set<Point2D> = [start, end]
 
-        for point in graph.accessiblePoints where graph.hasJunction(at: point) {
+        for point in accessiblePoints where hasJunction(at: point) {
             junctions.insert(point)
         }
 
@@ -194,13 +180,13 @@ private extension DepthFirstSearch where Graph: MapGraph, Graph.State: PathLengt
         var paths: [Point2D: [(Point2D, Int)]] = [:]
 
         for junction in junctions {
-            for neighbor in graph.neighbors(of: junction) {
+            for neighbor in neighbors(of: junction) {
                 var current = neighbor
                 var path: Set<Point2D> = [junction]
 
                 repeat {
                     path.insert(current)
-                    let neighbors = graph.neighbors(of: current).filter { !path.contains($0) }
+                    let neighbors = neighbors(of: current).filter { !path.contains($0) }
                     guard neighbors.count <= 1 else {
                         fatalError()
                     }

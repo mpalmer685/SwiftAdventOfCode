@@ -3,7 +3,7 @@
     "1" : {
       "partOneAnswer" : "1018944",
       "partOneDebugTime" : {
-        "nanoseconds" : 1278857,
+        "nanoseconds" : 876876,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -12,7 +12,7 @@
       },
       "partTwoAnswer" : "8446464",
       "partTwoDebugTime" : {
-        "nanoseconds" : 1262324,
+        "nanoseconds" : 973462,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -23,7 +23,7 @@
     "2" : {
       "partOneAnswer" : "548",
       "partOneDebugTime" : {
-        "nanoseconds" : 11655452,
+        "nanoseconds" : 9507431,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -32,7 +32,7 @@
       },
       "partTwoAnswer" : "502",
       "partTwoDebugTime" : {
-        "nanoseconds" : 9596144,
+        "nanoseconds" : 7350765,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -43,7 +43,7 @@
     "3" : {
       "partOneAnswer" : "282",
       "partOneDebugTime" : {
-        "nanoseconds" : 1518051,
+        "nanoseconds" : 1101727,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -52,7 +52,7 @@
       },
       "partTwoAnswer" : "958815792",
       "partTwoDebugTime" : {
-        "nanoseconds" : 1464273,
+        "nanoseconds" : 1072630,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -63,7 +63,7 @@
     "4" : {
       "partOneAnswer" : "235",
       "partOneDebugTime" : {
-        "nanoseconds" : 24791869,
+        "nanoseconds" : 16994872,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -72,7 +72,7 @@
       },
       "partTwoAnswer" : "194",
       "partTwoDebugTime" : {
-        "nanoseconds" : 51379751,
+        "nanoseconds" : 41937836,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -83,7 +83,7 @@
     "5" : {
       "partOneAnswer" : "904",
       "partOneDebugTime" : {
-        "nanoseconds" : 5467532,
+        "nanoseconds" : 5202474,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -92,7 +92,7 @@
       },
       "partTwoAnswer" : "669",
       "partTwoDebugTime" : {
-        "nanoseconds" : 8041283,
+        "nanoseconds" : 7085313,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -103,7 +103,7 @@
     "6" : {
       "partOneAnswer" : "6249",
       "partOneDebugTime" : {
-        "nanoseconds" : 9940316,
+        "nanoseconds" : 9431593,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -112,7 +112,7 @@
       },
       "partTwoAnswer" : "3103",
       "partTwoDebugTime" : {
-        "nanoseconds" : 8989470,
+        "nanoseconds" : 7788886,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -143,7 +143,7 @@
     "8" : {
       "partOneAnswer" : "1832",
       "partOneDebugTime" : {
-        "nanoseconds" : 3494585,
+        "nanoseconds" : 1480383,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -163,7 +163,7 @@
     "9" : {
       "partOneAnswer" : "1212510616",
       "partOneDebugTime" : {
-        "nanoseconds" : 13830285,
+        "nanoseconds" : 12471250,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -183,7 +183,7 @@
     "10" : {
       "partOneAnswer" : "1914",
       "partOneDebugTime" : {
-        "nanoseconds" : 894319,
+        "nanoseconds" : 658508,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -192,7 +192,7 @@
       },
       "partTwoAnswer" : "9256148959232",
       "partTwoDebugTime" : {
-        "nanoseconds" : 745204,
+        "nanoseconds" : 608113,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -232,7 +232,7 @@
       },
       "partTwoAnswer" : "42908",
       "partTwoDebugTime" : {
-        "nanoseconds" : 1825965,
+        "nanoseconds" : 1646801,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -243,7 +243,7 @@
     "13" : {
       "partOneAnswer" : "410",
       "partOneDebugTime" : {
-        "nanoseconds" : 310262,
+        "nanoseconds" : 252912,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -252,7 +252,7 @@
       },
       "partTwoAnswer" : "600691418730595",
       "partTwoDebugTime" : {
-        "nanoseconds" : 900315,
+        "nanoseconds" : 838804,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -263,7 +263,7 @@
     "14" : {
       "partOneAnswer" : "8570568288597",
       "partOneDebugTime" : {
-        "nanoseconds" : 4601983,
+        "nanoseconds" : 3647901,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -272,7 +272,7 @@
       },
       "partTwoAnswer" : "3289441921203",
       "partTwoDebugTime" : {
-        "nanoseconds" : 223665013,
+        "nanoseconds" : 212205256,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -283,7 +283,7 @@
     "15" : {
       "partOneAnswer" : "376",
       "partOneDebugTime" : {
-        "nanoseconds" : 1923185,
+        "nanoseconds" : 1717623,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -292,8 +292,8 @@
       },
       "partTwoAnswer" : "323780",
       "partTwoDebugTime" : {
-        "nanoseconds" : 545635599,
-        "seconds" : 27
+        "nanoseconds" : 151923514,
+        "seconds" : 26
       },
       "partTwoReleaseTime" : {
         "nanoseconds" : 909147629,
@@ -372,8 +372,8 @@
       },
       "partTwoAnswer" : "386",
       "partTwoDebugTime" : {
-        "nanoseconds" : 50334817,
-        "seconds" : 1
+        "nanoseconds" : 997255917,
+        "seconds" : 0
       },
       "partTwoReleaseTime" : {
         "nanoseconds" : 430111204,
@@ -423,7 +423,7 @@
     "22" : {
       "partOneAnswer" : "35818",
       "partOneDebugTime" : {
-        "nanoseconds" : 1247520,
+        "nanoseconds" : 1032639,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -443,7 +443,7 @@
     "23" : {
       "partOneAnswer" : "34952786",
       "partOneDebugTime" : {
-        "nanoseconds" : 407012,
+        "nanoseconds" : 318951,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -472,7 +472,7 @@
       },
       "partTwoAnswer" : "3649",
       "partTwoDebugTime" : {
-        "nanoseconds" : 650970444,
+        "nanoseconds" : 290579,
         "seconds" : 10
       },
       "partTwoReleaseTime" : {

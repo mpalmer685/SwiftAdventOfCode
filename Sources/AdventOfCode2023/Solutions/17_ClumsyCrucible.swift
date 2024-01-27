@@ -63,17 +63,15 @@ private struct LavaPath {
     }
 
     func heatLoss() -> Int {
-        let pathfinder = DijkstraPathfinder(self)
         let end = end
-        let path = pathfinder.path(from: SearchState(location: start)) { state in
+        return costOfPath(from: SearchState(location: start)) { state in
             state.location == end && state.streak >= minStreak
         }
-        return path.sum { map[$0.location] }
     }
 }
 
-extension LavaPath: DijkstraPathfindingGraph {
-    func nextStates(from state: SearchState) -> [(SearchState, Int)] {
+extension LavaPath: WeightedGraph {
+    func neighbors(of state: SearchState) -> [(SearchState, Int)] {
         var states = [SearchState]()
 
         for dir in Vector2D.orthogonalAdjacents {
@@ -128,7 +126,7 @@ struct SearchState: Hashable {
 
 extension SearchState: CustomStringConvertible {
     var description: String {
-        if let direction = direction {
+        if let direction {
             "\(location), \(direction), streak: \(streak)"
         } else {
             "\(location), streak: \(streak)"

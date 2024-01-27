@@ -124,36 +124,22 @@ private struct SearchState: Hashable {
     }
 }
 
-extension Valley: AStarPathfindingGraph {
-    func nextStates(from state: SearchState) -> [SearchState] {
+extension Valley: Graph {
+    func neighbors(of state: SearchState) -> [SearchState] {
         let blizzards = blizzardStates[(state.time + 1) % blizzardStates.count]
         let options = (state.location.orthogonalNeighbors + [state.location])
             .filter { map.contains($0) && map[$0] == .ground && !blizzards.contains($0) }
 
         return options.map { SearchState(location: $0, time: state.time + 1) }
     }
-
-    func costToMove(from: SearchState, to: SearchState) -> Int {
-        distance(from: from, to: to) + to.time
-    }
-
-    func estimatedCost(from: SearchState, to: SearchState) -> Int {
-        distance(from: from, to: to)
-    }
-
-    private func distance(from: SearchState, to: SearchState) -> Int {
-        from.location.manhattanDistance(to: to.location)
-    }
 }
 
 private extension Valley {
     func timeToTravel(from start: Point2D, to destination: Point2D, startTime: Int = 0) -> Int {
-        let pathfinder = AStarPathfinder(self)
-
         let start = SearchState(location: start, time: startTime)
         let destination = SearchState(location: destination)
 
-        let path = pathfinder.path(from: start, to: destination) {
+        let path = shortestPath(from: start) {
             $0.location == destination.location
         }
         return path.count

@@ -48,12 +48,12 @@ private extension Grid where Cell == Character {
     }
 }
 
-private struct Burrow: DijkstraPathfindingGraph {
+private struct Burrow: WeightedGraph {
     fileprivate static let types = Array("ABCD")
     fileprivate static let rooms = [3, 5, 7, 9]
 
     func cost(toOrganize grid: Grid<Character>) -> Int {
-        DijkstraPathfinder(self).costOfPath(from: grid) { grid -> Bool in
+        costOfPath(from: grid) { grid -> Bool in
             zip(Self.types, Self.rooms).allSatisfy { type, col in
                 (2 ..< grid.height - 1)
                     .allSatisfy { row in grid[col, row] == type }
@@ -61,7 +61,7 @@ private struct Burrow: DijkstraPathfindingGraph {
         }
     }
 
-    func nextStates(from state: Grid<Character>) -> [(Grid<Character>, Int)] {
+    func neighbors(of state: Grid<Character>) -> [(Grid<Character>, Int)] {
         state.points
             .filter { state.isOccupied($0) && !state.isTypeCompleted(at: $0) }
             .flatMap { p in

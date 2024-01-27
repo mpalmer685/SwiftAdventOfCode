@@ -110,11 +110,11 @@ private final class Path {
     }
 }
 
-private struct RoomsCollection: DijkstraPathfindingGraph {
+private struct RoomsCollection: Graph {
     let roomsByName: RoomsByName
 
-    func nextStates(from state: Room) -> [(Room, Int)] {
-        state.neighbors.map { (roomsByName[$0]!, 1) }
+    func neighbors(of state: Room) -> [Room] {
+        state.neighbors.map { roomsByName[$0]! }
     }
 }
 
@@ -124,8 +124,7 @@ private func calculateCosts(
     withRooms roomsByName: RoomsByName
 ) -> CostLookup {
     let rooms = RoomsCollection(roomsByName: roomsByName)
-    let pathfinder = DijkstraPathfinder(rooms)
-    let costs = pathfinder.calculateCosts(from: start)
+    let costs = rooms.nodesAccessible(from: start)
 
     return endPositions.reduce(into: CostLookup()) { $0[$1.name] = costs[$1]! }
 }
