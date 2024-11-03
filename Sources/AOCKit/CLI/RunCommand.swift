@@ -24,21 +24,21 @@ struct RunCommand: ParsableCommand {
     var latest = false
 
     func validate() throws {
-        if let day = day, !day.isBetween(1, and: 25) {
+        if let day, !day.isBetween(1, and: 25) {
             throw ValidationError("Day should be between 1 and 25")
         }
     }
 
     func run(event: AdventOfCode) throws {
         let success: Bool
-        if let day = day, let part = part {
+        if let day, let part {
             if event.hasSavedResult(for: day, part) {
                 success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
                 try event.generateResult(for: day, part: part)
                 success = true
             }
-        } else if let day = day {
+        } else if let day {
             success = try event.checkAllParts(for: day)
         } else if latest {
             guard let (day, part) = event.savedResults.latest,
@@ -76,11 +76,11 @@ private extension AdventOfCode {
     }
 
     private var inputFolder: Folder? {
-        try? Folder(path: "Inputs/\(year)")
+        try? Folder(path: "Data/\(year)")
     }
 
     private func readInput(for day: Int) -> Input? {
-        guard let inputFolder = inputFolder,
+        guard let inputFolder,
               let inputFile = try? inputFolder.file(named: "day\(day)"),
               let content = try? inputFile.readAsString()
         else {
@@ -90,7 +90,7 @@ private extension AdventOfCode {
     }
 
     private func downloadInput(for day: Int) -> Input? {
-        guard let inputFolder = inputFolder,
+        guard let inputFolder,
               let token = authToken,
               let url = URL(string: "https://adventofcode.com/\(year)/day/\(day)/input"),
               let cookie = HTTPCookie(properties: [
@@ -164,14 +164,18 @@ private extension AdventOfCode {
             if let oldDuration = duration {
                 let comparison = newDuration.compared(to: oldDuration)
                 spinner
-                    .succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).")
+                    .succeed(
+                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison))."
+                    )
                 if comparison.isImprovement {
                     savedResults.update(newDuration, for: day, part)
                     try savedResults.save()
                 }
             } else {
                 spinner
-                    .succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay().blue).")
+                    .succeed(
+                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay().blue)."
+                    )
                 savedResults.update(newDuration, for: day, part)
                 try savedResults.save()
             }
@@ -185,9 +189,9 @@ private extension AdventOfCode {
     func checkAllParts(for day: Int) throws -> Bool {
         try PuzzlePart.allCases.allSatisfy { part in
             if hasSavedResult(for: day, part) {
-                return try checkPuzzleMatchesSavedAnswer(for: day, part)
+                try checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
-                return true
+                true
             }
         }
     }

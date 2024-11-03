@@ -2,58 +2,84 @@ import Codextended
 import Files
 import Foundation
 
-struct SavedResults {
-    struct Result: Codable {
-        var partOneAnswer: String?
-        var partTwoAnswer: String?
+private struct Result<Value: Codable>: Codable {
+    var part1: Value?
+    var part2: Value?
+}
 
-        private var partOneDebugTime: Duration?
-        private var partTwoDebugTime: Duration?
+private let jsonEncoder = configure(JSONEncoder()) {
+    $0.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+}
 
-        private var partOneReleaseTime: Duration?
-        private var partTwoReleaseTime: Duration?
-    }
+private struct SavedResult<Value: Codable> {
+    private let saveLocation: File
 
-    private let encoder = configure(JSONEncoder()) {
-        $0.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
-    }
+    fileprivate var resultsByDay: [Int: Result<Value>]
 
-    private var resultsByDay: [Int: Result]
-    private var saveLocation: File?
-
-    static func load(from path: String) -> SavedResults {
-        do {
-            let file = try File(path: path)
-            let fileContents = try file.read()
-            var result = try JSONDecoder().decode(SavedResults.self, from: fileContents)
-            result.saveLocation = file
-            return result
-        } catch {
-            return SavedResults(path: path)
+    static func load(from path: String) -> SavedResult {
+        guard let file = try? File(path: path) else {
+            return SavedResult(path: path)
         }
+
+        guard let fileContents = try? file.read(),
+              let result = try? JSONDecoder().decode([Int: Result<Value>].self, from: fileContents)
+        else {
+            fatalError("Failed to decode saved results from \(path)")
+        }
+
+        return SavedResult(resultsByDay: result, saveLocation: file)
     }
 
     init(path: String) {
         resultsByDay = [:]
-        // swiftlint:disable:next force_try
-        saveLocation = try! Folder.current.createFileIfNeeded(at: path)
+        do {
+            saveLocation = try Folder.current.createFileIfNeeded(at: path)
+        } catch {
+            fatalError("Failed to create file at \(path): \(error)")
+        }
+    }
+
+    init(resultsByDay: [Int: Result<Value>], saveLocation: File) {
+        self.resultsByDay = resultsByDay
+        self.saveLocation = saveLocation
+    }
+
+    subscript(day: Int) -> Result<Value>? {
+        get { resultsByDay[day] }
+        set { resultsByDay[day] = newValue }
+    }
+
+    func save() throws {
+        try saveLocation.write(resultsByDay.encoded(using: jsonEncoder))
+    }
+}
+
+struct SavedResults {
+    private var answers: SavedResult<String>
+    private var benchmarks: SavedResult<Duration>
+
+    init(year: Int) {
+        answers = .load(from: "Data/\(year)/Answers.json")
+
+        #if DEBUG
+            let benchmarkFile = "\(year)-debug"
+        #else
+            let benchmarkFile = "\(year)-release"
+        #endif
+        benchmarks = .load(from: "Benchmarks/\(benchmarkFile).json")
     }
 
     var days: [Int] {
-        resultsByDay.keys.sorted()
-    }
-
-    subscript(day: Int) -> Result? {
-        resultsByDay[day]
+        answers.resultsByDay.keys.sorted()
     }
 
     var latest: (day: Int, part: PuzzlePart)? {
         guard var latestDay = days.max() else { return nil }
         while latestDay > 0 {
-            guard let result = resultsByDay[latestDay] else { continue }
-            if result.partTwoAnswer != nil {
+            guard let result = answers.resultsByDay[latestDay] else { continue }
+            if result.part2 != nil {
                 return (latestDay, .partTwo)
-            } else if result.partOneAnswer != nil {
+            } else if result.part1 != nil {
                 return (latestDay, .partOne)
             }
 
@@ -64,24 +90,25 @@ struct SavedResults {
     }
 
     func answer(for day: Int, _ part: PuzzlePart) -> String? {
-        let result = resultsByDay[day]
+        let result = answers[day]
         switch part {
             case .partOne:
-                return result?.partOneAnswer
+                return result?.part1
             case .partTwo:
-                return result?.partTwoAnswer
+                return result?.part2
         }
     }
 
     func savedResult(for day: Int, _ part: PuzzlePart) -> (String, Duration?)? {
-        guard let result = resultsByDay[day] else { return nil }
+        guard let answer = answers[day] else { return nil }
+        let benchmark = benchmarks[day]
         switch part {
             case .partOne:
-                guard let answer = result.partOneAnswer else { return nil }
-                return (answer, result.partOneTime)
+                guard let answer = answer.part1 else { return nil }
+                return (answer, benchmark?.part1)
             case .partTwo:
-                guard let answer = result.partTwoAnswer else { return nil }
-                return (answer, result.partTwoTime)
+                guard let answer = answer.part2 else { return nil }
+                return (answer, benchmark?.part2)
         }
     }
 
@@ -91,79 +118,35 @@ struct SavedResults {
         to answer: String,
         duration: Duration
     ) {
-        var result = resultsByDay[day] ?? Result()
+        var answers = answers[day] ?? Result()
+        var benchmarks = benchmarks[day] ?? Result()
         switch part {
             case .partOne:
-                result.partOneAnswer = answer
-                result.partOneTime = duration
+                answers.part1 = answer
+                benchmarks.part1 = duration
             case .partTwo:
-                result.partTwoAnswer = answer
-                result.partTwoTime = duration
+                answers.part2 = answer
+                benchmarks.part2 = duration
         }
 
-        resultsByDay[day] = result
+        self.answers[day] = answers
+        self.benchmarks[day] = benchmarks
     }
 
     mutating func update(_ duration: Duration, for day: Int, _ part: PuzzlePart) {
-        guard var result = resultsByDay[day] else { return }
+        var benchmarks = benchmarks[day] ?? Result()
         switch part {
             case .partOne:
-                result.partOneTime = duration
+                benchmarks.part1 = duration
             case .partTwo:
-                result.partTwoTime = duration
+                benchmarks.part2 = duration
         }
 
-        resultsByDay[day] = result
+        self.benchmarks[day] = benchmarks
     }
 
     func save() throws {
-        guard let saveLocation = saveLocation else { return }
-        try saveLocation.write(encoded(using: encoder))
-    }
-}
-
-extension SavedResults: Codable {
-    public init(from decoder: Decoder) throws {
-        resultsByDay = try decoder.decode("resultsByDay")
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        try encoder.encode(resultsByDay, for: "resultsByDay")
-    }
-}
-
-extension SavedResults.Result {
-    var partOneTime: Duration? {
-        get {
-            #if DEBUG
-                return partOneDebugTime
-            #else
-                return partOneReleaseTime
-            #endif
-        }
-        set {
-            #if DEBUG
-                partOneDebugTime = newValue
-            #else
-                partOneReleaseTime = newValue
-            #endif
-        }
-    }
-
-    var partTwoTime: Duration? {
-        get {
-            #if DEBUG
-                return partTwoDebugTime
-            #else
-                return partTwoReleaseTime
-            #endif
-        }
-        set {
-            #if DEBUG
-                partTwoDebugTime = newValue
-            #else
-                partTwoReleaseTime = newValue
-            #endif
-        }
+        try answers.save()
+        try benchmarks.save()
     }
 }

@@ -7,7 +7,7 @@ public class AdventOfCode {
         self.year = year
         self.puzzles = puzzles
 
-        savedResults = .load(from: "Results/\(year).json")
+        savedResults = SavedResults(year: year)
     }
 }
 
