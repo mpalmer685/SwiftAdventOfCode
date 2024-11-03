@@ -174,7 +174,7 @@ struct JurassicJigsaw: Puzzle {
     }
 }
 
-private typealias Transformation = (inout [[Character]]) -> Void
+private typealias Transformation = @Sendable (inout [[Character]]) -> Void
 private let transformations: [Transformation] = [
     rotate,
     rotate,
@@ -289,10 +289,12 @@ private extension Dictionary where Value == [Key], Value.Element: Equatable {
     }
 }
 
+@Sendable
 private func flip<T>(_ array: inout [[T]]) {
     array.reverse()
 }
 
+@Sendable
 private func rotate<T>(_ array: inout [[T]]) {
     array.reverse()
     for row in 0 ..< array.count {

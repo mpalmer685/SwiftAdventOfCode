@@ -75,7 +75,7 @@ struct BinaryDiagnostic: Puzzle {
     }
 }
 
-private typealias ElementSelector<Key: Hashable, Value> = ([Key: Value]) -> Dictionary<Key, Value>
+private typealias ElementSelector<Key: Hashable, Value> = @Sendable ([Key: Value]) -> Dictionary<Key, Value>
     .Element?
 
 private let selectMin: ElementSelector<Character, Int> = { $0.min(by: \.value) }

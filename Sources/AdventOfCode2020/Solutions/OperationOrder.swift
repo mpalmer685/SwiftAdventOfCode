@@ -103,10 +103,12 @@ private enum Token {
     case operand(value: Int)
 }
 
-private typealias Operation = (Int, Int) -> Int
+private typealias Operation = @Sendable (Int, Int) -> Int
 private let noOp: Operation = { _, _ in fatalError() }
+private let add: Operation = { $0 + $1 }
+private let multiply: Operation = { $0 * $1 }
 
-private struct Operator {
+private struct Operator: Sendable {
     let symbol: Character
     let precedence: Precedence
     let associativity: Associativity
@@ -143,21 +145,21 @@ private struct Operator {
         }
     }
 
-    struct OperatorSet: ExpressibleByArrayLiteral {
+    struct OperatorSet: ExpressibleByArrayLiteral, Sendable {
         private let operators: [Operator]
 
         static let part1: OperatorSet = [
             .openGroup(symbol: "("),
             .closeGroup(symbol: ")"),
-            .arithmetic(symbol: "+", precedence: .addition, operation: +),
-            .arithmetic(symbol: "*", precedence: .addition, operation: *),
+            .arithmetic(symbol: "+", precedence: .addition, operation: add),
+            .arithmetic(symbol: "*", precedence: .addition, operation: multiply),
         ]
 
         static let part2: OperatorSet = [
             .openGroup(symbol: "("),
             .closeGroup(symbol: ")"),
-            .arithmetic(symbol: "+", precedence: .addition, operation: +),
-            .arithmetic(symbol: "*", precedence: .multiplication, operation: *),
+            .arithmetic(symbol: "+", precedence: .addition, operation: add),
+            .arithmetic(symbol: "*", precedence: .multiplication, operation: multiply),
         ]
 
         init(arrayLiteral elements: Operator...) {

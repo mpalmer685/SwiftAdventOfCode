@@ -83,7 +83,7 @@
     "5" : {
       "partOneAnswer" : "904",
       "partOneDebugTime" : {
-        "nanoseconds" : 5202474,
+        "nanoseconds" : 4909669,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -252,7 +252,7 @@
       },
       "partTwoAnswer" : "600691418730595",
       "partTwoDebugTime" : {
-        "nanoseconds" : 838804,
+        "nanoseconds" : 789287,
         "seconds" : 0
       },
       "partTwoReleaseTime" : {
@@ -363,7 +363,7 @@
     "19" : {
       "partOneAnswer" : "151",
       "partOneDebugTime" : {
-        "nanoseconds" : 220166550,
+        "nanoseconds" : 206510096,
         "seconds" : 0
       },
       "partOneReleaseTime" : {

@@ -3,7 +3,7 @@
     "1" : {
       "partOneAnswer" : "71924",
       "partOneDebugTime" : {
-        "nanoseconds" : 5910514,
+        "nanoseconds" : 5575792,
         "seconds" : 0
       },
       "partOneReleaseTime" : {
@@ -312,8 +312,8 @@
       },
       "partTwoAnswer" : "2469",
       "partTwoDebugTime" : {
-        "nanoseconds" : 102526334,
-        "seconds" : 63
+        "nanoseconds" : 497154558,
+        "seconds" : 59
       },
       "partTwoReleaseTime" : {
         "nanoseconds" : 979908540,

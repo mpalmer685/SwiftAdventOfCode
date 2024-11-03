@@ -2,8 +2,8 @@ import AOCKit
 
 private typealias Passport = [String: String]
 private typealias FieldSet = Set<String>
-private typealias Validator = (Passport) -> Bool
-private typealias ValidatorBuilder = (String) -> (Passport) -> Bool
+private typealias Validator = @Sendable (Passport) -> Bool
+private typealias ValidatorBuilder = @Sendable (String) -> Validator
 
 struct PassportProcessing: Puzzle {
     static let day = 4

@@ -23,7 +23,7 @@ private extension Position {
 }
 
 private typealias Scanner = [Position]
-private typealias Rotation = (Position) -> Position
+private typealias Rotation = @Sendable (Position) -> Position
 private typealias Transform = (rotate: Rotation, offset: Position)
 private typealias Transforms = [[Int: [Transform]]]
 

@@ -66,10 +66,10 @@ private extension AdventOfCode {
         if let input = puzzleStatic.rawInput {
             return Input(input)
         }
-        if let input = try readInput(for: puzzleStatic.day) {
+        if let input = readInput(for: puzzleStatic.day) {
             return input
         }
-        if let input = try downloadInput(for: puzzleStatic.day) {
+        if let input = downloadInput(for: puzzleStatic.day) {
             return input
         }
         throw PuzzleError.noPuzzleInput(puzzleStatic.day)
@@ -79,7 +79,7 @@ private extension AdventOfCode {
         try? Folder(path: "Inputs/\(year)")
     }
 
-    private func readInput(for day: Int) throws -> Input? {
+    private func readInput(for day: Int) -> Input? {
         guard let inputFolder = inputFolder,
               let inputFile = try? inputFolder.file(named: "day\(day)"),
               let content = try? inputFile.readAsString()
@@ -89,7 +89,7 @@ private extension AdventOfCode {
         return Input(content)
     }
 
-    private func downloadInput(for day: Int) throws -> Input? {
+    private func downloadInput(for day: Int) -> Input? {
         guard let inputFolder = inputFolder,
               let token = authToken,
               let url = URL(string: "https://adventofcode.com/\(year)/day/\(day)/input"),

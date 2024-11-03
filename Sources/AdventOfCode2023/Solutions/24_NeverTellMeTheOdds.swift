@@ -246,8 +246,8 @@ private struct FVector2D: VectorProtocol {
         self.init(components[0], components[1])
     }
 
-    static var adjacents: [FVector2D] = adjacents()
-    static var orthogonalAdjacents: [FVector2D] = adjacents.filter(\.isOrthogonal)
+    static let adjacents: [FVector2D] = adjacents()
+    static let orthogonalAdjacents: [FVector2D] = adjacents.filter(\.isOrthogonal)
 }
 
 private extension VectorProtocol where Precision: FloatingPoint {

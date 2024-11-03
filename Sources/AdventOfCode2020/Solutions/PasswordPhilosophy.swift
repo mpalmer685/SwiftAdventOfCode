@@ -23,7 +23,7 @@ struct PasswordPhilosophy: Puzzle {
 }
 
 struct Entry {
-    typealias Policy = (Entry) -> Bool
+    typealias Policy = @Sendable (Entry) -> Bool
 
     static let characterCountPolicy: Policy = { entry in
         entry.password

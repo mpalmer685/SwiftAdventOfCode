@@ -81,7 +81,7 @@ public extension PointProtocol {
     }
 }
 
-public struct Point2D: PointProtocol {
+public struct Point2D: PointProtocol, Sendable {
     public typealias Vector = Vector2D
 
     public static let numberOfDimensions = 2
@@ -113,7 +113,7 @@ public struct Point2D: PointProtocol {
     }
 }
 
-public struct Point3D: PointProtocol {
+public struct Point3D: PointProtocol, Sendable {
     public typealias Vector = Vector3D
 
     public static let numberOfDimensions = 3
@@ -148,7 +148,7 @@ public struct Point3D: PointProtocol {
     }
 }
 
-public struct Point4D: PointProtocol {
+public struct Point4D: PointProtocol, Sendable {
     public typealias Vector = Vector4D
 
     public static let numberOfDimensions = 4

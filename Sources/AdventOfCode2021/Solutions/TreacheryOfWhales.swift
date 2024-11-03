@@ -69,7 +69,7 @@ private func getBestDestination(
     fatalError("Didn't find a solution within \(maxTries) tries.")
 }
 
-private typealias CostCalculator = (Int) -> Int
+private typealias CostCalculator = @Sendable (Int) -> Int
 
 private let identityCost: CostCalculator = { $0 }
 // https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF
