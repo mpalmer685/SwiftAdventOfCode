@@ -15,9 +15,6 @@ struct SavedResults {
     }
 
     private let encoder = configure(JSONEncoder()) {
-        guard #available(macOS 10.15, *) else {
-            fatalError("Platform not supported")
-        }
         $0.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
     }
 

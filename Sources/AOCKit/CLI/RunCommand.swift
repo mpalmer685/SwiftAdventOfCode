@@ -164,14 +164,14 @@ private extension AdventOfCode {
             if let oldDuration = duration {
                 let comparison = newDuration.compared(to: oldDuration)
                 spinner
-                    .succeed(text: "Day \(day) part \(part) took \(newDuration) (\(comparison)).")
+                    .succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).")
                 if comparison.isImprovement {
                     savedResults.update(newDuration, for: day, part)
                     try savedResults.save()
                 }
             } else {
                 spinner
-                    .succeed(text: "Day \(day) part \(part) took \(newDuration.description.blue).")
+                    .succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay().blue).")
                 savedResults.update(newDuration, for: day, part)
                 try savedResults.save()
             }
