@@ -1,6 +1,6 @@
 import AOCKit
 
-AdventOfCode(year: 2022, puzzles: [
+await AdventOfCode(year: 2022, puzzles: [
     CalorieCounting(),
     RockPaperScissors(),
     RucksackReorganization(),

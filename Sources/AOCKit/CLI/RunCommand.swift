@@ -5,7 +5,7 @@ import CLISpinner
 import Files
 import Rainbow
 
-struct RunCommand: ParsableCommand {
+struct RunCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "run",
         abstract: "Run one or more puzzles for and event."
@@ -32,22 +32,22 @@ struct RunCommand: ParsableCommand {
         }
     }
 
-    func run(event: AdventOfCode) throws {
+    func run(event: AdventOfCode) async throws {
         let success: Bool
         if let day, let part {
             if test {
                 success = try event.runTests(for: day, part: part)
             } else if event.hasSavedResult(for: day, part) {
-                success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
+                success = try await event.checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
-                try event.generateResult(for: day, part: part)
+                try await event.generateResult(for: day, part: part)
                 success = true
             }
         } else if let day {
             if test {
                 success = try event.runTests(for: day)
             } else {
-                success = try event.checkAllParts(for: day)
+                success = try await event.checkAllParts(for: day)
             }
         } else if latest {
             guard let (day, part) = event.savedResults.latest,
@@ -56,17 +56,17 @@ struct RunCommand: ParsableCommand {
                 throw PuzzleError.noSavedResults
             }
 
-            success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
+            success = try await event.checkPuzzleMatchesSavedAnswer(for: day, part)
         } else if next {
             let (day, part) = nextPuzzle(after: event.savedResults.latest)
             if test {
                 success = try event.runTests(for: day, part: part)
             } else {
-                try event.generateResult(for: day, part: part)
+                try await event.generateResult(for: day, part: part)
                 success = true
             }
         } else {
-            success = test ? try event.testAllPuzzles() : try event.checkAllPuzzles()
+            success = test ? try event.testAllPuzzles() : try await event.checkAllPuzzles()
         }
 
         throw success ? ExitCode.success : ExitCode.failure
@@ -219,7 +219,7 @@ private extension TestablePuzzleWithConfig {
 }
 
 private extension AdventOfCode {
-    func input(for puzzle: any Puzzle) throws -> Input {
+    func input(for puzzle: any Puzzle) async throws -> Input {
         let puzzleStatic = type(of: puzzle)
         if let input = puzzleStatic.rawInput {
             return Input(input)
@@ -227,7 +227,7 @@ private extension AdventOfCode {
         if let input = readInput(for: puzzleStatic.day) {
             return input
         }
-        if let input = downloadInput(for: puzzleStatic.day) {
+        if let input = await downloadInput(for: puzzleStatic.day) {
             return input
         }
         throw PuzzleError.noPuzzleInput(puzzleStatic.day)
@@ -247,7 +247,11 @@ private extension AdventOfCode {
         return Input(content)
     }
 
-    private func downloadInput(for day: Int) -> Input? {
+    private func downloadInput(for day: Int) async -> Input? {
+        guard confirm("Do you want to download the input for day \(day)?".cyan.bold) else {
+            return nil
+        }
+
         guard let inputFolder,
               let token = authToken,
               let url = URL(string: "https://adventofcode.com/\(year)/day/\(day)/input"),
@@ -264,7 +268,15 @@ private extension AdventOfCode {
         URLSession.shared.configuration.httpCookieStorage?.setCookie(cookie)
 
         do {
-            let str = try String(contentsOf: url)
+            var request = URLRequest(url: url)
+            request.setValue(
+                "github.com/mpalmer685/SwiftAdventOfCode by mrpalmer685@gmail.com",
+                forHTTPHeaderField: "User-Agent"
+            )
+            let (data, _) = try await URLSession.shared.data(for: request)
+            guard let str = String(data: data, encoding: .utf8) else {
+                return nil
+            }
             let file = try inputFolder.createFile(named: "day\(day)")
             try file.write(str)
 
@@ -287,9 +299,9 @@ private extension AdventOfCode {
         return token
     }
 
-    func generateResult(for day: Int, part: PuzzlePart) throws {
+    func generateResult(for day: Int, part: PuzzlePart) async throws {
         let puzzle = try puzzle(for: day)
-        let input = try input(for: puzzle)
+        let input = try await input(for: puzzle)
         let (result, duration) = try measure {
             try run(puzzle, part: part, with: input)
         }
@@ -301,7 +313,7 @@ private extension AdventOfCode {
         }
     }
 
-    func checkPuzzleMatchesSavedAnswer(for day: Int, _ part: PuzzlePart) throws -> Bool {
+    func checkPuzzleMatchesSavedAnswer(for day: Int, _ part: PuzzlePart) async throws -> Bool {
         guard let (savedAnswer, duration) = savedResults.savedResult(for: day, part) else {
             throw PuzzleError.noSavedResults
         }
@@ -311,7 +323,7 @@ private extension AdventOfCode {
 
         do {
             let puzzle = try puzzle(for: day)
-            let input = try input(for: puzzle)
+            let input = try await input(for: puzzle)
             let (result, newDuration) = try measure { try run(puzzle, part: part, with: input) }
             guard result == savedAnswer else {
                 spinner.fail()
@@ -344,18 +356,20 @@ private extension AdventOfCode {
         }
     }
 
-    func checkAllParts(for day: Int) throws -> Bool {
-        try PuzzlePart.allCases.allSatisfy { part in
-            if hasSavedResult(for: day, part) {
-                try checkPuzzleMatchesSavedAnswer(for: day, part)
-            } else {
-                true
-            }
+    func checkAllParts(for day: Int) async throws -> Bool {
+        var result = true
+        for part in PuzzlePart.allCases where hasSavedResult(for: day, part) {
+            result &&= try await checkPuzzleMatchesSavedAnswer(for: day, part)
         }
+        return result
     }
 
-    func checkAllPuzzles() throws -> Bool {
-        try savedResults.days.allSatisfy(checkAllParts)
+    func checkAllPuzzles() async throws -> Bool {
+        var result = true
+        for day in savedResults.days {
+            result &&= try await checkAllParts(for: day)
+        }
+        return result
     }
 }
 

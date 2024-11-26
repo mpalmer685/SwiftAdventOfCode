@@ -2,12 +2,12 @@
 @_exported import Foundation
 
 public extension AdventOfCode {
-    func run() {
+    func run() async {
         do {
             var command = try AOCCommand.parseAsRoot()
 
             if let command = command as? RunCommand {
-                try command.run(event: self)
+                try await command.run(event: self)
             } else {
                 try command.run()
             }

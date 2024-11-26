@@ -1,6 +1,6 @@
 import AOCKit
 
-AdventOfCode(year: 2021, puzzles: [
+await AdventOfCode(year: 2021, puzzles: [
     SonarSweep(),
     Dive(),
     BinaryDiagnostic(),

@@ -1,6 +1,6 @@
 import AOCKit
 
-AdventOfCode(year: 2020, puzzles: [
+await AdventOfCode(year: 2020, puzzles: [
     ReportRepair(),
     PasswordPhilosophy(),
     TobogganTrajectory(),
