@@ -1,6 +1,17 @@
 import AOCKit
 
-struct Trebuchet: Puzzle {
+struct Trebuchet: TestablePuzzle {
+    let testCases = [
+        TestCase<Int, Int>(
+            input: .file("example1"),
+            part1: 142
+        ),
+        TestCase(
+            input: .file("example2"),
+            part2: 281
+        ),
+    ]
+
     static let day = 1
 
     func part1(input: Input) throws -> Int {

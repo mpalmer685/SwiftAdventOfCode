@@ -23,8 +23,64 @@ public extension Puzzle {
     }
 }
 
-public extension Puzzle {
-    func input(_: StaticString = #file) -> Input {
-        fatalError("input() is deprecated: day \(Self.day)")
+public protocol TestablePuzzle: Puzzle {
+    var testCases: [TestCase<Part1Result, Part2Result>] { get }
+}
+
+public protocol TestablePuzzleWithConfig: Puzzle {
+    associatedtype Config
+
+    var testCases: [TestCaseWithConfig<Part1Result, Part2Result, Config>] { get }
+
+    func part1(input: Input, _ config: Config) throws -> Part1Result
+    func part2(input: Input, _ config: Config) throws -> Part2Result
+}
+
+public struct TestCase<
+    Part1Result: CustomStringConvertible,
+    Part2Result: CustomStringConvertible
+> {
+    let input: InputSource
+    let expectedPart1: Part1Result?
+    let expectedPart2: Part2Result?
+
+    public init(
+        input: InputSource,
+        part1: Part1Result? = nil,
+        part2: Part2Result? = nil
+    ) {
+        self.input = input
+        expectedPart1 = part1
+        expectedPart2 = part2
     }
+}
+
+public struct TestCaseWithConfig<
+    Part1Result: CustomStringConvertible,
+    Part2Result: CustomStringConvertible,
+    Config
+> {
+    let input: InputSource
+    let expectedPart1: Part1Result?
+    let expectedPart2: Part2Result?
+    let config: Config
+
+    public init(
+        input: InputSource,
+        config: Config,
+        part1: Part1Result? = nil,
+        part2: Part2Result? = nil
+    ) {
+        self.input = input
+        self.config = config
+        expectedPart1 = part1
+        expectedPart2 = part2
+    }
+}
+
+public enum InputSource {
+    case raw(String)
+    case file(String)
+
+    public static var example: Self { .file("example") }
 }

@@ -1,22 +1,23 @@
 import AOCKit
 
-struct NeverTellMeTheOdds: Puzzle {
+private let rangeMin = 200_000_000_000_000
+private let rangeMax = 400_000_000_000_000
+
+struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
     static let day = 24
 
-    // static let rawInput: String? = """
-    // 19, 13, 30 @ -2,  1, -2
-    // 18, 19, 22 @ -1, -1, -2
-    // 20, 25, 34 @ -2, -2, -4
-    // 12, 31, 28 @ -1, -2, -1
-    // 20, 19, 15 @  1, -5, -3
-    // """
+    let testCases: [TestCaseWithConfig<Int, Int, (Int, Int)>] = [
+        .init(
+            input: .example,
+            config: (7, 27),
+            part1: 2,
+            part2: 44
+        ),
+    ]
 
-    func part1(input: Input) throws -> Int {
+    func part1(input: Input, _ range: (Int, Int) = (rangeMin, rangeMax)) throws -> Int {
+        let (min, max) = range
         let particles = parse(input).map { Particle2D(position: $0, velocity: $1) }
-
-        let min = 200_000_000_000_000
-        let max = 400_000_000_000_000
-        // let min = 7, max = 27
 
         let targetRange = Double(min) ... Double(max)
 
@@ -31,7 +32,7 @@ struct NeverTellMeTheOdds: Puzzle {
     }
 
     // https://www.reddit.com/r/adventofcode/comments/18q40he/2023_day_24_part_2_a_straightforward_nonsolver/
-    func part2(input: Input) throws -> Int {
+    func part2(input: Input, _ range: (Int, Int) = (rangeMin, rangeMax)) throws -> Int {
         let particles = parse(input)
 
         let m1 = asSystemMatrix(from: particles, using: \.x, \.y, \.dx, \.dy)

@@ -23,6 +23,9 @@ struct RunCommand: ParsableCommand {
     @Flag(name: .long)
     var latest = false
 
+    @Flag(name: .long)
+    var test = false
+
     func validate() throws {
         if let day, !day.isBetween(1, and: 25) {
             throw ValidationError("Day should be between 1 and 25")
@@ -32,14 +35,20 @@ struct RunCommand: ParsableCommand {
     func run(event: AdventOfCode) throws {
         let success: Bool
         if let day, let part {
-            if event.hasSavedResult(for: day, part) {
+            if test {
+                success = try event.runTests(for: day, part: part)
+            } else if event.hasSavedResult(for: day, part) {
                 success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
             } else {
                 try event.generateResult(for: day, part: part)
                 success = true
             }
         } else if let day {
-            success = try event.checkAllParts(for: day)
+            if test {
+                success = try event.runTests(for: day)
+            } else {
+                success = try event.checkAllParts(for: day)
+            }
         } else if latest {
             guard let (day, part) = event.savedResults.latest,
                   event.hasSavedResult(for: day, part)
@@ -50,13 +59,162 @@ struct RunCommand: ParsableCommand {
             success = try event.checkPuzzleMatchesSavedAnswer(for: day, part)
         } else if next {
             let (day, part) = nextPuzzle(after: event.savedResults.latest)
-            try event.generateResult(for: day, part: part)
-            success = true
+            if test {
+                success = try event.runTests(for: day, part: part)
+            } else {
+                try event.generateResult(for: day, part: part)
+                success = true
+            }
         } else {
-            success = try event.checkAllPuzzles()
+            success = test ? try event.testAllPuzzles() : try event.checkAllPuzzles()
         }
 
         throw success ? ExitCode.success : ExitCode.failure
+    }
+}
+
+private extension AdventOfCode {
+    func testAllPuzzles() throws -> Bool {
+        let allDays = puzzles.map { type(of: $0).day }.sorted()
+        return try allDays.allSatisfy { day in
+            try runTests(for: day)
+        }
+    }
+
+    func runTests(for day: Int) throws -> Bool {
+        try PuzzlePart.allCases.allSatisfy { part in
+            try runTests(for: day, part: part)
+        }
+    }
+
+    func runTests(for day: Int, part: PuzzlePart) throws -> Bool {
+        let puzzle = try puzzle(for: day)
+        if let puzzle = puzzle as? any TestablePuzzle {
+            return try runTests(for: puzzle, part: part)
+        } else if let puzzle = puzzle as? any TestablePuzzleWithConfig {
+            return try runTests(for: puzzle, part: part)
+        } else {
+            throw PuzzleError.testableNotImplemented
+        }
+    }
+
+    private func runTests(for puzzle: some TestablePuzzle, part: PuzzlePart) throws -> Bool {
+        let testCases = puzzle.testCases(for: part)
+        guard testCases.isNotEmpty else {
+            throw PuzzleError.noTestCases
+        }
+        let testCasesWithInput = testCases.map { testCase in
+            let input = switch testCase.input {
+                case let .raw(raw): Input(raw)
+                case let .file(suffix): input(for: puzzle, suffix: suffix)
+            }
+            return (input, testCase.output)
+        }
+        return try puzzle.run(testCasesWithInput, for: part)
+    }
+
+    private func runTests(
+        for puzzle: some TestablePuzzleWithConfig,
+        part: PuzzlePart
+    ) throws -> Bool {
+        let testCases = puzzle.testCases(for: part)
+        guard testCases.isNotEmpty else {
+            throw PuzzleError.noTestCases
+        }
+        let testCasesWithInput = testCases.map { testCase in
+            let input = switch testCase.input {
+                case let .raw(raw): Input(raw)
+                case let .file(suffix): input(for: puzzle, suffix: suffix)
+            }
+            return (input, testCase.config, testCase.output)
+        }
+        return try puzzle.run(testCasesWithInput, for: part)
+    }
+
+    private func input(for puzzle: any Puzzle, suffix: String) -> Input {
+        let puzzleStatic = type(of: puzzle)
+        let inputFileName = "day\(puzzleStatic.day).\(suffix)"
+        guard let inputFolder,
+              let inputFile = try? inputFolder.file(named: inputFileName),
+              let content = try? inputFile.readAsString()
+        else {
+            fatalError("Missing input file \(inputFileName)")
+        }
+        return Input(content)
+    }
+}
+
+private extension TestablePuzzle {
+    typealias TestCase<Input> = (input: Input, output: String)
+
+    func testCases(for part: PuzzlePart) -> [TestCase<InputSource>] {
+        testCases.compactMap { testCase in
+            if part == .partOne, let expected = testCase.expectedPart1 {
+                (testCase.input, String(describing: expected))
+            } else if part == .partTwo, let expected = testCase.expectedPart2 {
+                (testCase.input, String(describing: expected))
+            } else {
+                nil
+            }
+        }
+    }
+
+    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) throws -> Bool {
+        for (input, expected) in testCases {
+            do {
+                let result = try part == .partOne
+                    ? String(describing: part1(input: input))
+                    : String(describing: part2(input: input))
+                if result == expected {
+                    print("✅ \(input) -> \(result)")
+                } else {
+                    print("❌ \(input) -> \(result) (expected \(expected))")
+                    return false
+                }
+            } catch {
+                print("❌ \(input) -> \(error)")
+                return false
+            }
+        }
+
+        return true
+    }
+}
+
+private extension TestablePuzzleWithConfig {
+    typealias TestCase<Input> = (input: Input, config: Config, output: String)
+
+    func testCases(for part: PuzzlePart) -> [TestCase<InputSource>] {
+        testCases.compactMap { testCase in
+            if part == .partOne, let expected = testCase.expectedPart1 {
+                (testCase.input, testCase.config, String(describing: expected))
+            } else if part == .partTwo, let expected = testCase.expectedPart2 {
+                (testCase.input, testCase.config, String(describing: expected))
+            } else {
+                nil
+            }
+        }
+    }
+
+    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) throws -> Bool {
+        for (input, config, expected) in testCases {
+            do {
+                let result = try part == .partOne
+                    ? String(describing: part1(input: input, config))
+                    : String(describing: part2(input: input, config))
+                if result == expected {
+                    print("✅ \(input) -> \(result)")
+                } else {
+                    print("❌ \(input) -> \(result) (expected \(expected))")
+                    return false
+                }
+            } catch {
+                print("❌ \(input) -> \(error)")
+                return false
+            }
+        }
+
+        return true
     }
 }
 

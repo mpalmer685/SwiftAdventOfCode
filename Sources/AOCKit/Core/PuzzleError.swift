@@ -3,19 +3,25 @@ enum PuzzleError: Error {
     case dayNotImplemented(_ day: Int)
     case partNotImplemented(_ part: Int)
     case noPuzzleInput(_ day: Int)
+    case testableNotImplemented
+    case noTestCases
 }
 
 extension PuzzleError: CustomStringConvertible {
     public var description: String {
         switch self {
             case let .noPuzzleInput(day):
-                return "Could not find or download an input file for day \(day)"
+                "Could not find or download an input file for day \(day)"
             case .noSavedResults:
-                return "No saved results yet."
+                "No saved results yet."
             case let .dayNotImplemented(day):
-                return "Solution for day \(day) not implemented"
+                "Solution for day \(day) not implemented"
             case let .partNotImplemented(part):
-                return "Part \(part) not implemented"
+                "Part \(part) not implemented"
+            case .testableNotImplemented:
+                "TestablePuzzle not implemented"
+            case .noTestCases:
+                "No test cases found"
         }
     }
 }
