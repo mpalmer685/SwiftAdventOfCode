@@ -25,7 +25,7 @@ public extension Dimensioned {
 
     var description: String {
         let (start, end) = Self.descriptionWrappers
-        return start + components.map(\.description).joined(separator: ", ") + end
+        return start + components.map(String.init).joined(separator: ", ") + end
     }
 }
 

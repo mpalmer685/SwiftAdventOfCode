@@ -26,6 +26,6 @@ extension AdventOfCode {
 
     func run(_ puzzle: any Puzzle, part: PuzzlePart, with input: Input) throws -> String {
         let runPuzzle = part == .partOne ? puzzle.part1(input:) : puzzle.part2(input:)
-        return try runPuzzle(input).description
+        return try String(describing: runPuzzle(input))
     }
 }

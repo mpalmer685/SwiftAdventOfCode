@@ -221,9 +221,6 @@ private extension TestablePuzzleWithConfig {
 private extension AdventOfCode {
     func input(for puzzle: any Puzzle) async throws -> Input {
         let puzzleStatic = type(of: puzzle)
-        if let input = puzzleStatic.rawInput {
-            return Input(input)
-        }
         if let input = readInput(for: puzzleStatic.day) {
             return input
         }

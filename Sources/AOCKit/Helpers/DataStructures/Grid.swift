@@ -108,7 +108,7 @@ public struct Grid<Cell> {
 
 extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
     public var description: String {
-        cells.map { $0.map(\.description).joined() }.joined(separator: "\n")
+        cells.map { $0.map(String.init).joined() }.joined(separator: "\n")
     }
 }
 

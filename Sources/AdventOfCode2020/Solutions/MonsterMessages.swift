@@ -29,11 +29,11 @@ struct MonsterMessages: Puzzle {
         return (rules, messages)
     }
 
-    private func isMessageValid<Message: StringProtocol, Rules: Collection>(
-        _ message: Message,
-        for ruleIds: Rules,
+    private func isMessageValid(
+        _ message: some StringProtocol,
+        for ruleIds: some Collection<Int>,
         given rules: [Int: Rule]
-    ) -> Bool where Rules.Element == Int {
+    ) -> Bool {
         guard let ruleId = ruleIds.first, !message.isEmpty else {
             return message.isEmpty.exclusiveOr(!ruleIds.isEmpty)
         }
@@ -77,12 +77,12 @@ private indirect enum Rule: CustomDebugStringConvertible {
 
     var debugDescription: String {
         switch self {
-            case let .literal(c): return "\"\(c)\""
-            case let .sequence(rules): return rules.map(\.description).joined(separator: " ")
+            case let .literal(c): "\"\(c)\""
+            case let .sequence(rules): rules.map(String.init).joined(separator: " ")
             case let .fork(rules):
-                return rules
+                rules
                     .map {
-                        $0.map(\.description).joined(separator: " ")
+                        $0.map(String.init).joined(separator: " ")
                     }.joined(separator: " | ")
         }
     }

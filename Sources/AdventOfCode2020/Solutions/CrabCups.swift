@@ -31,7 +31,7 @@ private struct Game {
         var label = cupRing[1]
         var result = ""
         while label != 1 {
-            result += label.description
+            result += String(label)
             label = cupRing[label]
         }
         return result

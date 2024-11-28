@@ -94,9 +94,9 @@ private enum Instruction {
 
     func type(matches other: Self) -> Bool {
         switch (self, other) {
-            case (.steps, .steps): return true
-            case (.turn, .turn): return true
-            default: return false
+            case (.steps, .steps): true
+            case (.turn, .turn): true
+            default: false
         }
     }
 }
@@ -104,8 +104,8 @@ private enum Instruction {
 extension Instruction: CustomStringConvertible {
     public var description: String {
         switch self {
-            case let .steps(count): return count.description
-            case let .turn(dir): return String(dir.rawValue)
+            case let .steps(count): String(count)
+            case let .turn(dir): String(dir.rawValue)
         }
     }
 }
@@ -154,7 +154,7 @@ private class Walker {
                 break
             }
             position = nextPosition
-            if let nextHeading = nextHeading, nextHeading != heading {
+            if let nextHeading, nextHeading != heading {
                 heading = nextHeading
             }
         }
@@ -166,10 +166,10 @@ private class Walker {
         _ heading: Vector2D
     ) -> (Point2D, Vector2D) {
         switch (heading.dx, heading.dy) {
-            case (1, 0): return (map.leftmost(inRow: position.y), heading)
-            case (0, -1): return (map.lowest(inColumn: position.x), heading)
-            case (-1, 0): return (map.rightmost(inRow: position.y), heading)
-            case (0, 1): return (map.highest(inColumn: position.x), heading)
+            case (1, 0): (map.leftmost(inRow: position.y), heading)
+            case (0, -1): (map.lowest(inColumn: position.x), heading)
+            case (-1, 0): (map.rightmost(inRow: position.y), heading)
+            case (0, 1): (map.highest(inColumn: position.x), heading)
             default: fatalError()
         }
     }
@@ -198,10 +198,10 @@ private extension Vector2D {
 
     var facingValue: Int {
         switch (dx, dy) {
-            case (1, 0): return 0
-            case (0, 1): return 1
-            case (-1, 0): return 2
-            case (0, -1): return 3
+            case (1, 0): 0
+            case (0, 1): 1
+            case (-1, 0): 2
+            case (0, -1): 3
             default: fatalError()
         }
     }
@@ -209,9 +209,9 @@ private extension Vector2D {
     func turn(_ dir: Direction) -> Self {
         switch dir {
             case .left:
-                return Self(dx: dy, dy: -dx)
+                Self(dx: dy, dy: -dx)
             case .right:
-                return Self(dx: -dy, dy: dx)
+                Self(dx: -dy, dy: dx)
         }
     }
 }
@@ -290,10 +290,10 @@ private struct Face {
 
     func edge(on side: Side) -> [Point2D] {
         switch side {
-            case .top: return cols.map { .init($0, rows.lowerBound) }
-            case .bottom: return cols.map { .init($0, rows.upperBound) }
-            case .left: return rows.map { .init(cols.lowerBound, $0) }
-            case .right: return rows.map { .init(cols.upperBound, $0) }
+            case .top: cols.map { .init($0, rows.lowerBound) }
+            case .bottom: cols.map { .init($0, rows.upperBound) }
+            case .left: rows.map { .init(cols.lowerBound, $0) }
+            case .right: rows.map { .init(cols.upperBound, $0) }
         }
     }
 

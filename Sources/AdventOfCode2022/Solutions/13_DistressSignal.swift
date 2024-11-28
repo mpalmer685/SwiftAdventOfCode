@@ -86,8 +86,8 @@ extension Packet: Comparable {
 extension Packet: CustomStringConvertible {
     public var description: String {
         switch self {
-            case let .integer(i): return i.description
-            case let .list(l): return "[" + l.map(\.description).joined(separator: ",") + "]"
+            case let .integer(i): String(i)
+            case let .list(l): "[" + l.map(String.init).joined(separator: ",") + "]"
         }
     }
 }

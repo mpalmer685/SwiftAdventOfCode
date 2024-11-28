@@ -2,7 +2,7 @@ import AOCKit
 
 struct Trebuchet: TestablePuzzle {
     let testCases = [
-        TestCase<Int, Int>(
+        TestCase(
             input: .file("example1"),
             part1: 142
         ),

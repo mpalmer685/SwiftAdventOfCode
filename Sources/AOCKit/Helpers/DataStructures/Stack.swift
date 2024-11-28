@@ -11,7 +11,7 @@ public struct Stack<Element> {
         elements.append(el)
     }
 
-    public mutating func push<S>(contentsOf elements: S) where S: Sequence, S.Element == Element {
+    public mutating func push(contentsOf elements: some Sequence<Element>) {
         for el in elements {
             push(el)
         }
@@ -24,7 +24,7 @@ public struct Stack<Element> {
 
 extension Stack: CustomStringConvertible {
     public var description: String {
-        elements.reversed().description
+        String(describing: elements.reversed())
     }
 }
 
