@@ -18,7 +18,7 @@ struct HistorianHysteria: Puzzle {
     }
 
     private func parseLists(from input: Input) -> ([Int], [Int]) {
-        let pairs = input.lines.map { $0.words.compactMap(\.integer) }.map { ($0[0], $0[1]) }
+        let pairs = input.lines.map(\.integers).map { ($0[0], $0[1]) }
         return (pairs.map(\.0), pairs.map(\.1))
     }
 
