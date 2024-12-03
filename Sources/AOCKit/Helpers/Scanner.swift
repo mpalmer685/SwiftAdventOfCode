@@ -80,13 +80,15 @@ public extension Scanner where C.Element: Equatable {
         return false
     }
 
-    mutating func expect<O: Collection>(_ other: O) where O.Element == C.Element {
+    mutating func expect(_ other: some Collection<C.Element>) {
         assert(hasMore, "Reached the end")
-        for element in other { expect(element) }
+        for element in other {
+            expect(element)
+        }
     }
 
     @discardableResult
-    mutating func skip<O: Collection>(_ other: O) -> Bool where O.Element == C.Element {
+    mutating func skip(_ other: some Collection<C.Element>) -> Bool {
         let start = cursor
         var iterator = other.makeIterator()
         while let next = iterator.next() {
@@ -99,7 +101,7 @@ public extension Scanner where C.Element: Equatable {
         return true
     }
 
-    func starts<O: Collection>(with other: O) -> Bool where O.Element == C.Element {
+    func starts(with other: some Collection<C.Element>) -> Bool {
         guard let next = peek(next: other.count) else { return false }
 
         for (expected, actual) in zip(other, next) where expected != actual {
@@ -135,5 +137,20 @@ public extension Scanner where C == String {
         }
 
         return next == other
+    }
+
+    func starts(with regex: some RegexComponent) -> Bool {
+        data[cursor...].starts(with: regex)
+    }
+
+    mutating func scan<R>(using pattern: R) -> Regex<R.RegexOutput>.Match? where R: RegexComponent {
+        let sample = data[cursor...]
+        guard let match = sample.prefixMatch(of: pattern) else {
+            return nil
+        }
+
+        let matchLength = sample.distance(from: match.range.lowerBound, to: match.range.upperBound)
+        skip(count: matchLength)
+        return match
     }
 }
