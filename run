@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+# Usage:
+#    ./run next [--test] [--year <year>]
+#    ./run latest [--test] [--year <year>]
+#    ./run today [--test] [--year <year>]
+#    ./run all [--test] [--year <year>]
+#    ./run <day> [--test] [--year <year>]
+
+subcommand=$1
+config=release
+args=()
+year=$(date +'%Y')
+day=$(date +'%-d')
+
+shift;
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --test)
+            config=debug
+            args+=("--test")
+            shift
+            ;;
+        --year)
+            year=$2
+            shift 2
+            ;;
+        *)
+            args+=("$1")
+            shift
+            ;;
+    esac
+done
+
+cmd="swift run -c $config aoc${year}"
+
+case $subcommand in
+    next)
+        cmd+=" --next ${args[*]}"
+        ;;
+    latest)
+        cmd+=" --latest ${args[*]}"
+        ;;
+    today)
+        cmd+=" --day $day ${args[*]}"
+        ;;
+    all)
+        cmd+="${args[*]}"
+        ;;
+    *)
+        cmd+=" --day $subcommand ${args[*]}"
+        ;;
+esac
+
+echo "Running: $cmd"
+$cmd
