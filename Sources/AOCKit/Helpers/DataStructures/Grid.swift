@@ -50,6 +50,10 @@ public struct Grid<Cell> {
         }
     }
 
+    public subscript(safe point: Point2D) -> Cell? {
+        contains(point) ? self[point] : nil
+    }
+
     public subscript(x: Int, y: Int) -> Cell {
         get {
             guard contains(x: x, y: y) else {
