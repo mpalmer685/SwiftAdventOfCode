@@ -303,7 +303,7 @@ private extension AdventOfCode {
             try run(puzzle, part: part, with: input)
         }
         copyToClipboard(result)
-        print("\(result) \("(took \(duration))".blue)")
+        print("\(result) \("(took \(duration.formattedForDisplay()))".blue)")
         if confirm("Is this correct?".cyan.bold) {
             savedResults.update(day, for: part, to: result, duration: duration)
             try savedResults.save()
