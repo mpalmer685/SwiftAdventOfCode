@@ -5,4 +5,5 @@ await AdventOfCode(year: 2024, puzzles: [
     RedNosedReports(),
     MullItOver(),
     CeresSearch(),
+    PrintQueue(),
 ]).run()
