@@ -118,3 +118,4 @@ extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
 
 extension Grid: Equatable where Cell: Equatable {}
 extension Grid: Hashable where Cell: Hashable {}
+extension Grid: Sendable where Cell: Sendable {}
