@@ -7,4 +7,5 @@ await AdventOfCode(year: 2024, puzzles: [
     CeresSearch(),
     PrintQueue(),
     GuardGallivant(),
+    BridgeRepair(),
 ]).run()
