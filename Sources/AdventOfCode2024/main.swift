@@ -8,4 +8,5 @@ await AdventOfCode(year: 2024, puzzles: [
     PrintQueue(),
     GuardGallivant(),
     BridgeRepair(),
+    ResonantCollinearity(),
 ]).run()
