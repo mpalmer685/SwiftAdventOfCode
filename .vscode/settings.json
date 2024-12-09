@@ -4,6 +4,8 @@
         "antinodes",
         "Codextended",
         "Collinearity",
+        "Fragmenter",
+        "Subrange",
         "uniquing",
         "whitespaces"
     ]
