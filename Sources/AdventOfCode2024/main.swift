@@ -10,4 +10,5 @@ await AdventOfCode(year: 2024, puzzles: [
     BridgeRepair(),
     ResonantCollinearity(),
     DiskFragmenter(),
+    HoofIt(),
 ]).run()

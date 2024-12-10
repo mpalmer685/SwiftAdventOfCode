@@ -6,6 +6,7 @@
         "Collinearity",
         "Fragmenter",
         "Subrange",
+        "trailheads",
         "uniquing",
         "whitespaces"
     ]
