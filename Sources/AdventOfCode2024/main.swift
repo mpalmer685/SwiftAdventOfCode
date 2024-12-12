@@ -12,4 +12,5 @@ await AdventOfCode(year: 2024, puzzles: [
     DiskFragmenter(),
     HoofIt(),
     PlutonianPebbles(),
+    GardenGroups(),
 ]).run()
