@@ -13,4 +13,5 @@ await AdventOfCode(year: 2024, puzzles: [
     HoofIt(),
     PlutonianPebbles(),
     GardenGroups(),
+    ClawContraption(),
 ]).run()

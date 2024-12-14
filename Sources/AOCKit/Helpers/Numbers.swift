@@ -70,3 +70,9 @@ public extension FixedWidthInteger {
     var isEven: Bool { self % 2 == 0 }
     var isOdd: Bool { self % 2 == 1 }
 }
+
+public extension BinaryFloatingPoint {
+    var isWholeNumber: Bool {
+        Int(exactly: self) != nil
+    }
+}

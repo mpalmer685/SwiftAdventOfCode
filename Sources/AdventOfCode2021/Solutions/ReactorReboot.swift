@@ -58,7 +58,7 @@ struct ReactorReboot: Puzzle {
     }
 }
 
-private func volume<C: Collection>(of cuboids: C) -> Int where C.Element == Cuboid {
+private func volume(of cuboids: some Collection<Cuboid>) -> Int {
     guard let (start, rest) = cuboids.firstAndRest() else { return 0 }
 
     let intersections: Set<Cuboid> = rest
@@ -67,6 +67,7 @@ private func volume<C: Collection>(of cuboids: C) -> Int where C.Element == Cubo
     return start.volume + volume(of: rest) - volume(of: intersections)
 }
 
+// swiftlint:disable:next large_tuple
 private typealias Instruction = (ClosedRange<Int>, ClosedRange<Int>, ClosedRange<Int>, Bool)
 
 private struct Cuboid: Hashable {
@@ -118,7 +119,7 @@ private extension ClosedRange {
 
 private extension Collection {
     func firstAndRest() -> (Element, SubSequence)? {
-        guard let first = first else { return nil }
+        guard let first else { return nil }
         let startOfRest = index(after: startIndex)
         return (first, self[startOfRest...])
     }
