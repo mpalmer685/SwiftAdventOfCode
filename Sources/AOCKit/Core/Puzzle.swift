@@ -80,4 +80,12 @@ public enum InputSource {
     case file(String)
 
     public static var example: Self { .file("example") }
+
+    public static func example(_ number: Int) -> Self {
+        .file("example\(number)")
+    }
+
+    public static func example(_ prefix: String) -> Self {
+        .file("\(prefix).example")
+    }
 }

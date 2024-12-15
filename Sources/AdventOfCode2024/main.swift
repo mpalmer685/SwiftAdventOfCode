@@ -15,4 +15,5 @@ await AdventOfCode(year: 2024, puzzles: [
     GardenGroups(),
     ClawContraption(),
     RestroomRedoubt(),
+    WarehouseWoes(),
 ]).run()
