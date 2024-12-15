@@ -21,6 +21,15 @@ public extension VectorProtocol {
         let new = zip(lhs.components, rhs.components).map(+)
         return Self(new)
     }
+
+    static func * (lhs: Self, rhs: Precision) -> Self {
+        let new = lhs.components.map { $0 * rhs }
+        return Self(new)
+    }
+
+    static func *= (lhs: inout Self, rhs: Precision) {
+        lhs = lhs * rhs
+    }
 }
 
 public extension VectorProtocol {
