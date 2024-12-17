@@ -17,4 +17,5 @@ await AdventOfCode(year: 2024, puzzles: [
     RestroomRedoubt(),
     WarehouseWoes(),
     ReindeerMaze(),
+    ChronospatialComputer(),
 ]).run()
