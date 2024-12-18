@@ -27,7 +27,7 @@ struct RamRun: Puzzle {
         let (memorySize, _) = config
         let corruptedBytes = input.lines.map { Point2D($0.integers) }
 
-        let firstBlockedIndex = corruptedBytes.bisect { index in
+        let firstBlockedIndex = corruptedBytes.indices.partitioningIndex { index in
             let memorySpace = MemorySpace(
                 size: memorySize,
                 corruptedBytes: corruptedBytes[...index]
@@ -64,22 +64,6 @@ extension MemorySpace: Graph {
 
     private func contains(_ point: Point2D) -> Bool {
         bounds.contains(point.x) && bounds.contains(point.y)
-    }
-}
-
-private extension BidirectionalCollection {
-    func bisect(with test: (Index) -> Bool) -> Index {
-        var low = startIndex
-        var high = endIndex
-        while low < high {
-            let mid = index(low, offsetBy: distance(from: low, to: high) / 2)
-            if test(mid) {
-                high = mid
-            } else {
-                low = index(after: mid)
-            }
-        }
-        return low
     }
 }
 
