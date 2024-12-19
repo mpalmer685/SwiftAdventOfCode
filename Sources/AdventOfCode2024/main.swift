@@ -19,4 +19,5 @@ await AdventOfCode(year: 2024, puzzles: [
     ReindeerMaze(),
     ChronospatialComputer(),
     RamRun(),
+    LinenLayout(),
 ]).run()
