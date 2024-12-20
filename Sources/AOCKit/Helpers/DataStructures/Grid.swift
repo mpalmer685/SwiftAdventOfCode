@@ -116,6 +116,12 @@ extension Grid: CustomStringConvertible where Cell: CustomStringConvertible {
     }
 }
 
+public extension Grid where Cell: Equatable {
+    func location(of cell: Cell) -> Point2D? {
+        points.first { self[$0] == cell }
+    }
+}
+
 extension Grid: Equatable where Cell: Equatable {}
 extension Grid: Hashable where Cell: Hashable {}
 extension Grid: Sendable where Cell: Sendable {}

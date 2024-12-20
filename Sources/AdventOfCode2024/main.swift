@@ -20,4 +20,5 @@ await AdventOfCode(year: 2024, puzzles: [
     ChronospatialComputer(),
     RamRun(),
     LinenLayout(),
+    RaceCondition(),
 ]).run()

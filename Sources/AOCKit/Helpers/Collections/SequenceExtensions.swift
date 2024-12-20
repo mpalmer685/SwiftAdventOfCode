@@ -1,9 +1,5 @@
 public extension Sequence {
-    func count(where isIncluded: (Self.Element) throws -> Bool) rethrows -> Int {
-        try filter(isIncluded).count
-    }
-
-    func min<T: Comparable>(by keyPath: KeyPath<Element, T>) -> Self.Element? {
+    func min(by keyPath: KeyPath<Element, some Comparable>) -> Self.Element? {
         self.min { first, second in
             first[keyPath: keyPath] < second[keyPath: keyPath]
         }
@@ -22,7 +18,7 @@ public extension Sequence {
         return final
     }
 
-    func max<T: Comparable>(by keyPath: KeyPath<Element, T>) -> Self.Element? {
+    func max(by keyPath: KeyPath<Element, some Comparable>) -> Self.Element? {
         self.max { first, second in
             first[keyPath: keyPath] < second[keyPath: keyPath]
         }
@@ -45,7 +41,7 @@ public extension Sequence {
         compactMap(T.init(rawValue:))
     }
 
-    func sorted<T: Comparable>(using getValue: (Element) -> T) -> [Element] {
+    func sorted(using getValue: (Element) -> some Comparable) -> [Element] {
         sorted(by: { l, r in
             getValue(l) < getValue(r)
         })
