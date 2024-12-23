@@ -17,17 +17,11 @@ struct GuardGallivant: Puzzle {
             fatalError()
         }
 
-        let semaphore = DispatchSemaphore(value: 0)
-        var count = 0
-        Task {
-            count = await visited.concurrentCount { point in
+        return sync {
+            await visited.concurrentCount { point in
                 simulation.addingObstacle(at: point).run().isLoop
             }
-            semaphore.signal()
         }
-        semaphore.wait()
-
-        return count
     }
 }
 
@@ -129,27 +123,6 @@ private extension Vector2D {
             case -.x: -.y
             case -.y: .x
             default: fatalError()
-        }
-    }
-}
-
-private extension Sequence where Element: Sendable {
-    func concurrentCount(where isIncluded: @escaping @Sendable (Self.Element) async -> Bool) async
-        -> Int
-    {
-        await withTaskGroup(of: Int.self) { group in
-            for element in self {
-                group.addTask {
-                    await isIncluded(element) ? 1 : 0
-                }
-            }
-
-            var count = 0
-            for await partialCount in group {
-                count += partialCount
-            }
-
-            return count
         }
     }
 }

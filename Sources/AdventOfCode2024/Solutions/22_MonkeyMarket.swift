@@ -1,16 +1,22 @@
 import AOCKit
 
-struct MonkeyMarket: Puzzle {
+struct MonkeyMarket: Puzzle, Sendable {
     static let day = 22
 
     func part1(input: Input) throws -> Int {
-        input.lines.integers.sum { start in
-            secretNumbers(startingWith: start).last!
+        let codes = input.lines.integers
+        return sync {
+            await codes.concurrentMap { start in
+                secretNumbers(startingWith: start).last!
+            }.sum
         }
     }
 
     func part2(input: Input) throws -> Int {
-        let sequences = input.lines.integers.map { salesOpportunities(for: $0) }
+        let codes = input.lines.integers
+        let sequences = sync {
+            await codes.concurrentMap { salesOpportunities(for: $0) }
+        }
 
         let sales = sequences.reduce([[Int]: Int]()) { sales, sequences in
             sales.merging(sequences, uniquingKeysWith: +)
@@ -20,8 +26,8 @@ struct MonkeyMarket: Puzzle {
     }
 
     private func secretNumbers(startingWith start: Int) -> [Int] {
-        (1 ..< 2000).reduce(into: [start]) { numbers, _ in
-            numbers.append(nextValue(numbers.last!))
+        (0 ..< 2000).reduce(into: [start]) { numbers, _ in
+            numbers.append(nextValue(for: numbers.last!))
         }
     }
 
@@ -38,7 +44,7 @@ struct MonkeyMarket: Puzzle {
 
     private typealias Transform = (Int) -> Int
 
-    private let nextValue: Transform = memoize { value in
+    private func nextValue(for value: Int) -> Int {
         let steps: [Transform] = [
             { value in (value * 64).mixed(with: value).pruned() },
             { value in (value / 32).mixed(with: value).pruned() },
