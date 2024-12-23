@@ -17,16 +17,13 @@ struct RestroomRedoubt: Puzzle {
 
     func part2(input: Input, _ size: (width: Int, height: Int)) throws -> Int {
         let simulation = Simulation.parse(from: input, size: size)
-        var best = (safetyScore: Int.max, seconds: 0)
-
-        for seconds in 1 ..< size.width * size.height {
-            let score = simulation.safetyScore(at: seconds)
-            if score < best.safetyScore {
-                best = (score, seconds)
+        let scores = sync {
+            await (1 ..< size.width * size.height).concurrentMap { seconds in
+                (seconds: seconds, score: simulation.safetyScore(at: seconds))
             }
         }
 
-        return best.seconds
+        return scores.min(by: \.score)!.seconds
     }
 }
 

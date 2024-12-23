@@ -23,4 +23,5 @@ await AdventOfCode(year: 2024, puzzles: [
     RaceCondition(),
     KeypadConundrum(),
     MonkeyMarket(),
+    LanParty(),
 ]).run()
