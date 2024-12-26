@@ -25,4 +25,5 @@ await AdventOfCode(year: 2024, puzzles: [
     MonkeyMarket(),
     LanParty(),
     CrossedWires(),
+    CodeChronicle(),
 ]).run()
