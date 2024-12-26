@@ -20,19 +20,11 @@ private extension [Int] {
     }
 
     var isSafeWithDampener: Bool {
-        if isSafe {
-            return true
-        }
-
-        for index in indices {
+        isSafe || indices.contains { index in
             var copy = self
             copy.remove(at: index)
-            if copy.isSafe {
-                return true
-            }
+            return copy.isSafe
         }
-
-        return false
     }
 
     func isChanging(by allowedDifferences: Set<Int>) -> Bool {

@@ -14,7 +14,7 @@ struct HistorianHysteria: Puzzle {
         let (first, second) = parseLists(from: input)
         let counts = countOccurrences(from: first, in: second)
 
-        return first.map { $0 * counts[$0]! }.sum
+        return first.sum { $0 * counts[$0]! }
     }
 
     private func parseLists(from input: Input) -> ([Int], [Int]) {
