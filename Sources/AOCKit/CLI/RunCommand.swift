@@ -8,7 +8,7 @@ import Rainbow
 struct RunCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "run",
-        abstract: "Run one or more puzzles for and event."
+        abstract: "Run one or more puzzles for an event."
     )
 
     @Option(name: .shortAndLong)

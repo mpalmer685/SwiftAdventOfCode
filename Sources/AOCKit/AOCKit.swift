@@ -8,6 +8,8 @@ public extension AdventOfCode {
 
             if let command = command as? RunCommand {
                 try await command.run(event: self)
+            } else if let command = command as? StatsCommand {
+                try command.run(year: year)
             } else {
                 try command.run()
             }

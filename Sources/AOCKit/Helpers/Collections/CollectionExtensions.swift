@@ -46,7 +46,7 @@ public extension Collection where Element: Comparable {
 
 public extension Collection where Element: Collection {
     var flattened: [Element.Element] {
-        flatMap { $0 }
+        flatMap(\.self)
     }
 }
 
@@ -65,6 +65,26 @@ public extension Collection where Element: Collection, Element.Element: Hashable
             if set.isEmpty { break }
         }
         return set
+    }
+}
+
+public extension MutableCollection where Self: RandomAccessCollection {
+    mutating func sort(using getValue: (Element) -> some Comparable) {
+        sort(by: { l, r in
+            getValue(l) < getValue(r)
+        })
+    }
+
+    mutating func sort(nilLast: Bool = false, using getValue: (Element) -> (some Comparable)?) {
+        sort(by: { l, r in
+            guard let lValue = getValue(l) else {
+                return nilLast
+            }
+            guard let rValue = getValue(r) else {
+                return !nilLast
+            }
+            return lValue < rValue
+        })
     }
 }
 

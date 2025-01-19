@@ -42,6 +42,7 @@ let package = Package(
         .package(url: "https://github.com/kiliankoe/CLISpinner", from: "0.4.0"),
         .package(url: "https://github.com/JohnSundell/Codextended", from: "0.1.0"),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/mpalmer685/swift-ascii-table", exact: "0.2.0"),
     ],
     targets: [
         .target(
@@ -53,6 +54,7 @@ let package = Package(
                 .product(name: "Codextended", package: "Codextended"),
                 .product(name: "Files", package: "Files"),
                 .product(name: "Rainbow", package: "Rainbow"),
+                .product(name: "AsciiTable", package: "swift-ascii-table"),
             ]
         ),
         .executableTarget(

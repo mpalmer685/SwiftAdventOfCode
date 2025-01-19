@@ -150,3 +150,58 @@ struct SavedResults {
         try benchmarks.save()
     }
 }
+
+struct PuzzleDescriptor: Hashable, Sendable {
+    let day: Int
+    let part: PuzzlePart
+}
+
+extension PuzzleDescriptor: Comparable {
+    static func < (lhs: PuzzleDescriptor, rhs: PuzzleDescriptor) -> Bool {
+        if lhs.day == rhs.day {
+            lhs.part.rawValue < rhs.part.rawValue
+        } else {
+            lhs.day < rhs.day
+        }
+    }
+}
+
+extension PuzzleDescriptor: CustomStringConvertible {
+    var description: String {
+        "Day \(day), Part \(part.rawValue)"
+    }
+}
+
+struct Benchmark {
+    let puzzle: PuzzleDescriptor
+    let debugTime: Duration?
+    let releaseTime: Duration?
+
+    static func loadAll(forYear year: Int) -> [Self] {
+        let debugBenchmarks = SavedResult<Duration>.load(from: "Benchmarks/\(year)-debug.json")
+        let releaseBenchmarks = SavedResult<Duration>.load(from: "Benchmarks/\(year)-release.json")
+
+        let days = Set(debugBenchmarks.resultsByDay.keys)
+            .union(releaseBenchmarks.resultsByDay.keys)
+            .sorted()
+
+        return days
+            .flatMap { day in
+                [
+                    Benchmark(
+                        puzzle: PuzzleDescriptor(day: day, part: .partOne),
+                        debugTime: debugBenchmarks[day]?.part1,
+                        releaseTime: releaseBenchmarks[day]?.part1
+                    ),
+                    Benchmark(
+                        puzzle: PuzzleDescriptor(day: day, part: .partTwo),
+                        debugTime: debugBenchmarks[day]?.part2,
+                        releaseTime: releaseBenchmarks[day]?.part2
+                    ),
+                ]
+            }
+            .filter { benchmark in
+                benchmark.debugTime != nil || benchmark.releaseTime != nil
+            }
+    }
+}

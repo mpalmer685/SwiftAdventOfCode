@@ -21,11 +21,31 @@ private let millisecondsFormatter = Duration.UnitsFormatStyle(
     width: .narrow,
     fractionalPart: .show(length: 3)
 )
+private let secondsOnlyFormatter = Duration.UnitsFormatStyle(
+    allowedUnits: [.minutes, .seconds],
+    width: .narrow,
+    zeroValueUnits: .hide,
+    fractionalPart: .hide(rounded: .down)
+)
 
 extension Duration {
     func formattedForDisplay() -> String {
         let formatter = components.seconds > 0 ? secondsFormatter : millisecondsFormatter
         return formatted(formatter)
+    }
+
+    func formattedForComparison() -> String {
+        let seconds = components.seconds
+        guard seconds > 0 else {
+            return formatted(millisecondsFormatter)
+        }
+
+        let formattedSeconds = formatted(secondsOnlyFormatter)
+        let formattedMilliseconds = (self - .seconds(seconds)).formatted(millisecondsFormatter)
+        let paddingLength = " 000.000ms".count - formattedMilliseconds.count
+        let padding = String(repeating: " ", count: paddingLength)
+
+        return formattedSeconds + padding + formattedMilliseconds
     }
 }
 
