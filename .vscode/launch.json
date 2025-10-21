@@ -1,7 +1,7 @@
 {
     "configurations": [
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Debug aoc2020",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/debug/aoc2020",
@@ -10,7 +10,7 @@
             "preLaunchTask": "swift: Build Debug aoc2020"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Release aoc2020",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/release/aoc2020",
@@ -19,7 +19,7 @@
             "preLaunchTask": "swift: Build Release aoc2020"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Debug aoc2021",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/debug/aoc2021",
@@ -28,7 +28,7 @@
             "preLaunchTask": "swift: Build Debug aoc2021"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Release aoc2021",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/release/aoc2021",
@@ -37,7 +37,7 @@
             "preLaunchTask": "swift: Build Release aoc2021"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Debug aoc2022",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/debug/aoc2022",
@@ -46,7 +46,7 @@
             "preLaunchTask": "swift: Build Debug aoc2022"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "name": "Release aoc2022",
             "program": "${workspaceFolder:SwiftAdventOfCode}/.build/release/aoc2022",
@@ -55,11 +55,9 @@
             "preLaunchTask": "swift: Build Release aoc2022"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
-            "sourceLanguages": [
-                "swift"
-            ],
+            "sourceLanguages": ["swift"],
             "args": [],
             "cwd": "${workspaceFolder:SwiftAdventOfCode}",
             "name": "Debug aoc2023",
@@ -67,11 +65,9 @@
             "preLaunchTask": "swift: Build Debug aoc2023"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
-            "sourceLanguages": [
-                "swift"
-            ],
+            "sourceLanguages": ["swift"],
             "args": [],
             "cwd": "${workspaceFolder:SwiftAdventOfCode}",
             "name": "Release aoc2023",
@@ -79,7 +75,7 @@
             "preLaunchTask": "swift: Build Release aoc2023"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:SwiftAdventOfCode}",
@@ -88,7 +84,7 @@
             "preLaunchTask": "swift: Build Debug aoc2024"
         },
         {
-            "type": "lldb",
+            "type": "swift",
             "request": "launch",
             "args": [],
             "cwd": "${workspaceFolder:SwiftAdventOfCode}",
