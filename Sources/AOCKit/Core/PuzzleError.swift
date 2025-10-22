@@ -1,4 +1,4 @@
-enum PuzzleError: Error {
+public enum PuzzleError: Error {
     case noSavedResults
     case dayNotImplemented(_ day: Int)
     case partNotImplemented(_ part: Int)
@@ -8,7 +8,7 @@ enum PuzzleError: Error {
 }
 
 extension PuzzleError: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         switch self {
             case let .noPuzzleInput(day):
                 "Could not find or download an input file for day \(day)"

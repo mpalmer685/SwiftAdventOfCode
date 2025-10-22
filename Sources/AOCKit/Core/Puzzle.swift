@@ -1,6 +1,6 @@
 import Files
 
-public protocol Puzzle {
+public protocol Puzzle: Sendable {
     associatedtype Part1Result: CustomStringConvertible
     associatedtype Part2Result: CustomStringConvertible
 
@@ -37,9 +37,9 @@ public struct TestCase<
     Part1Result: CustomStringConvertible,
     Part2Result: CustomStringConvertible
 > {
-    let input: InputSource
-    let expectedPart1: Part1Result?
-    let expectedPart2: Part2Result?
+    public let input: InputSource
+    public let expectedPart1: Part1Result?
+    public let expectedPart2: Part2Result?
 
     public init(
         input: InputSource,
@@ -57,10 +57,10 @@ public struct TestCaseWithConfig<
     Part2Result: CustomStringConvertible,
     Config
 > {
-    let input: InputSource
-    let expectedPart1: Part1Result?
-    let expectedPart2: Part2Result?
-    let config: Config
+    public let input: InputSource
+    public let expectedPart1: Part1Result?
+    public let expectedPart2: Part2Result?
+    public let config: Config
 
     public init(
         input: InputSource,

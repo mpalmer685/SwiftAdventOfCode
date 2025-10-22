@@ -60,7 +60,7 @@ private struct SavedResult<Value: Codable> {
     }
 }
 
-struct SavedResults {
+public struct SavedResults {
     private var answers: SavedResult<String>
     private var benchmarks: SavedResult<Duration>
 

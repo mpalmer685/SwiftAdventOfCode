@@ -33,12 +33,6 @@ let package = Package(
             name: "AOCKit",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
-                .product(name: "CLISpinner", package: "CLISpinner"),
-                .product(name: "Codextended", package: "Codextended"),
-                .product(name: "Files", package: "Files"),
-                .product(name: "Rainbow", package: "Rainbow"),
-                .product(name: "AsciiTable", package: "swift-ascii-table"),
             ]
         ),
         .testTarget(
@@ -47,7 +41,15 @@ let package = Package(
         ),
         .executableTarget(
             name: "aoc",
-            dependencies: ["AOCKit"]
+            dependencies: [
+                "AOCKit",
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Codextended", package: "Codextended"),
+                .product(name: "Files", package: "Files"),
+                .product(name: "CLISpinner", package: "CLISpinner"),
+                .product(name: "Rainbow", package: "Rainbow"),
+                .product(name: "AsciiTable", package: "swift-ascii-table"),
+            ]
         ),
     ]
 )
