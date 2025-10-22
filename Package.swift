@@ -1,4 +1,4 @@
-// swift-tools-version:6.0
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import Foundation
@@ -6,31 +6,15 @@ import PackageDescription
 
 let package = Package(
     name: "SwiftAdventOfCode",
-    platforms: [.macOS(.v13)],
+    platforms: [.macOS(.v15)],
     products: [
         .library(
             name: "AOCKit",
             targets: ["AOCKit"]
         ),
         .executable(
-            name: "aoc2020",
-            targets: ["AdventOfCode2020"]
-        ),
-        .executable(
-            name: "aoc2021",
-            targets: ["AdventOfCode2021"]
-        ),
-        .executable(
-            name: "aoc2022",
-            targets: ["AdventOfCode2022"]
-        ),
-        .executable(
-            name: "aoc2023",
-            targets: ["AdventOfCode2023"]
-        ),
-        .executable(
-            name: "aoc2024",
-            targets: ["AdventOfCode2024"]
+            name: "aoc",
+            targets: ["aoc"]
         ),
     ],
     dependencies: [
@@ -57,24 +41,12 @@ let package = Package(
                 .product(name: "AsciiTable", package: "swift-ascii-table"),
             ]
         ),
-        .executableTarget(
-            name: "AdventOfCode2020",
+        .testTarget(
+            name: "AOCKitTests",
             dependencies: ["AOCKit"]
         ),
         .executableTarget(
-            name: "AdventOfCode2021",
-            dependencies: ["AOCKit"]
-        ),
-        .executableTarget(
-            name: "AdventOfCode2022",
-            dependencies: ["AOCKit"]
-        ),
-        .executableTarget(
-            name: "AdventOfCode2023",
-            dependencies: ["AOCKit"]
-        ),
-        .executableTarget(
-            name: "AdventOfCode2024",
+            name: "aoc",
             dependencies: ["AOCKit"]
         ),
     ]

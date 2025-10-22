@@ -68,8 +68,8 @@ public final class Line: StringInput {
     public var lines: [Line] { [self] }
 
     public var integers: [Int] {
-        let matches = NSRegularExpression("(-?\\d+)").matches(in: raw)
-        return matches.compactMap { Int($0[1]) }
+        let ranges = raw.ranges(of: /(-?\d+)/)
+        return ranges.compactMap { Int(raw[$0]) }
     }
 }
 
@@ -80,7 +80,7 @@ public final class Word: StringInput {
         self.raw = raw
     }
 
-    public lazy var lines: [Line] = { [Line(raw)] }()
+    public lazy var lines: [Line] = [Line(raw)]
     public var words: [Word] { [self] }
     public var csvWords: [Word] { [self] }
 }
@@ -111,7 +111,7 @@ public extension Collection where Element: Collection, Element.Element: StringIn
     var integers: [[Int]] { map(\.integers) }
 }
 
-public extension Collection where Element == Character {
+public extension Collection<Character> {
     var integers: [Int] { compactMap(\.wholeNumberValue) }
     var bits: [Bit] { compactMap(\.bitValue) }
 }

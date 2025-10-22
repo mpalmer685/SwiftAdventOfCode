@@ -21,8 +21,14 @@ private struct SavedResult<Value: Codable> {
             return SavedResult(path: path)
         }
 
-        guard let fileContents = try? file.read(),
-              let result = try? JSONDecoder().decode([Int: Result<Value>].self, from: fileContents)
+        guard let fileContents = try? file.read() else {
+            fatalError("Failed to read contents of file at \(path)")
+        }
+        if fileContents.isEmpty {
+            return SavedResult(path: path)
+        }
+
+        guard let result = try? JSONDecoder().decode([Int: Result<Value>].self, from: fileContents)
         else {
             fatalError("Failed to decode saved results from \(path)")
         }

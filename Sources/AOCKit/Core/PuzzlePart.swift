@@ -4,7 +4,7 @@ enum PuzzlePart: Int, CaseIterable {
 }
 
 extension PuzzlePart: CustomStringConvertible {
-    public var description: String {
+    var description: String {
         String(rawValue)
     }
 }

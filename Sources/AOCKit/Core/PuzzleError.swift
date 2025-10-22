@@ -8,7 +8,7 @@ enum PuzzleError: Error {
 }
 
 extension PuzzleError: CustomStringConvertible {
-    public var description: String {
+    var description: String {
         switch self {
             case let .noPuzzleInput(day):
                 "Could not find or download an input file for day \(day)"
