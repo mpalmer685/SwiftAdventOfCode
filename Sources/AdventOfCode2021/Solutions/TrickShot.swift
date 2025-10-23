@@ -4,7 +4,6 @@ private let testInput = "target area: x=20..30, y=-10..-5"
 
 struct TrickShot: Puzzle {
     static let day = 17
-    static let rawInput: String? = "target area: x=185..221, y=-122..-74"
 
     func part1(input: Input) throws -> Int {
         let bounds = parse(input)

@@ -15,7 +15,11 @@ struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
         ),
     ]
 
-    func part1(input: Input, _ range: (Int, Int) = (rangeMin, rangeMax)) throws -> Int {
+    func part1(input: Input) throws -> Int {
+        try part1(input: input, (rangeMin, rangeMax))
+    }
+
+    func part1(input: Input, _ range: (Int, Int)) throws -> Int {
         let (min, max) = range
         let particles = parse(input).map { Particle2D(position: $0, velocity: $1) }
 
@@ -31,8 +35,12 @@ struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
         }
     }
 
+    func part2(input: Input) throws -> Int {
+        try part2(input: input, (rangeMin, rangeMax))
+    }
+
     // https://www.reddit.com/r/adventofcode/comments/18q40he/2023_day_24_part_2_a_straightforward_nonsolver/
-    func part2(input: Input, _ range: (Int, Int) = (rangeMin, rangeMax)) throws -> Int {
+    func part2(input: Input, _: (Int, Int)) throws -> Int {
         let particles = parse(input)
 
         let m1 = asSystemMatrix(from: particles, using: \.x, \.y, \.dx, \.dy)
