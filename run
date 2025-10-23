@@ -33,7 +33,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-cmd="swift run -c $config aoc${year}"
+cmd="swift run -c $config aoc --year ${year}"
 
 case $subcommand in
     next)

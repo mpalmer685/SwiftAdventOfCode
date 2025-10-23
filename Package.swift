@@ -53,6 +53,7 @@ let package = Package(
             name: "AOCKit",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "Files", package: "Files"),
             ]
         ),
         .testTarget(
