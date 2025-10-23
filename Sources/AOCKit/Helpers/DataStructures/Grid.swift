@@ -1,4 +1,4 @@
-public struct Grid<Cell> {
+public struct Grid<Cell: Sendable>: Sendable {
     private(set) var cells: [[Cell]]
 
     public init(_ cells: [[Cell]]) {
@@ -124,4 +124,3 @@ public extension Grid where Cell: Equatable {
 
 extension Grid: Equatable where Cell: Equatable {}
 extension Grid: Hashable where Cell: Hashable {}
-extension Grid: Sendable where Cell: Sendable {}

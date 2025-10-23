@@ -1,5 +1,5 @@
-public protocol Dimensioned: Hashable, CustomStringConvertible {
-    associatedtype Precision: SignedNumeric, CustomStringConvertible, Comparable
+public protocol Dimensioned: Hashable, CustomStringConvertible, Sendable {
+    associatedtype Precision: SignedNumeric, CustomStringConvertible, Comparable, Sendable
 
     static var numberOfDimensions: Int { get }
     static var descriptionWrappers: (String, String) { get }

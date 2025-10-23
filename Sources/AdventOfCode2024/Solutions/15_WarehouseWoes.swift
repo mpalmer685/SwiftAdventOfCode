@@ -22,7 +22,7 @@ struct WarehouseWoes: Puzzle {
 }
 
 private protocol Warehouse {
-    associatedtype Tile: RawRepresentable where Tile.RawValue == Character
+    associatedtype Tile: RawRepresentable, Sendable where Tile.RawValue == Character
 
     init(map: Grid<Tile>)
 

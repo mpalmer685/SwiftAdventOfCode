@@ -2,7 +2,6 @@ import AOCKit
 
 struct RambunctiousRecitation: Puzzle {
     static let day = 15
-    static let rawInput: String? = "5,1,9,18,13,8,0"
 
     func part1(input: Input) throws -> Int {
         let startingNumbers = input.csvWords.integers
@@ -29,7 +28,7 @@ struct RambunctiousRecitation: Puzzle {
 
         for turn in startingNumbers.count ..< turns {
             guard let (lastTurn, priorTurn) = numbersRead[lastNumber] else { fatalError() }
-            if let priorTurn = priorTurn {
+            if let priorTurn {
                 lastNumber = lastTurn - priorTurn
             } else {
                 lastNumber = 0

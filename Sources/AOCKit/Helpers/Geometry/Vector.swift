@@ -60,7 +60,7 @@ public extension VectorProtocol {
     }
 }
 
-public struct Vector2D: VectorProtocol, Sendable {
+public struct Vector2D: VectorProtocol {
     public static let numberOfDimensions = 2
 
     public static let x = Self(1, 0)
@@ -96,7 +96,7 @@ public struct Vector2D: VectorProtocol, Sendable {
     public static let orthogonalAdjacents = adjacents.filter(\.isOrthogonal)
 }
 
-public struct Vector3D: VectorProtocol, Sendable {
+public struct Vector3D: VectorProtocol {
     public static let numberOfDimensions = 3
 
     public static let x = Self(1, 0, 0)
@@ -136,7 +136,7 @@ public struct Vector3D: VectorProtocol, Sendable {
     public static let orthogonalAdjacents: [Self] = adjacents.filter(\.isOrthogonal)
 }
 
-public struct Vector4D: VectorProtocol, Sendable {
+public struct Vector4D: VectorProtocol {
     public static let numberOfDimensions = 4
 
     public var dw: Int
