@@ -20,37 +20,37 @@ struct KeypadConundrum: Puzzle {
             return keypresses * numericCode
         }
     }
-
-    private struct State: Hashable {
-        let start: Character
-        let end: Character
-        let level: Int
-    }
-
-    private func keypresses(for code: String, robots: Int) -> Int {
-        let keys = ["A"] + Array(code)
-        return keys.adjacentPairs().sum { start, end in
-            countKeypresses(.numeric, start, end, robots + 1)
-        }
-    }
-
-    private let countKeypresses =
-        recursiveMemoize(
-            getKey: { (_: Keypad, start: Character, end: Character, level: Int) in
-                State(start: start, end: end, level: level)
-            },
-            { countKeypresses, keypad, start, end, level -> Int in
-                if level == 0 { return 1 }
-
-                return keypad.steps(from: start, to: end).min { steps in
-                    let sequence = Array("A" + steps)
-                    return sequence.adjacentPairs().sum { start, end in
-                        countKeypresses(.directional, start, end, level - 1)
-                    }
-                }!
-            }
-        )
 }
+
+private struct State: Hashable {
+    let start: Character
+    let end: Character
+    let level: Int
+}
+
+private func keypresses(for code: String, robots: Int) -> Int {
+    let keys = ["A"] + Array(code)
+    return keys.adjacentPairs().sum { start, end in
+        countKeypresses(.numeric, start, end, robots + 1)
+    }
+}
+
+private nonisolated(unsafe) let countKeypresses =
+    recursiveMemoize(
+        getKey: { (_: Keypad, start: Character, end: Character, level: Int) in
+            State(start: start, end: end, level: level)
+        },
+        { countKeypresses, keypad, start, end, level -> Int in
+            if level == 0 { return 1 }
+
+            return keypad.steps(from: start, to: end).min { steps in
+                let sequence = Array("A" + steps)
+                return sequence.adjacentPairs().sum { start, end in
+                    countKeypresses(.directional, start, end, level - 1)
+                }
+            }!
+        }
+    )
 
 private struct Keypad {
     private typealias StepMap = [Character: [Character: [String]]]
