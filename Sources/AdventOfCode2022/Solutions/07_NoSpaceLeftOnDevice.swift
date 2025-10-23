@@ -1,6 +1,6 @@
 import AOCKit
 
-class NoSpaceLeftOnDevice: Puzzle {
+struct NoSpaceLeftOnDevice: Puzzle {
     static let day = 7
 
     func part1(input: Input) throws -> Int {
@@ -54,10 +54,10 @@ private enum Entry {
 }
 
 private class Node<T> {
-    public let value: T
+    let value: T
 
-    public private(set) weak var parent: Node<T>?
-    public private(set) var children: [Node<T>]
+    private(set) weak var parent: Node<T>?
+    private(set) var children: [Node<T>]
 
     init(value: T) {
         self.value = value
@@ -93,18 +93,18 @@ private extension Node where T == Entry {
     var name: String {
         switch value {
             case let .file(name, _):
-                return name
+                name
             case let .folder(name):
-                return name
+                name
         }
     }
 
     var size: Int {
         switch value {
             case let .file(_, size):
-                return size
+                size
             case .folder:
-                return children.map(\.size).sum
+                children.map(\.size).sum
         }
     }
 }

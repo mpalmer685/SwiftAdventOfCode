@@ -1,6 +1,6 @@
 import AOCKit
 
-class PyroclasticFlow: Puzzle {
+struct PyroclasticFlow: Puzzle {
     static let day = 17
 
     func part1(input: Input) throws -> Int {

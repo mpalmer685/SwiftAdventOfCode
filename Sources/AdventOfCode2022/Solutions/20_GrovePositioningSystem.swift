@@ -1,6 +1,6 @@
 import AOCKit
 
-class GrovePositioningSystem: Puzzle {
+struct GrovePositioningSystem: Puzzle {
     static let day = 20
 
     func part1(input: Input) throws -> Int {

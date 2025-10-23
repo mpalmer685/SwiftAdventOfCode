@@ -3,7 +3,7 @@ import AOCKit
 private typealias Stack = [Character]
 private typealias Instruction = (Int, Int, Int)
 
-class SupplyStacks: Puzzle {
+struct SupplyStacks: Puzzle {
     static let day = 5
 
     func part1(input: Input) throws -> String {

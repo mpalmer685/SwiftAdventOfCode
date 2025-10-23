@@ -1,6 +1,6 @@
 import AOCKit
 
-class BoilingBoulders: Puzzle {
+struct BoilingBoulders: Puzzle {
     static let day = 18
 
     func part1(input: Input) throws -> Int {

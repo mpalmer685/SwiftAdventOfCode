@@ -1,6 +1,6 @@
 import AOCKit
 
-class MonkeyInTheMiddle: Puzzle {
+struct MonkeyInTheMiddle: Puzzle {
     static let day = 11
 
     func part1(input: Input) throws -> Int {

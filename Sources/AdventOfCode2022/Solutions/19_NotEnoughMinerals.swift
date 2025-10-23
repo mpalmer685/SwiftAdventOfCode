@@ -1,6 +1,6 @@
 import AOCKit
 
-class NotEnoughMinerals: Puzzle {
+struct NotEnoughMinerals: Puzzle {
     static let day = 19
 
     func part1(input: Input) throws -> Int {

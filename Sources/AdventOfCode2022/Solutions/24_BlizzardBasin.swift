@@ -1,6 +1,6 @@
 import AOCKit
 
-class BlizzardBasin: Puzzle {
+struct BlizzardBasin: Puzzle {
     static let day = 24
 
     func part1(input: Input) throws -> Int {

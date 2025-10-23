@@ -1,6 +1,6 @@
 import AOCKit
 
-class ProboscideaVolcanium: Puzzle {
+struct ProboscideaVolcanium: Puzzle {
     static let day = 16
 
     func part1(input: Input) throws -> Int {

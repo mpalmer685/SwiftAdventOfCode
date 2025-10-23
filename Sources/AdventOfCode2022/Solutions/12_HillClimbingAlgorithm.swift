@@ -1,6 +1,6 @@
 import AOCKit
 
-class HillClimbingAlgorithm: Puzzle {
+struct HillClimbingAlgorithm: Puzzle {
     static let day = 12
 
     func part1(input: Input) throws -> Int {

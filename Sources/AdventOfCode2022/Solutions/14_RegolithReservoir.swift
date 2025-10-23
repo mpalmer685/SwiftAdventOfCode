@@ -1,6 +1,6 @@
 import AOCKit
 
-class RegolithReservoir: Puzzle {
+struct RegolithReservoir: Puzzle {
     static let day = 14
 
     private func cave(from input: Input) -> Cave {

@@ -1,6 +1,6 @@
 import AOCKit
 
-class DistressSignal: Puzzle {
+struct DistressSignal: Puzzle {
     static let day = 13
 
     private func packets(from input: Input) -> [Packet] {

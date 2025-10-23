@@ -2,7 +2,7 @@ import AOCKit
 
 private typealias ScanData = (scanner: Point2D, beacon: Point2D, distance: Int)
 
-class BeaconExclusionZone: Puzzle {
+struct BeaconExclusionZone: Puzzle {
     static let day = 15
 
 //    static let rawInput: String? = """

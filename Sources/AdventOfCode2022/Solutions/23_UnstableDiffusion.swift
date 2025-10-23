@@ -3,7 +3,7 @@ import AOCKit
 private typealias Point = Point2D
 private typealias Direction = Vector2D
 
-class UnstableDiffusion: Puzzle {
+struct UnstableDiffusion: Puzzle {
     static let day = 23
 
     private let decisions: [Decision] = [
@@ -102,13 +102,11 @@ private extension Vector2D {
 }
 
 private extension Point2D {
-    func hasNeighbors<C: Collection>(in collection: C) -> Bool where C.Element == Self {
+    func hasNeighbors(in collection: some Collection<Self>) -> Bool {
         neighbors.contains(where: { collection.contains($0) })
     }
 
-    func hasNeighbor<C: Collection>(in collection: C, checking vectors: [Vector]) -> Bool
-        where C.Element == Self
-    {
+    func hasNeighbor(in collection: some Collection<Self>, checking vectors: [Vector]) -> Bool {
         vectors.contains(where: { collection.contains(self + $0) })
     }
 }
@@ -122,7 +120,7 @@ private struct Rect {
     var area: Int { (xMax - xMin + 1) * (yMax - yMin + 1) }
 }
 
-private extension Set where Element == Point2D {
+private extension Set<Point2D> {
     var bounds: Rect {
         Rect(xMin: min(of: \.x)!, xMax: max(of: \.x)!, yMin: min(of: \.y)!, yMax: max(of: \.y)!)
     }
