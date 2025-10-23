@@ -12,6 +12,10 @@ let package = Package(
             name: "AOCKit",
             targets: ["AOCKit"]
         ),
+        .library(
+            name: "AdventOfCode2020",
+            targets: ["AdventOfCode2020"]
+        ),
         .executable(
             name: "aoc",
             targets: ["aoc"]
@@ -39,10 +43,15 @@ let package = Package(
             name: "AOCKitTests",
             dependencies: ["AOCKit"]
         ),
+        .target(
+            name: "AdventOfCode2020",
+            dependencies: ["AOCKit"]
+        ),
         .executableTarget(
             name: "aoc",
             dependencies: [
                 "AOCKit",
+                "AdventOfCode2020",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Codextended", package: "Codextended"),
                 .product(name: "Files", package: "Files"),
