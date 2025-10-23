@@ -1,8 +1,8 @@
 import Files
 
 public protocol Puzzle: Sendable {
-    associatedtype Part1Result: CustomStringConvertible
-    associatedtype Part2Result: CustomStringConvertible
+    associatedtype Part1Result: CustomStringConvertible & Sendable
+    associatedtype Part2Result: CustomStringConvertible & Sendable
 
     static var day: Int { get }
 
@@ -25,7 +25,7 @@ public protocol TestablePuzzle: Puzzle {
 }
 
 public protocol TestablePuzzleWithConfig: Puzzle {
-    associatedtype Config
+    associatedtype Config: Sendable
 
     var testCases: [TestCaseWithConfig<Part1Result, Part2Result, Config>] { get }
 
@@ -34,9 +34,9 @@ public protocol TestablePuzzleWithConfig: Puzzle {
 }
 
 public struct TestCase<
-    Part1Result: CustomStringConvertible,
-    Part2Result: CustomStringConvertible
-> {
+    Part1Result: CustomStringConvertible & Sendable,
+    Part2Result: CustomStringConvertible & Sendable
+>: Sendable {
     public let input: InputSource
     public let expectedPart1: Part1Result?
     public let expectedPart2: Part2Result?
@@ -53,10 +53,10 @@ public struct TestCase<
 }
 
 public struct TestCaseWithConfig<
-    Part1Result: CustomStringConvertible,
-    Part2Result: CustomStringConvertible,
-    Config
-> {
+    Part1Result: CustomStringConvertible & Sendable,
+    Part2Result: CustomStringConvertible & Sendable,
+    Config: Sendable
+>: Sendable {
     public let input: InputSource
     public let expectedPart1: Part1Result?
     public let expectedPart2: Part2Result?
@@ -75,7 +75,7 @@ public struct TestCaseWithConfig<
     }
 }
 
-public enum InputSource {
+public enum InputSource: Sendable {
     case raw(String)
     case file(String)
 

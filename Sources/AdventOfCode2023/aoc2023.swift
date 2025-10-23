@@ -1,6 +1,6 @@
 import AOCKit
 
-await AdventOfCode(year: 2023, puzzles: [
+public let aoc2023 = AdventOfCodeEvent(year: 2023, puzzles: [
     Trebuchet(),
     CubeConundrum(),
     GearRatios(),
@@ -26,4 +26,4 @@ await AdventOfCode(year: 2023, puzzles: [
     LongWalk(),
     NeverTellMeTheOdds(),
     Snowverload(),
-]).run()
+])
