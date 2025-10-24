@@ -46,6 +46,7 @@ let package = Package(
         .package(url: "https://github.com/kiliankoe/CLISpinner", from: "0.4.0"),
         .package(url: "https://github.com/JohnSundell/Codextended", from: "0.1.0"),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-collections", from: "1.0.0"),
         .package(url: "https://github.com/mpalmer685/swift-ascii-table", exact: "0.2.0"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
@@ -55,6 +56,7 @@ let package = Package(
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
+                .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Files", package: "Files"),
             ],
         ),

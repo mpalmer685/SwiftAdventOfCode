@@ -11,17 +11,17 @@ public extension WeightedGraph {
     @discardableResult
     private func traverse(
         from start: Node,
-        until goalReached: (Node) -> Bool
+        until goalReached: (Node) -> Bool,
     ) -> (Path?, [Node: Path]) {
         let startSegment = Path(start)
 
-        var frontier = Heap<Path>.minHeap()
+        var frontier = Heap<Path>()
         frontier.insert(startSegment)
 
         var explored: [Node: Path] = [:]
         explored[start] = startSegment
 
-        while let current = frontier.remove() {
+        while let current = frontier.popMin() {
             let node = current.value
 
             if goalReached(node) {
