@@ -3,19 +3,17 @@ import AOCKit
 struct MonkeyMarket: Puzzle, Sendable {
     static let day = 22
 
-    func part1(input: Input) throws -> Int {
+    func part1(input: Input) async throws -> Int {
         let codes = input.lines.integers
-        return sync {
-            await codes.concurrentMap { start in
-                secretNumbers(startingWith: start).last!
-            }.sum
-        }
+        return await codes.concurrentMap { start in
+            secretNumbers(startingWith: start).last!
+        }.sum
     }
 
-    func part2(input: Input) throws -> Int {
+    func part2(input: Input) async throws -> Int {
         let codes = input.lines.integers
-        let sequences = sync {
-            await codes.concurrentMap { salesOpportunities(for: $0) }
+        let sequences = await codes.concurrentMap {
+            salesOpportunities(for: $0)
         }
 
         let sales = sequences.reduce([[Int]: Int]()) { sales, sequences in

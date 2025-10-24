@@ -11,16 +11,14 @@ struct GuardGallivant: Puzzle {
         return visited.count
     }
 
-    func part2(input: Input) throws -> Int {
+    func part2(input: Input) async throws -> Int {
         let simulation = Simulation(input: input)
         guard case let .exit(visited) = simulation.run() else {
             fatalError()
         }
 
-        return sync {
-            await visited.concurrentCount { point in
-                simulation.addingObstacle(at: point).run().isLoop
-            }
+        return await visited.concurrentCount { point in
+            simulation.addingObstacle(at: point).run().isLoop
         }
     }
 }

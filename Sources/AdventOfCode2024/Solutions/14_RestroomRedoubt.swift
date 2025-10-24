@@ -11,16 +11,14 @@ struct RestroomRedoubt: Puzzle {
         Simulation.parse(from: input, size: size).safetyScore(at: 100)
     }
 
-    func part2(input: Input) throws -> Int {
-        try part2(input: input, Simulation.size)
+    func part2(input: Input) async throws -> Int {
+        try await part2(input: input, Simulation.size)
     }
 
-    func part2(input: Input, _ size: (width: Int, height: Int)) throws -> Int {
+    func part2(input: Input, _ size: (width: Int, height: Int)) async throws -> Int {
         let simulation = Simulation.parse(from: input, size: size)
-        let scores = sync {
-            await (1 ..< size.width * size.height).concurrentMap { seconds in
-                (seconds: seconds, score: simulation.safetyScore(at: seconds))
-            }
+        let scores = await (1 ..< size.width * size.height).concurrentMap { seconds in
+            (seconds: seconds, score: simulation.safetyScore(at: seconds))
         }
 
         return scores.min(by: \.score)!.seconds
@@ -38,7 +36,7 @@ private struct Simulation {
             }
             return Robot(
                 position: Point2D(Int(match.x)!, Int(match.y)!),
-                velocity: Vector2D(Int(match.dx)!, Int(match.dy)!)
+                velocity: Vector2D(Int(match.dx)!, Int(match.dy)!),
             )
         }
         return Self(robots: robots, size: size)

@@ -99,7 +99,7 @@ extension AdventOfCodeEvent {
             var request = URLRequest(url: url)
             request.setValue(
                 "github.com/mpalmer685/SwiftAdventOfCode by mrpalmer685@gmail.com",
-                forHTTPHeaderField: "User-Agent"
+                forHTTPHeaderField: "User-Agent",
             )
             let (data, _) = try await URLSession.shared.data(for: request)
             guard let str = String(data: data, encoding: .utf8) else {
@@ -139,36 +139,45 @@ extension AdventOfCodeEvent {
         }
         return (result!, duration)
     }
+
+    func measure<T>(_ work: () async throws -> T) async rethrows -> (T, Duration) {
+        let clock = ContinuousClock()
+        var result: T?
+        let duration = try await clock.measure {
+            result = try await work()
+        }
+        return (result!, duration)
+    }
 }
 
 // MARK: - Testing
 
 extension AdventOfCodeEvent {
-    func testAllPuzzles() throws -> Bool {
+    func testAllPuzzles() async throws -> Bool {
         let allDays = puzzles.map { type(of: $0).day }.sorted()
-        return try allDays.allSatisfy { day in
-            try runTests(for: day)
+        return try await allDays.async.allSatisfy { day in
+            try await runTests(for: day)
         }
     }
 
-    func runTests(for day: Int) throws -> Bool {
-        try PuzzlePart.allCases.allSatisfy { part in
-            try runTests(for: day, part: part)
+    func runTests(for day: Int) async throws -> Bool {
+        try await PuzzlePart.allCases.async.allSatisfy { part in
+            try await runTests(for: day, part: part)
         }
     }
 
-    func runTests(for day: Int, part: PuzzlePart) throws -> Bool {
+    func runTests(for day: Int, part: PuzzlePart) async throws -> Bool {
         let puzzle = try puzzle(for: day)
         if let puzzle = puzzle as? any TestablePuzzle {
-            return try runTests(for: puzzle, part: part)
+            return try await runTests(for: puzzle, part: part)
         } else if let puzzle = puzzle as? any TestablePuzzleWithConfig {
-            return try runTests(for: puzzle, part: part)
+            return try await runTests(for: puzzle, part: part)
         } else {
             throw PuzzleError.testableNotImplemented
         }
     }
 
-    private func runTests(for puzzle: some TestablePuzzle, part: PuzzlePart) throws -> Bool {
+    private func runTests(for puzzle: some TestablePuzzle, part: PuzzlePart) async throws -> Bool {
         let testCases = puzzle.testCases(for: part)
         guard testCases.isNotEmpty else {
             throw PuzzleError.noTestCases
@@ -180,13 +189,13 @@ extension AdventOfCodeEvent {
             }
             return (input, testCase.output)
         }
-        return try puzzle.run(testCasesWithInput, for: part)
+        return try await puzzle.run(testCasesWithInput, for: part)
     }
 
     private func runTests(
         for puzzle: some TestablePuzzleWithConfig,
-        part: PuzzlePart
-    ) throws -> Bool {
+        part: PuzzlePart,
+    ) async throws -> Bool {
         let testCases = puzzle.testCases(for: part)
         guard testCases.isNotEmpty else {
             throw PuzzleError.noTestCases
@@ -198,7 +207,7 @@ extension AdventOfCodeEvent {
             }
             return (input, testCase.config, testCase.output)
         }
-        return try puzzle.run(testCasesWithInput, for: part)
+        return try await puzzle.run(testCasesWithInput, for: part)
     }
 }
 
@@ -209,8 +218,8 @@ extension AdventOfCodeEvent {
         var saved = savedResults
         let puzzle = try puzzle(for: day)
         let input = try await input(for: puzzle)
-        let (result, duration) = try measure {
-            try run(puzzle, part: part, with: input)
+        let (result, duration) = try await measure {
+            try await run(puzzle, part: part, with: input)
         }
         copyToClipboard(result)
         print("\(result) \("(took \(duration.formattedForDisplay()))".blue)")
@@ -232,7 +241,9 @@ extension AdventOfCodeEvent {
         do {
             let puzzle = try puzzle(for: day)
             let input = try await input(for: puzzle)
-            let (result, newDuration) = try measure { try run(puzzle, part: part, with: input) }
+            let (result, newDuration) = try await measure {
+                try await run(puzzle, part: part, with: input)
+            }
             guard result == savedAnswer else {
                 spinner.fail()
                 print("Expected \(savedAnswer) but got \(result).")
@@ -243,7 +254,7 @@ extension AdventOfCodeEvent {
                 let comparison = newDuration.compared(to: oldDuration)
                 spinner
                     .succeed(
-                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison))."
+                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).",
                     )
                 if comparison.isImprovement {
                     savedResults.update(newDuration, for: day, part)
@@ -252,7 +263,7 @@ extension AdventOfCodeEvent {
             } else {
                 spinner
                     .succeed(
-                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay().blue)."
+                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay().blue).",
                     )
                 savedResults.update(newDuration, for: day, part)
                 try savedResults.save()
@@ -280,8 +291,12 @@ extension AdventOfCodeEvent {
         return result
     }
 
-    private func run(_ puzzle: any Puzzle, part: PuzzlePart, with input: Input) throws -> String {
+    private func run(
+        _ puzzle: any Puzzle,
+        part: PuzzlePart,
+        with input: Input,
+    ) async throws -> String {
         let runPuzzle = part == .partOne ? puzzle.part1(input:) : puzzle.part2(input:)
-        return try String(describing: runPuzzle(input))
+        return try await String(describing: runPuzzle(input))
     }
 }

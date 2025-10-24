@@ -6,16 +6,16 @@ public protocol Puzzle: Sendable {
 
     static var day: Int { get }
 
-    func part1(input: Input) throws -> Part1Result
-    func part2(input: Input) throws -> Part2Result
+    func part1(input: Input) async throws -> Part1Result
+    func part2(input: Input) async throws -> Part2Result
 }
 
 public extension Puzzle {
-    func part1(input: Input) throws -> Int {
+    func part1(input: Input) async throws -> Int {
         throw PuzzleError.partNotImplemented(1)
     }
 
-    func part2(input: Input) throws -> Int {
+    func part2(input: Input) async throws -> Int {
         throw PuzzleError.partNotImplemented(2)
     }
 }
@@ -29,8 +29,8 @@ public protocol TestablePuzzleWithConfig: Puzzle {
 
     var testCases: [TestCaseWithConfig<Part1Result, Part2Result, Config>] { get }
 
-    func part1(input: Input, _ config: Config) throws -> Part1Result
-    func part2(input: Input, _ config: Config) throws -> Part2Result
+    func part1(input: Input, _ config: Config) async throws -> Part1Result
+    func part2(input: Input, _ config: Config) async throws -> Part2Result
 }
 
 public struct TestCase<

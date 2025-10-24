@@ -4,7 +4,7 @@ import ArgumentParser
 struct RunCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "run",
-        abstract: "Run one or more puzzles for an event."
+        abstract: "Run one or more puzzles for an event.",
     )
 
     @OptionGroup var eventOptions: EventOptions
@@ -35,26 +35,26 @@ struct RunCommand: AsyncParsableCommand {
             fatalError("No event defined for \(eventOptions.year)")
         }
 
-        let success = test ? try runTests(for: event) : try await run(event)
+        let success = try await test ? runTests(for: event) : run(event)
 
         throw success ? ExitCode.success : ExitCode.failure
     }
 
-    private func runTests(for event: AdventOfCodeEvent) throws -> Bool {
+    private func runTests(for event: AdventOfCodeEvent) async throws -> Bool {
         if let day, let part {
-            return try event.runTests(for: day, part: part)
+            return try await event.runTests(for: day, part: part)
         } else if let day {
-            return try event.runTests(for: day)
+            return try await event.runTests(for: day)
         } else if latest {
             guard let (day, part) = event.latest else {
                 throw PuzzleError.noSavedResults
             }
-            return try event.runTests(for: day, part: part)
+            return try await event.runTests(for: day, part: part)
         } else if next {
             let (day, part) = event.next
-            return try event.runTests(for: day, part: part)
+            return try await event.runTests(for: day, part: part)
         } else {
-            return try event.testAllPuzzles()
+            return try await event.testAllPuzzles()
         }
     }
 

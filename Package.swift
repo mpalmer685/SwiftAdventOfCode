@@ -10,31 +10,31 @@ let package = Package(
     products: [
         .library(
             name: "AOCKit",
-            targets: ["AOCKit"]
+            targets: ["AOCKit"],
         ),
         .library(
             name: "AdventOfCode2020",
-            targets: ["AdventOfCode2020"]
+            targets: ["AdventOfCode2020"],
         ),
         .library(
             name: "AdventOfCode2021",
-            targets: ["AdventOfCode2021"]
+            targets: ["AdventOfCode2021"],
         ),
         .library(
             name: "AdventOfCode2022",
-            targets: ["AdventOfCode2022"]
+            targets: ["AdventOfCode2022"],
         ),
         .library(
             name: "AdventOfCode2023",
-            targets: ["AdventOfCode2023"]
+            targets: ["AdventOfCode2023"],
         ),
         .library(
             name: "AdventOfCode2024",
-            targets: ["AdventOfCode2024"]
+            targets: ["AdventOfCode2024"],
         ),
         .executable(
             name: "aoc",
-            targets: ["aoc"]
+            targets: ["aoc"],
         ),
     ],
     dependencies: [
@@ -47,38 +47,40 @@ let package = Package(
         .package(url: "https://github.com/JohnSundell/Codextended", from: "0.1.0"),
         .package(url: "https://github.com/apple/swift-algorithms", from: "1.0.0"),
         .package(url: "https://github.com/mpalmer685/swift-ascii-table", exact: "0.2.0"),
+        .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
     ],
     targets: [
         .target(
             name: "AOCKit",
             dependencies: [
                 .product(name: "Algorithms", package: "swift-algorithms"),
+                .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Files", package: "Files"),
-            ]
+            ],
         ),
         .testTarget(
             name: "AOCKitTests",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .target(
             name: "AdventOfCode2020",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .target(
             name: "AdventOfCode2021",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .target(
             name: "AdventOfCode2022",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .target(
             name: "AdventOfCode2023",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .target(
             name: "AdventOfCode2024",
-            dependencies: ["AOCKit"]
+            dependencies: ["AOCKit"],
         ),
         .executableTarget(
             name: "aoc",
@@ -95,7 +97,7 @@ let package = Package(
                 .product(name: "CLISpinner", package: "CLISpinner"),
                 .product(name: "Rainbow", package: "Rainbow"),
                 .product(name: "AsciiTable", package: "swift-ascii-table"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

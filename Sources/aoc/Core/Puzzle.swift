@@ -15,10 +15,10 @@ extension TestablePuzzle {
         }
     }
 
-    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) throws -> Bool {
+    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) async throws -> Bool {
         for (input, expected) in testCases {
             do {
-                let result = try part == .partOne
+                let result = try await part == .partOne
                     ? String(describing: part1(input: input))
                     : String(describing: part2(input: input))
                 if result == expected {
@@ -52,10 +52,10 @@ extension TestablePuzzleWithConfig {
         }
     }
 
-    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) throws -> Bool {
+    func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) async throws -> Bool {
         for (input, config, expected) in testCases {
             do {
-                let result = try part == .partOne
+                let result = try await part == .partOne
                     ? String(describing: part1(input: input, config))
                     : String(describing: part2(input: input, config))
                 if result == expected {
