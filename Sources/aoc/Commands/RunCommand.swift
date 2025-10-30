@@ -41,33 +41,35 @@ struct RunCommand: AsyncParsableCommand {
     }
 
     private func runTests(for event: AdventOfCodeEvent) async throws -> Bool {
+        let runner = TestEventRunner(event: event)
         if let day, let part {
-            return try await event.runTests(for: day, part: part)
+            return try await runner.runTests(for: day, part: part)
         } else if let day {
-            return try await event.runTests(for: day)
+            return try await runner.runTests(for: day)
         } else if latest {
             guard let (day, part) = event.latest else {
                 throw PuzzleError.noSavedResults
             }
-            return try await event.runTests(for: day, part: part)
+            return try await runner.runTests(for: day, part: part)
         } else if next {
             let (day, part) = event.next
-            return try await event.runTests(for: day, part: part)
+            return try await runner.runTests(for: day, part: part)
         } else {
-            return try await event.testAllPuzzles()
+            return try await runner.testAllPuzzles()
         }
     }
 
     private func run(_ event: AdventOfCodeEvent) async throws -> Bool {
+        var runner = EventRunner(event: event)
         if let day, let part {
             if event.hasSavedResult(for: day, part: part) {
-                return try await event.checkPuzzleMatchesSavedAnswer(for: day, part: part)
+                return try await runner.checkPuzzleMatchesSavedAnswer(for: day, part: part)
             } else {
-                try await event.generateResult(for: day, part: part)
+                try await runner.generateResult(for: day, part: part)
                 return true
             }
         } else if let day {
-            return try await event.checkAllParts(for: day)
+            return try await runner.checkAllParts(for: day)
         } else if latest {
             guard let (day, part) = event.latest,
                   event.hasSavedResult(for: day, part: part)
@@ -75,13 +77,13 @@ struct RunCommand: AsyncParsableCommand {
                 throw PuzzleError.noSavedResults
             }
 
-            return try await event.checkPuzzleMatchesSavedAnswer(for: day, part: part)
+            return try await runner.checkPuzzleMatchesSavedAnswer(for: day, part: part)
         } else if next {
             let (day, part) = event.next
-            try await event.generateResult(for: day, part: part)
+            try await runner.generateResult(for: day, part: part)
             return true
         } else {
-            return try await event.checkAllPuzzles()
+            return try await runner.checkAllPuzzles()
         }
     }
 }

@@ -46,7 +46,7 @@ case $subcommand in
         cmd+=" --day $day ${args[*]}"
         ;;
     all)
-        cmd+="${args[*]}"
+        cmd+=" ${args[*]}"
         ;;
     *)
         cmd+=" --day $subcommand ${args[*]}"

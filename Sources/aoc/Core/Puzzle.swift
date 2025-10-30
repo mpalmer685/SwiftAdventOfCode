@@ -1,4 +1,5 @@
 import AOCKit
+import Rainbow
 
 extension TestablePuzzle {
     typealias TestCase<Input> = (input: Input, output: String)
@@ -16,19 +17,21 @@ extension TestablePuzzle {
     }
 
     func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) async throws -> Bool {
-        for (input, expected) in testCases {
+        print("Day \(Self.day) part \(part)")
+        for (index, testCase) in testCases.enumerated() {
+            let (input, expected) = testCase
             do {
                 let result = try await part == .partOne
                     ? String(describing: part1(input: input))
                     : String(describing: part2(input: input))
                 if result == expected {
-                    print("✅ \(input) -> \(result)")
+                    print("  \("✔".green) \(index + 1): \(result)")
                 } else {
-                    print("❌ \(input) -> \(result) (expected \(expected))")
+                    print("  \("✖".red) \(index + 1): \(result) (expected \(expected))")
                     return false
                 }
             } catch {
-                print("❌ \(input) -> \(error)")
+                print("  \("✖".red) \(index + 1): Error - \(error)")
                 return false
             }
         }
@@ -53,19 +56,21 @@ extension TestablePuzzleWithConfig {
     }
 
     func run(_ testCases: [TestCase<Input>], for part: PuzzlePart) async throws -> Bool {
-        for (input, config, expected) in testCases {
+        print("Day \(Self.day) part \(part)")
+        for (index, testCase) in testCases.enumerated() {
+            let (input, config, expected) = testCase
             do {
                 let result = try await part == .partOne
                     ? String(describing: part1(input: input, config))
                     : String(describing: part2(input: input, config))
                 if result == expected {
-                    print("✅ \(input) -> \(result)")
+                    print("  \("✔".green) \(index + 1): \(result)")
                 } else {
-                    print("❌ \(input) -> \(result) (expected \(expected))")
+                    print("  \("✖".red) \(index + 1): \(result) (expected \(expected))")
                     return false
                 }
             } catch {
-                print("❌ \(input) -> \(error)")
+                print("  \("✖".red) \(index + 1): Error - \(error)")
                 return false
             }
         }
