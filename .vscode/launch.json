@@ -4,19 +4,21 @@
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:SwiftAdventOfCode}",
+            "cwd": "${workspaceFolder:advent-of-code}",
             "name": "Debug aoc",
-            "program": "${workspaceFolder:SwiftAdventOfCode}/.build/debug/aoc",
-            "preLaunchTask": "swift: Build Debug aoc"
+            "preLaunchTask": "swift: Build Debug aoc",
+            "target": "aoc",
+            "configuration": "debug"
         },
         {
             "type": "swift",
             "request": "launch",
             "args": [],
-            "cwd": "${workspaceFolder:SwiftAdventOfCode}",
+            "cwd": "${workspaceFolder:advent-of-code}",
             "name": "Release aoc",
-            "program": "${workspaceFolder:SwiftAdventOfCode}/.build/release/aoc",
-            "preLaunchTask": "swift: Build Release aoc"
+            "preLaunchTask": "swift: Build Release aoc",
+            "target": "aoc",
+            "configuration": "release"
         }
     ]
 }

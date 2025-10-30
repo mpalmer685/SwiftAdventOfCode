@@ -168,6 +168,9 @@ private extension EventRunner {
                 if comparison.isImprovement {
                     savedResults.update(newDuration, for: day, part)
                 }
+            } else {
+                spinner.succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).")
+                savedResults.update(newDuration, for: day, part)
             }
             return true
         } catch {
