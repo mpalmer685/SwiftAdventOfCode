@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# All paths should be relative to the main git repository root
+# Worktrees still point to the main git hooks directory
+root_dir="$(dirname "$(git rev-parse --path-format=absolute --git-common-dir)")"
+tasks_dir="$root_dir/.githooks/tasks"
+if [ ! -d "$tasks_dir" ]; then
+    echo "Hooks directory $tasks_dir could not be found"
+    exit 1
+fi
+
+"$tasks_dir/swiftformat.sh"
+"$tasks_dir/swiftlint.sh"
