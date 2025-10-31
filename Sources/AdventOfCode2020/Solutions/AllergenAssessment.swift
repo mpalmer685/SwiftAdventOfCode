@@ -7,7 +7,7 @@ struct AllergenAssessment: Puzzle {
         let (ingredients, allergens) = parse(input)
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
-            allergens: allergens
+            allergens: allergens,
         )
         let allergenicIngredients = Set(ingredientsByAllergen.values)
         return ingredients.values.sum {
@@ -19,7 +19,7 @@ struct AllergenAssessment: Puzzle {
         let (ingredients, allergens) = parse(input)
         let ingredientsByAllergen = mapAllergensToIngredients(
             ingredients: ingredients,
-            allergens: allergens
+            allergens: allergens,
         )
         return ingredientsByAllergen.sorted(using: \.key)
             .map(\.value)
@@ -28,7 +28,7 @@ struct AllergenAssessment: Puzzle {
 
     private func mapAllergensToIngredients(
         ingredients: [Int: [String]],
-        allergens: [Int: [String]]
+        allergens: [Int: [String]],
     ) -> [String: String] {
         let uniqueAllergens: Set<String> = allergens.reduce(into: Set()) { $0.formUnion($1.value) }
         var possibleIngredientsByAllergen: [String: Set<String>] = uniqueAllergens
@@ -53,9 +53,9 @@ struct AllergenAssessment: Puzzle {
         return allergenicIngredients
     }
 
-    private func removeInstances<Key, Element: Equatable>(
+    private func removeInstances<Element: Equatable>(
         of item: Element,
-        from dict: inout [Key: Set<Element>]
+        from dict: inout [some Any: Set<Element>],
     ) {
         for (key, var value) in dict {
             if value.count == 1, value.first! == item {

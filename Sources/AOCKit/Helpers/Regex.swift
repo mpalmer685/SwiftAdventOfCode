@@ -5,7 +5,7 @@ public struct RegexMatch {
     private var match: NSTextCheckingResult
 
     init?(string: String, result: NSTextCheckingResult?) {
-        guard let result = result else { return nil }
+        guard let result else { return nil }
         self.init(string: string, result: result)
     }
 
@@ -58,7 +58,7 @@ public extension NSRegularExpression {
 
         let range = NSRange(location: 0, length: string.utf16.count)
         enumerateMatches(in: string, options: [], range: range) { result, _, _ in
-            if let result = result {
+            if let result {
                 let match = RegexMatch(string: string, result: result)
                 matches.append(match)
             }

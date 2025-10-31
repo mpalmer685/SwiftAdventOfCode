@@ -21,7 +21,7 @@ import AsciiTable
 struct StatsCommand: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "stats",
-        abstract: "Show runtime statistics for all puzzles"
+        abstract: "Show runtime statistics for all puzzles",
     )
 
     @OptionGroup var eventOptions: EventOptions
@@ -47,7 +47,7 @@ struct StatsCommand: ParsableCommand {
         }
         if slowest != nil || fastest != nil, buildConfig.count != 1 {
             throw ValidationError(
-                "Cannot specify --slowest or --fastest with multiple build configurations"
+                "Cannot specify --slowest or --fastest with multiple build configurations",
             )
         }
     }

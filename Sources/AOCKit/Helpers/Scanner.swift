@@ -64,7 +64,7 @@ public extension Scanner where C.Element: Equatable {
         assert(hasMore, "Reached the end")
         if data[cursor] != element {
             fatalError(
-                "Expected next character to be '\(element)' but got '\(data[cursor])'"
+                "Expected next character to be '\(element)' but got '\(data[cursor])'",
             )
         }
         advance()

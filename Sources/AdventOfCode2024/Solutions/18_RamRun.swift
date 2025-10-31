@@ -14,7 +14,7 @@ struct RamRun: Puzzle {
         let corruptedBytes = input.lines.map { Point2D($0.integers) }
         let memorySpace = MemorySpace(
             size: memorySize,
-            corruptedBytes: corruptedBytes[..<droppedBytes]
+            corruptedBytes: corruptedBytes[..<droppedBytes],
         )
         return memorySpace.safePath.count
     }
@@ -30,7 +30,7 @@ struct RamRun: Puzzle {
         let firstBlockedIndex = corruptedBytes.indices.partitioningIndex { index in
             let memorySpace = MemorySpace(
                 size: memorySize,
-                corruptedBytes: corruptedBytes[...index]
+                corruptedBytes: corruptedBytes[...index],
             )
             let path = memorySpace.safePath
             return path.isEmpty

@@ -40,7 +40,7 @@ struct PointOfIncidence: Puzzle {
 
     private func reflection(
         in grid: Grid<Character>,
-        using check: ([[Character]], [[Character]]) -> Bool
+        using check: ([[Character]], [[Character]]) -> Bool,
     ) -> Reflection {
         for row in 1 ..< grid.height {
             let length = min(row, grid.height - row)
@@ -66,16 +66,16 @@ struct PointOfIncidence: Puzzle {
     private func summarize(_ reflections: [Reflection]) -> Int {
         let columnCount = reflections.sum {
             if case let .vertical(column) = $0 {
-                return column
+                column
             } else {
-                return 0
+                0
             }
         }
         let rowCount = reflections.sum {
             if case let .horizontal(row) = $0 {
-                return row
+                row
             } else {
-                return 0
+                0
             }
         }
 

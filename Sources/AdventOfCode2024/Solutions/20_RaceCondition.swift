@@ -74,7 +74,7 @@ struct RaceCondition: Puzzle {
             }
             assert(
                 neighbors.count == 1,
-                "Expected 1 neighbor at \(current), got \(neighbors.count)"
+                "Expected 1 neighbor at \(current), got \(neighbors.count)",
             )
 
             current = neighbors[0]

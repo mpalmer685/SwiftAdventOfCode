@@ -80,12 +80,12 @@ private enum Direction: String, CaseIterable {
 
     var displacement: (dx: Int, dy: Int, dz: Int) {
         switch self {
-            case .east: return (1, -1, 0)
-            case .west: return (-1, 1, 0)
-            case .northEast: return (1, 0, -1)
-            case .northWest: return (0, 1, -1)
-            case .southEast: return (0, -1, 1)
-            case .southWest: return (-1, 0, 1)
+            case .east: (1, -1, 0)
+            case .west: (-1, 1, 0)
+            case .northEast: (1, 0, -1)
+            case .northWest: (0, 1, -1)
+            case .southEast: (0, -1, 1)
+            case .southWest: (-1, 0, 1)
         }
     }
 }

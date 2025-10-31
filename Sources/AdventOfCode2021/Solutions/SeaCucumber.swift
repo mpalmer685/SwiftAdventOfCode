@@ -47,9 +47,9 @@ private extension Grid where Cell == Location {
 
     private func nextPosition(for position: Point2D) -> Point2D? {
         switch self[position] {
-            case .empty: return nil
-            case .east: return wrap(position + .x)
-            case .south: return wrap(position + .y)
+            case .empty: nil
+            case .east: wrap(position + .x)
+            case .south: wrap(position + .y)
         }
     }
 
@@ -76,9 +76,9 @@ private enum Location {
 
     var nextStep: Self {
         switch self {
-            case .empty: return self
-            case .east: return .south
-            case .south: return .east
+            case .empty: self
+            case .east: .south
+            case .south: .east
         }
     }
 }

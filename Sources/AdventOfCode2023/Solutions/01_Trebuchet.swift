@@ -4,11 +4,11 @@ struct Trebuchet: TestablePuzzle {
     let testCases = [
         TestCase(
             input: .file("example1"),
-            part1: 142
+            part1: 142,
         ),
         TestCase(
             input: .file("example2"),
-            part2: 281
+            part2: 281,
         ),
     ]
 

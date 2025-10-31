@@ -75,7 +75,7 @@ private struct Computer {
             registerA: registerA,
             registerB: registerB,
             registerC: registerC,
-            program: program
+            program: program,
         )
     }
 
@@ -92,7 +92,7 @@ private struct Computer {
     mutating func executeCurrentInstruction() {
         let instruction = Instruction(
             opCode: OpCode(rawValue: program[instructionPointer])!,
-            operand: program[instructionPointer + 1]
+            operand: program[instructionPointer + 1],
         )
 
         switch instruction.opCode {

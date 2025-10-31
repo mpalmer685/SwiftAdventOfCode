@@ -19,7 +19,7 @@ struct CamelCards: Puzzle {
         score(for: input, using: JokersHand.init)
     }
 
-    private func score<T: Hand>(for input: Input, using buildHand: (Line) -> T) -> Int {
+    private func score(for input: Input, using buildHand: (Line) -> some Hand) -> Int {
         input.lines
             .map(buildHand)
             .sorted()

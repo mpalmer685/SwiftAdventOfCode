@@ -4,7 +4,7 @@ enum GameOfLife {
 
     static func playRound<P: GameOfLifePosition>(
         on grid: inout Grid<P>,
-        using willBeActive: Rule
+        using willBeActive: Rule,
     ) {
         for position in grid.keys {
             for neighbor in position.neighbors where grid[neighbor] == nil {

@@ -45,7 +45,7 @@ struct ReactorReboot: Puzzle {
     private func parse(_ input: Input) -> [Instruction] {
         let pattern =
             NSRegularExpression(
-                "(on|off) x=(-?\\d+\\.\\.-?\\d+),y=(-?\\d+\\.\\.-?\\d+),z=(-?\\d+\\.\\.-?\\d+)"
+                "(on|off) x=(-?\\d+\\.\\.-?\\d+),y=(-?\\d+\\.\\.-?\\d+),z=(-?\\d+\\.\\.-?\\d+)",
             )
         return input.lines.raw.map { line in
             guard let match = pattern.match(line) else { fatalError() }
@@ -80,7 +80,7 @@ private struct Cuboid: Hashable {
         xRange: ClosedRange<Int>,
         yRange: ClosedRange<Int>,
         zRange: ClosedRange<Int>,
-        isOn: Bool = false
+        isOn: Bool = false,
     ) {
         self.xRange = xRange
         self.yRange = yRange

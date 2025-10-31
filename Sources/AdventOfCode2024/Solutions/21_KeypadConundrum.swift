@@ -49,7 +49,7 @@ private nonisolated(unsafe) let countKeypresses =
                     countKeypresses(.directional, start, end, level - 1)
                 }
             }!
-        }
+        },
     )
 
 private struct Keypad {
@@ -94,7 +94,7 @@ private struct Keypad {
         map: [Point2D: Character],
         start: Character,
         end: Character,
-        visited: Set<Character> = []
+        visited: Set<Character> = [],
     ) -> [String] {
         if start == end { return ["A"] }
 
@@ -107,7 +107,7 @@ private struct Keypad {
                 map: map,
                 start: nextChar,
                 end: end,
-                visited: visited.union([start])
+                visited: visited.union([start]),
             )
             results.append(contentsOf: nextSteps.map { dir.key + $0 })
         }

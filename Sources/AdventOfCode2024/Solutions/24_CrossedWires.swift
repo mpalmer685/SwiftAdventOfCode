@@ -135,7 +135,7 @@ struct CrossedWires: Puzzle {
             gates[outputId] = Gate(
                 inputs: [String(left), String(right)],
                 output: outputId,
-                operation: Gate.Operation(rawValue: String(op))!
+                operation: Gate.Operation(rawValue: String(op))!,
             )
         }
 

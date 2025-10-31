@@ -9,7 +9,7 @@ struct ProboscideaVolcanium: Puzzle {
             forRooms: destinations,
             time: 30,
             costs: costsByOrigin,
-            roomsByName: roomsByName
+            roomsByName: roomsByName,
         )
     }
 
@@ -22,13 +22,13 @@ struct ProboscideaVolcanium: Puzzle {
                 forRooms: myValves,
                 time: 26,
                 costs: costsByOrigin,
-                roomsByName: roomsByName
+                roomsByName: roomsByName,
             )
             let elephant = maxPressure(
                 forRooms: Array(Set(destinations).subtracting(myValves)),
                 time: 26,
                 costs: costsByOrigin,
-                roomsByName: roomsByName
+                roomsByName: roomsByName,
             )
             maxPressureReleased = max(maxPressureReleased, myPart + elephant)
         }
@@ -58,7 +58,7 @@ struct ProboscideaVolcanium: Puzzle {
             costs[room.name] = calculateCosts(
                 from: room,
                 to: destinations.filter { $0.name != room.name },
-                withRooms: roomsByName
+                withRooms: roomsByName,
             )
         }
 
@@ -99,7 +99,7 @@ private final class Path {
         timeLeft: Int,
         steps: [String] = [],
         finalPressure: Int = 0,
-        finished: Bool = false
+        finished: Bool = false,
     ) {
         self.roomName = roomName
         self.toVisit = toVisit
@@ -121,7 +121,7 @@ private struct RoomsCollection: Graph {
 private func calculateCosts(
     from start: Room,
     to endPositions: [Room],
-    withRooms roomsByName: RoomsByName
+    withRooms roomsByName: RoomsByName,
 ) -> CostLookup {
     let rooms = RoomsCollection(roomsByName: roomsByName)
     let costs = rooms.nodesAccessible(from: start)
@@ -133,7 +133,7 @@ private func maxPressure(
     forRooms destinations: [Room],
     time: Int,
     costs: CostsByOrigin,
-    roomsByName: RoomsByName
+    roomsByName: RoomsByName,
 ) -> Int {
     var paths: [Path] = [Path(roomName: "AA", toVisit: destinations.map(\.name), timeLeft: time)]
 
@@ -166,7 +166,7 @@ private func maxPressure(
                 toVisit: path.toVisit.filter { $0 != roomName },
                 timeLeft: path.timeLeft - currentPrice - 1,
                 steps: path.steps + [roomName],
-                finalPressure: path.finalPressure + (path.timeLeft - currentPrice - 1) * room.flow
+                finalPressure: path.finalPressure + (path.timeLeft - currentPrice - 1) * room.flow,
             ))
         }
         if !madeNewPath {

@@ -112,7 +112,7 @@ private struct Map {
             for category in categories where category.sourceRange.overlaps(range) {
                 let (overlappingRange, unmappedRanges) = range.intersect(
                     with: category.sourceRange,
-                    addingOffset: category.destinationOffset
+                    addingOffset: category.destinationOffset,
                 )
                 splitRanges.remove(range)
                 splitRanges.insert(overlappingRange)
@@ -166,7 +166,7 @@ private extension Range<Int> {
 
     func intersect(
         with other: Self,
-        addingOffset offset: Int
+        addingOffset offset: Int,
     ) -> (overlap: Self, unmappedRanges: [Self]) {
         let overlapLowerBound = Swift.max(lowerBound, other.lowerBound)
         let overlapUpperBound = Swift.min(upperBound, other.upperBound)

@@ -96,7 +96,7 @@ extension LavaPath: WeightedGraph {
             states.append(SearchState(
                 location: next,
                 direction: dir,
-                streak: streak
+                streak: streak,
             ))
         }
 

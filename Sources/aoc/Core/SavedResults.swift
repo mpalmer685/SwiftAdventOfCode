@@ -122,7 +122,7 @@ public struct SavedResults {
         _ day: Int,
         for part: PuzzlePart,
         to answer: String,
-        duration: Duration
+        duration: Duration,
     ) {
         var answers = answers[day] ?? Result()
         var benchmarks = benchmarks[day] ?? Result()
@@ -197,12 +197,12 @@ struct Benchmark {
                     Benchmark(
                         puzzle: PuzzleDescriptor(day: day, part: .partOne),
                         debugTime: debugBenchmarks[day]?.part1,
-                        releaseTime: releaseBenchmarks[day]?.part1
+                        releaseTime: releaseBenchmarks[day]?.part1,
                     ),
                     Benchmark(
                         puzzle: PuzzleDescriptor(day: day, part: .partTwo),
                         debugTime: debugBenchmarks[day]?.part2,
-                        releaseTime: releaseBenchmarks[day]?.part2
+                        releaseTime: releaseBenchmarks[day]?.part2,
                     ),
                 ]
             }

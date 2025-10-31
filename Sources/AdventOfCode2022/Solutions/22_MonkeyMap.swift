@@ -163,7 +163,7 @@ private class Walker {
     private static func wrap(
         _ map: Map,
         _ position: Point2D,
-        _ heading: Vector2D
+        _ heading: Vector2D,
     ) -> (Point2D, Vector2D) {
         switch (heading.dx, heading.dy) {
             case (1, 0): (map.leftmost(inRow: position.y), heading)

@@ -58,7 +58,7 @@ struct SupplyStacks: Puzzle {
             return (
                 Int(match[1])!,
                 Int(match[2])! - 1,
-                Int(match[3])! - 1
+                Int(match[3])! - 1,
             )
         }
     }

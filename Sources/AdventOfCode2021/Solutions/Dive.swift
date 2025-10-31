@@ -13,11 +13,11 @@ struct Dive: Puzzle {
             fileprivate func next(after command: Command) -> SimplePosition {
                 switch command.direction {
                     case .forward:
-                        return Self(x: x + command.distance, depth: depth)
+                        Self(x: x + command.distance, depth: depth)
                     case .up:
-                        return Self(x: x, depth: depth - command.distance)
+                        Self(x: x, depth: depth - command.distance)
                     case .down:
-                        return Self(x: x, depth: depth + command.distance)
+                        Self(x: x, depth: depth + command.distance)
                 }
             }
         }
@@ -38,14 +38,14 @@ struct Dive: Puzzle {
             fileprivate func next(after command: Command) -> AimedPosition {
                 switch command.direction {
                     case .up:
-                        return Self(x: x, depth: depth, aim: aim - command.distance)
+                        Self(x: x, depth: depth, aim: aim - command.distance)
                     case .down:
-                        return Self(x: x, depth: depth, aim: aim + command.distance)
+                        Self(x: x, depth: depth, aim: aim + command.distance)
                     case .forward:
-                        return Self(
+                        Self(
                             x: x + command.distance,
                             depth: depth + (aim * command.distance),
-                            aim: aim
+                            aim: aim,
                         )
                 }
             }

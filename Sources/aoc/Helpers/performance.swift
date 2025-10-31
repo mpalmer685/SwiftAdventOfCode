@@ -1,18 +1,18 @@
 private let secondsFormatter = Duration.UnitsFormatStyle(
     allowedUnits: [.seconds],
     width: .narrow,
-    fractionalPart: .show(length: 3)
+    fractionalPart: .show(length: 3),
 )
 private let millisecondsFormatter = Duration.UnitsFormatStyle(
     allowedUnits: [.milliseconds],
     width: .narrow,
-    fractionalPart: .show(length: 3)
+    fractionalPart: .show(length: 3),
 )
 private let secondsOnlyFormatter = Duration.UnitsFormatStyle(
     allowedUnits: [.minutes, .seconds],
     width: .narrow,
     zeroValueUnits: .hide,
-    fractionalPart: .hide(rounded: .down)
+    fractionalPart: .hide(rounded: .down),
 )
 
 extension Duration {

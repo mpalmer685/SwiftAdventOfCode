@@ -1,6 +1,6 @@
 public func memoize<
     Input: Hashable,
-    Output
+    Output,
 >(_ function: @escaping (Input) -> Output) -> (Input) -> Output {
     var memory: [Input: Output] = [:]
 
@@ -17,7 +17,7 @@ public func memoize<
 
 public func memoize<
     each Input: Hashable,
-    Output
+    Output,
 >(_ function: @escaping (repeat each Input) -> Output) -> (repeat each Input) -> Output {
     var memory: [AnyHashable: Output] = [:]
 
@@ -37,7 +37,7 @@ public func memoize<
 
 public func recursiveMemoize<Input: Hashable, Output>(_ function: @escaping (
     (Input) -> Output,
-    Input
+    Input,
 ) -> Output) -> (Input) -> Output {
     var memory: [Input: Output] = [:]
     var memoized: ((Input) -> Output)!
@@ -57,7 +57,7 @@ public func recursiveMemoize<Input: Hashable, Output>(_ function: @escaping (
 
 public func recursiveMemoize<each Input: Hashable, Output>(_ function: @escaping (
     (repeat each Input) -> Output,
-    repeat each Input
+    repeat each Input,
 ) -> Output) -> (repeat each Input) -> Output {
     var memory: [AnyHashable: Output] = [:]
     var memoized: ((repeat each Input) -> Output)!
@@ -80,7 +80,7 @@ public func recursiveMemoize<each Input: Hashable, Output>(_ function: @escaping
 
 public func memoize<each Input, Key: Hashable, Output>(
     getKey: @escaping (repeat each Input) -> Key,
-    _ function: @escaping (Key) -> Output
+    _ function: @escaping (Key) -> Output,
 ) -> (repeat each Input) -> Output {
     var memory: [Key: Output] = [:]
 
@@ -98,7 +98,7 @@ public func memoize<each Input, Key: Hashable, Output>(
 
 public func recursiveMemoize<each Input, Key: Hashable, Output>(
     getKey: @escaping (repeat each Input) -> Key,
-    _ function: @escaping ((repeat each Input) -> Output, repeat each Input) -> Output
+    _ function: @escaping ((repeat each Input) -> Output, repeat each Input) -> Output,
 ) -> (repeat each Input) -> Output {
     var memory: [Key: Output] = [:]
     var memoized: ((repeat each Input) -> Output)!

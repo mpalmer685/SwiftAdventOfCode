@@ -36,14 +36,14 @@ struct OperationOrder: Puzzle {
 
     private func tokenize(
         _ string: String,
-        using operatorSet: Operator.OperatorSet
+        using operatorSet: Operator.OperatorSet,
     ) throws -> [Token] {
         var tokens = [Token]()
         for ch in Array(string) where !ch.isWhitespace {
             if let value = ch.wholeNumberValue {
                 tokens.append(.operand(value: value))
             } else {
-                tokens.append(.operator(try operatorSet.parse(from: ch)))
+                try tokens.append(.operator(operatorSet.parse(from: ch)))
             }
         }
         return tokens
@@ -75,10 +75,10 @@ struct OperationOrder: Puzzle {
     private func moveOperatorsWithPrecedenceHigherThan(
         _ op: Operator,
         from operatorStack: inout [Operator],
-        to outputStack: inout [Token]
+        to outputStack: inout [Token],
     ) {
         func shouldMoveToOutput(current: Operator, topOfStack: Operator?) -> Bool {
-            guard let topOfStack = topOfStack else { return false }
+            guard let topOfStack else { return false }
             let isLowerPrecedence = current.precedence < topOfStack.precedence ||
                 (current.precedence == topOfStack.precedence && current.associativity == .left)
 
@@ -125,7 +125,7 @@ private struct Operator: Sendable {
     static func arithmetic(
         symbol: Character,
         precedence: Precedence,
-        operation: @escaping Operation
+        operation: @escaping Operation,
     ) -> Self {
         Operator(symbol: symbol, precedence: precedence, associativity: .left, operate: operation)
     }

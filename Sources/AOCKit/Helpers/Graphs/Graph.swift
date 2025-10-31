@@ -9,7 +9,7 @@ public extension Graph {
     func depthFirstTraverse(
         from start: Node,
         visitor: (Node) -> Void = { _ in },
-        until goalReached: (Node) -> Bool = { _ in false }
+        until goalReached: (Node) -> Bool = { _ in false },
     ) -> [Node] {
         var frontier = Stack<Path<Node>>()
         frontier.push(Path(start))
@@ -38,7 +38,7 @@ public extension Graph {
     private func breadthFirstTraverse(
         from start: Node,
         visitor: (Path<Node>) -> Void,
-        until goalReached: (Node) -> Bool
+        until goalReached: (Node) -> Bool,
     ) -> [Node] {
         var frontier = Queue<Path<Node>>()
         frontier.push(Path(start))
@@ -67,7 +67,7 @@ public extension Graph {
     func breadthFirstTraverse(
         from start: Node,
         visitor: (Node) -> Void = { _ in },
-        until goalReached: (Node) -> Bool = { _ in false }
+        until goalReached: (Node) -> Bool = { _ in false },
     ) -> [Node] {
         breadthFirstTraverse(from: start, visitor: { visitor($0.value) }, until: goalReached)
     }
@@ -85,7 +85,7 @@ public extension Graph {
         breadthFirstTraverse(
             from: start,
             visitor: { p in nodesAccessible[p.value] = p.path.count },
-            until: { _ in false }
+            until: { _ in false },
         )
         return nodesAccessible
     }
@@ -95,7 +95,7 @@ public extension Graph {
         breadthFirstTraverse(
             from: start,
             visitor: { p in pair = (p.value, p.path.count) },
-            until: { _ in false }
+            until: { _ in false },
         )
         return pair
     }

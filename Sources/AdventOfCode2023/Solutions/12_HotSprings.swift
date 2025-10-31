@@ -54,7 +54,8 @@ struct HotSprings: Puzzle {
 
     // private func countValidArrangements(in pattern: String, using runs: [Int]) -> Int {
     //     let countValidArrangements =
-    //         recursiveMemoize { (next: (String, [Int]) -> Int, pattern: String, runs: [Int]) -> Int in
+    //         recursiveMemoize { (next: (String, [Int]) -> Int, pattern: String, runs: [Int]) ->
+    //         Int in
     //             if pattern.isEmpty {
     //                 return runs.isEmpty ? 1 : 0
     //             }
@@ -95,8 +96,8 @@ struct HotSprings: Puzzle {
     // }
 
     private func countValidArrangements(of record: MaintenanceRecord) -> Int {
-        let countValidArrangements =
-            recursiveMemoize { (countNext: (MaintenanceRecord) -> Int, record: MaintenanceRecord) -> Int in
+        let countValidArrangements: (MaintenanceRecord) -> Int =
+            recursiveMemoize { countNext, record -> Int in
                 let status = record.status
                 if status == .valid {
                     return 1

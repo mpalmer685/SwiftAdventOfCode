@@ -32,7 +32,7 @@ struct TheFloorWillBeLava: Puzzle {
             let fromBottom = followPath(
                 in: map,
                 startingAt: Point2D(x, map.height - 1),
-                moving: .north
+                moving: .north,
             )
             max = Swift.max(max, fromTop.count, fromBottom.count)
         }
@@ -42,7 +42,7 @@ struct TheFloorWillBeLava: Puzzle {
             let fromRight = followPath(
                 in: map,
                 startingAt: Point2D(map.width - 1, y),
-                moving: .west
+                moving: .west,
             )
             max = Swift.max(max, fromLeft.count, fromRight.count)
         }
@@ -60,7 +60,7 @@ struct TheFloorWillBeLava: Puzzle {
     private func followPath(
         in map: Grid<Tile>,
         startingAt start: Point2D,
-        moving direction: Vector2D
+        moving direction: Vector2D,
     ) -> Set<Point2D> {
         var visited = Set<Tuple<Point2D, Vector2D>>()
         var beams: [(Point2D, Vector2D)] = [(start, direction)]
@@ -93,19 +93,19 @@ private enum Tile: Character {
     func nextDirections(moving dir: Vector2D) -> [Vector2D] {
         switch (self, dir) {
             case (.rightMirror, .north), (.leftMirror, .south):
-                return [.east]
+                [.east]
             case (.rightMirror, .south), (.leftMirror, .north):
-                return [.west]
+                [.west]
             case (.rightMirror, .east), (.leftMirror, .west):
-                return [.north]
+                [.north]
             case (.rightMirror, .west), (.leftMirror, .east):
-                return [.south]
+                [.south]
             case (.verticalSplitter, dir) where dir.dx != 0:
-                return [.north, .south]
+                [.north, .south]
             case (.horizontalSplitter, dir) where dir.dy != 0:
-                return [.east, .west]
+                [.east, .west]
             default:
-                return [dir]
+                [dir]
         }
     }
 }

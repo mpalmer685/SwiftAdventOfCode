@@ -12,7 +12,7 @@ public struct Grid<Cell: Sendable>: Sendable {
     public init(width: Int, height: Int, filledWith filler: Cell) {
         let cells = Array(
             repeating: Array(repeating: filler, count: width),
-            count: height
+            count: height,
         )
         self.init(cells)
     }

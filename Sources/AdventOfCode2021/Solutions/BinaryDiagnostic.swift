@@ -40,7 +40,7 @@ struct BinaryDiagnostic: Puzzle {
             let digitToSelect = try selectValue(
                 in: digits,
                 using: selectMax,
-                withTieBreaker: "1"
+                withTieBreaker: "1",
             )
             oxygenGeneratorData.removeAll { $0[index] != digitToSelect }
             index += 1
@@ -53,7 +53,7 @@ struct BinaryDiagnostic: Puzzle {
             let digitToSelect = try selectValue(
                 in: digits,
                 using: selectMin,
-                withTieBreaker: "0"
+                withTieBreaker: "0",
             )
             scrubberData.removeAll { $0[index] != digitToSelect }
             index += 1
@@ -75,8 +75,11 @@ struct BinaryDiagnostic: Puzzle {
     }
 }
 
-private typealias ElementSelector<Key: Hashable, Value> = @Sendable ([Key: Value]) -> Dictionary<Key, Value>
-    .Element?
+private typealias ElementSelector<Key: Hashable, Value> = @Sendable ([Key: Value]) -> Dictionary<
+    Key,
+    Value,
+>
+.Element?
 
 private let selectMin: ElementSelector<Character, Int> = { $0.min(by: \.value) }
 private let selectMax: ElementSelector<Character, Int> = { $0.max(by: \.value) }
@@ -84,7 +87,7 @@ private let selectMax: ElementSelector<Character, Int> = { $0.max(by: \.value) }
 private func selectValue(
     in digits: [Character],
     using select: ElementSelector<Character, Int>,
-    withTieBreaker tieBreaker: Character = " "
+    withTieBreaker tieBreaker: Character = " ",
 ) throws -> Character {
     let counts: [Character: Int] = digits.reduce(into: [:]) { counts, digit in
         counts[digit] = (counts[digit] ?? 0) + 1

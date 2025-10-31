@@ -57,7 +57,7 @@ private func parseRules(from lines: [Line]) -> RuleCollection {
 private func run(
     reactions: Int,
     on polymer: inout Polymer,
-    using rules: RuleCollection
+    using rules: RuleCollection,
 ) {
     for _ in 0 ..< reactions {
         polymer.react(using: rules)

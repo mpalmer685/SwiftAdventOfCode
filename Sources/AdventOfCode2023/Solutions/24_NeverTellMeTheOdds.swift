@@ -11,7 +11,7 @@ struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
             input: .example,
             config: (7, 27),
             part1: 2,
-            part2: 44
+            part2: 44,
         ),
     ]
 
@@ -64,7 +64,7 @@ struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
         using p1: (Point3D) -> Int,
         _ p2: (Point3D) -> Int,
         _ v1: (Vector3D) -> Int,
-        _ v2: (Vector3D) -> Int
+        _ v2: (Vector3D) -> Int,
     ) -> [[Double]] {
         let m = particles.map { particle in
             let (p, v) = particle
@@ -142,7 +142,7 @@ private struct Particle2D: Particle {
     init(position: Point3D, velocity: Vector3D) {
         self.init(
             position: FPoint2D(position.x, position.y),
-            velocity: FVector2D(velocity.dx, velocity.dy)
+            velocity: FVector2D(velocity.dx, velocity.dy),
         )
     }
 

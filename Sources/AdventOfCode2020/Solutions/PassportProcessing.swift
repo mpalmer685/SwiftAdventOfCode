@@ -93,8 +93,8 @@ private struct PassportValidator {
             .height,
             validate: and(
                 matches(pattern: "^\\d{2,3}(cm|in)$"),
-                or(hasUnits("cm", between: 150, and: 193), hasUnits("in", between: 59, and: 76))
-            )
+                or(hasUnits("cm", between: 150, and: 193), hasUnits("in", between: 59, and: 76)),
+            ),
         ),
 
         // hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
@@ -104,7 +104,7 @@ private struct PassportValidator {
         field(.eyeColor, validate: oneOf("amb", "blu", "brn", "gry", "grn", "hzl", "oth")),
 
         // pid (Passport ID) - a nine-digit number, including leading zeroes.
-        field(.passportId, validate: matches(pattern: "^\\d{9}$"))
+        field(.passportId, validate: matches(pattern: "^\\d{9}$")),
     )
 
     private static let todo: ValidatorBuilder = { _ in { _ in fatalError() } }
@@ -115,7 +115,7 @@ private struct PassportValidator {
 
     private static func field(
         _ name: String,
-        validate builder: ValidatorBuilder
+        validate builder: ValidatorBuilder,
     ) -> (key: String, value: Validator) {
         (key: name, value: builder(name))
     }
@@ -163,7 +163,7 @@ private struct PassportValidator {
     private static func hasUnits(
         _ units: String,
         between min: Int,
-        and max: Int
+        and max: Int,
     ) -> ValidatorBuilder {
         let regex = NSRegularExpression("(\\d+)\(units)")
         return { fieldName in
@@ -180,10 +180,10 @@ enum PassportProcessingError: Error {
 }
 
 extension PassportProcessingError: CustomStringConvertible {
-    public var description: String {
+    var description: String {
         switch self {
             case let .invalidSegment(segment):
-                return "Unable to process segment: \(segment)"
+                "Unable to process segment: \(segment)"
         }
     }
 }

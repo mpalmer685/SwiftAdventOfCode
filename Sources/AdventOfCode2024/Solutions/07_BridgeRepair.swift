@@ -15,14 +15,14 @@ struct BridgeRepair: Puzzle {
 
     private func parse(
         _ input: Input,
-        with operators: [CalibrationEquation.Operator]
+        with operators: [CalibrationEquation.Operator],
     ) -> [CalibrationEquation] {
         input.lines.map { line in
             let ints = line.integers
             return CalibrationEquation(
                 target: ints[0],
                 operands: Array(ints[1...]),
-                operators: operators
+                operators: operators,
             )
         }
     }

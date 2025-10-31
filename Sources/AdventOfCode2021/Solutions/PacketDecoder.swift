@@ -98,18 +98,18 @@ private enum Packet {
     var versionSum: Int {
         switch self {
             case let .literal(version: v, value: _):
-                return v
+                v
             case let .operation(version: v, type: _, packets: packets):
-                return v + packets.reduce(0) { $0 + $1.versionSum }
+                v + packets.reduce(0) { $0 + $1.versionSum }
         }
     }
 
     var value: Int {
         switch self {
             case let .literal(version: _, value: value):
-                return value
+                value
             case let .operation(version: _, type: type, packets: packets):
-                return calculateValue(of: packets, withOperationType: type)
+                calculateValue(of: packets, withOperationType: type)
         }
     }
 }
@@ -117,19 +117,19 @@ private enum Packet {
 private func calculateValue(of packets: [Packet], withOperationType type: Int) -> Int {
     switch type {
         case 0:
-            return packets.sum(of: \.value)
+            packets.sum(of: \.value)
         case 1:
-            return packets.product(of: \.value)
+            packets.product(of: \.value)
         case 2:
-            return packets.min(of: \.value)!
+            packets.min(of: \.value)!
         case 3:
-            return packets.max(of: \.value)!
+            packets.max(of: \.value)!
         case 5:
-            return (packets[0].value > packets[1].value).bit
+            (packets[0].value > packets[1].value).bit
         case 6:
-            return (packets[0].value < packets[1].value).bit
+            (packets[0].value < packets[1].value).bit
         case 7:
-            return (packets[0].value == packets[1].value).bit
+            (packets[0].value == packets[1].value).bit
         default:
             fatalError("Unknown operation type \(type)")
     }
@@ -145,7 +145,7 @@ private extension Character {
     var bit: Bool { self == "1" }
 }
 
-private extension Sequence where Element == Character {
+private extension Sequence<Character> {
     var bits: [Bool] { map(\.bit) }
 }
 

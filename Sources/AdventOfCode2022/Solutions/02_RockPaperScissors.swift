@@ -34,11 +34,11 @@ private enum Shape {
     var score: Int {
         switch self {
             case .rock:
-                return 1
+                1
             case .paper:
-                return 2
+                2
             case .scissors:
-                return 3
+                3
         }
     }
 
@@ -57,11 +57,11 @@ private enum Shape {
     func match(for outcome: Outcome) -> Shape {
         switch outcome {
             case .draw:
-                return self
+                self
             case .lose:
-                return Self.wins[self]!
+                Self.wins[self]!
             case .win:
-                return Self.wins.first { $0.value == self }!.key
+                Self.wins.first { $0.value == self }!.key
         }
     }
 
@@ -74,11 +74,11 @@ private enum Shape {
     static func fromInput(_ input: String) -> Shape {
         switch input {
             case "A", "X":
-                return .rock
+                .rock
             case "B", "Y":
-                return .paper
+                .paper
             case "C", "Z":
-                return .scissors
+                .scissors
             default:
                 fatalError("Invalid input: \(input)")
         }
@@ -91,22 +91,22 @@ private enum Outcome {
     var score: Int {
         switch self {
             case .win:
-                return 6
+                6
             case .lose:
-                return 0
+                0
             case .draw:
-                return 3
+                3
         }
     }
 
     static func fromInput(_ input: String) -> Outcome {
         switch input {
             case "X":
-                return .lose
+                .lose
             case "Y":
-                return .draw
+                .draw
             case "Z":
-                return .win
+                .win
             default:
                 fatalError("Invalid input: \(input)")
         }

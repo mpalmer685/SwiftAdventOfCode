@@ -37,7 +37,7 @@ private extension Grid where Cell == Int {
 
     private func basinSize(
         startingAt start: Point2D,
-        visiting visitedPoints: inout Set<Point2D>
+        visiting visitedPoints: inout Set<Point2D>,
     ) -> Int {
         guard height(at: start) < 9, !visitedPoints.contains(start) else {
             return 0

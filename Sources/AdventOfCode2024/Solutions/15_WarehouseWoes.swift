@@ -86,7 +86,7 @@ private class WideWarehouse: Warehouse {
     private func move(
         from position: Point2D,
         along direction: Vector2D,
-        update: Bool = false
+        update: Bool = false,
     ) -> Bool {
         let destination = position + direction
 
@@ -121,7 +121,7 @@ private class WideWarehouse: Warehouse {
     private func moveBox(
         at position: Point2D,
         along direction: Vector2D,
-        update: Bool = false
+        update: Bool = false,
     ) -> Bool {
         let destination = position + direction
         switch (map[destination], map[destination + .x]) {

@@ -94,7 +94,7 @@ private struct GameState: Hashable {
             player1Position: player2Position,
             player2Position: nextPosition,
             player1Score: player2Score,
-            player2Score: player1Score + scoreAtPosition
+            player2Score: player1Score + scoreAtPosition,
         )
     }
 
@@ -113,7 +113,7 @@ private struct GameState: Hashable {
 }
 
 private struct DeterministicDie {
-    private(set) var rolls: Int = 0
+    private(set) var rolls = 0
 
     private mutating func rollOnce() -> Int {
         defer { rolls += 1 }

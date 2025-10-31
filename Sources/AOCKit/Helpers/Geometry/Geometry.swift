@@ -33,7 +33,7 @@ public extension Dimensioned {
     static func assertComponents(_ components: [Precision], caller: StaticString = #function) {
         if components.count != numberOfDimensions {
             fatalError(
-                "Invalid components provided to \(caller). Expected \(numberOfDimensions), but got \(components.count)"
+                "Invalid components provided to \(caller). Expected \(numberOfDimensions), but got \(components.count)",
             )
         }
     }

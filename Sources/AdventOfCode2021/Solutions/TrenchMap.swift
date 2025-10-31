@@ -53,7 +53,7 @@ private func parseImage(from lines: [String]) -> Image {
     let width = lines[0].count
     let bounds = Rect(
         topLeft: Point2D(x: 0, y: 0),
-        bottomRight: Point2D(x: width - 1, y: height - 1)
+        bottomRight: Point2D(x: width - 1, y: height - 1),
     )
     let pixels: Set<Point2D> = bounds.points.reduce(into: []) { pixels, point in
         if lines[point.y][point.x] == "#" {
@@ -120,7 +120,7 @@ private struct Image {
     func enhanced(using algorithm: EnhancementAlgorithm, withDefault defaultPixel: Bool) -> Image {
         let newBounds = Rect(
             topLeft: bounds.topLeft.offset(by: (-1, -1)),
-            bottomRight: bounds.bottomRight.offset(by: (1, 1))
+            bottomRight: bounds.bottomRight.offset(by: (1, 1)),
         )
         var newPixels: Set<Point2D> = []
         for point in newBounds.points {

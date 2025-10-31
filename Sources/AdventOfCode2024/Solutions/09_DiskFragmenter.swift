@@ -118,11 +118,11 @@ private struct FileSystem {
 
             blocks.replaceSubrange(
                 freeStartIndex ..< freeStartIndex + length,
-                with: Array(repeating: block, count: length)
+                with: Array(repeating: block, count: length),
             )
             blocks.replaceSubrange(
                 fileStartIndex ..< fileStartIndex + length,
-                with: Array(repeating: .free, count: length)
+                with: Array(repeating: .free, count: length),
             )
         }
 
@@ -164,7 +164,7 @@ extension DiskFragmenter: TestablePuzzle {
             .init(
                 input: .raw("2333133121414131402"),
                 part1: 1928,
-                part2: 2858
+                part2: 2858,
             ),
         ]
     }

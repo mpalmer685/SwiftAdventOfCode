@@ -39,7 +39,7 @@ struct CosmicExpansion: Puzzle {
 
             let e = Point2D(
                 point.x + (multiplier - 1) * colExpandCount,
-                point.y + (multiplier - 1) * rowExpandCount
+                point.y + (multiplier - 1) * rowExpandCount,
             )
             return e
         }

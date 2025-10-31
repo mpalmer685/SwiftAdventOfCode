@@ -35,7 +35,7 @@ public extension VectorProtocol {
 public extension VectorProtocol {
     static func adjacents(
         includingSelf: Bool = false,
-        length: Int = 3
+        length: Int = 3,
     ) -> [Self] {
         let combos = combos(count: Self.numberOfDimensions, length: length)
         var all = combos.map(Self.init)

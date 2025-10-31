@@ -57,7 +57,7 @@ private struct MaskV2 {
     private var masks: [MaskV1]
 
     init(_ string: String) {
-        var masks: [String] = [""]
+        var masks = [""]
 
         for ch in string {
             switch ch {

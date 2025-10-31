@@ -50,7 +50,7 @@ struct HauntedWasteland: Puzzle {
                 instructions,
                 for: nodes,
                 startingAt: nodeId,
-                until: { $0.id.ends(with: "Z") }
+                until: { $0.id.ends(with: "Z") },
             )
             return turns
         }
@@ -62,7 +62,7 @@ struct HauntedWasteland: Puzzle {
         _ instructions: [Turn],
         for nodes: [String: Node],
         startingAt startingNodeId: String,
-        until isFinished: (Node) -> Bool
+        until isFinished: (Node) -> Bool,
     ) -> Int {
         var turns = instructions.cycled().makeIterator()
         var currentNodeId = startingNodeId

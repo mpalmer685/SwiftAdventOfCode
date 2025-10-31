@@ -45,7 +45,7 @@ struct StepCounter: Puzzle {
 
         assert(
             grid.width == grid.height,
-            "Expected input to be a square, but got \(grid.width) x \(grid.height)"
+            "Expected input to be a square, but got \(grid.width) x \(grid.height)",
         )
         let size = grid.width
         let n = ((targetStepCount - (size / 2)) / size)

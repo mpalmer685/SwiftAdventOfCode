@@ -51,7 +51,7 @@ struct TicketTranslation: Puzzle {
         return fieldIndices
     }
 
-    private func remove<Key, Value: Equatable>(_ item: Value, in dict: inout [Key: [Value]]) {
+    private func remove<Value: Equatable>(_ item: Value, in dict: inout [some Hashable: [Value]]) {
         for (key, value) in dict {
             if value.count == 1, value.first! == item {
                 dict[key] = nil

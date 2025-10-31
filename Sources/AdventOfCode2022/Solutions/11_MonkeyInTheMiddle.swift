@@ -73,7 +73,7 @@ struct MonkeyInTheMiddle: Puzzle {
                 },
                 divisibleByTest: lines[3].integers[0],
                 trueDest: lines[4].integers[0],
-                falseDest: lines[5].integers[0]
+                falseDest: lines[5].integers[0],
             )
         }
     }

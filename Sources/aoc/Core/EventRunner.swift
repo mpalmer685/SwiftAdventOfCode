@@ -169,7 +169,10 @@ private extension EventRunner {
                     savedResults.update(newDuration, for: day, part)
                 }
             } else {
-                spinner.succeed(text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).")
+                spinner
+                    .succeed(
+                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).",
+                    )
                 savedResults.update(newDuration, for: day, part)
             }
             return true

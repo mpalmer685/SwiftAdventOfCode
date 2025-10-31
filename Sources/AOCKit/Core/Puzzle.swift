@@ -35,7 +35,7 @@ public protocol TestablePuzzleWithConfig: Puzzle {
 
 public struct TestCase<
     Part1Result: CustomStringConvertible & Sendable,
-    Part2Result: CustomStringConvertible & Sendable
+    Part2Result: CustomStringConvertible & Sendable,
 >: Sendable {
     public let input: InputSource
     public let expectedPart1: Part1Result?
@@ -44,7 +44,7 @@ public struct TestCase<
     public init(
         input: InputSource,
         part1: Part1Result? = nil,
-        part2: Part2Result? = nil
+        part2: Part2Result? = nil,
     ) {
         self.input = input
         expectedPart1 = part1
@@ -55,7 +55,7 @@ public struct TestCase<
 public struct TestCaseWithConfig<
     Part1Result: CustomStringConvertible & Sendable,
     Part2Result: CustomStringConvertible & Sendable,
-    Config: Sendable
+    Config: Sendable,
 >: Sendable {
     public let input: InputSource
     public let expectedPart1: Part1Result?
@@ -66,7 +66,7 @@ public struct TestCaseWithConfig<
         input: InputSource,
         config: Config,
         part1: Part1Result? = nil,
-        part2: Part2Result? = nil
+        part2: Part2Result? = nil,
     ) {
         self.input = input
         self.config = config

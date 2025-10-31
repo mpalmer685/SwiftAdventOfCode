@@ -120,15 +120,15 @@ private class Number {
     }
 
     private class TreeNode: CustomStringConvertible {
-        private(set) var value: Int = 0
+        private(set) var value = 0
         private(set) var left: TreeNode?
         private(set) var right: TreeNode?
 
         var magnitude: Int {
-            if let left = left, let right = right {
-                return 3 * left.magnitude + 2 * right.magnitude
+            if let left, let right {
+                3 * left.magnitude + 2 * right.magnitude
             } else {
-                return value
+                value
             }
         }
 
@@ -151,10 +151,10 @@ private class Number {
         }
 
         var description: String {
-            if let left = left, let right = right {
-                return "[\(left),\(right)]"
+            if let left, let right {
+                "[\(left),\(right)]"
             } else {
-                return "\(value)"
+                "\(value)"
             }
         }
     }
@@ -166,7 +166,7 @@ extension Number: CustomStringConvertible {
 
 private extension Collection {
     func reduce(
-        _ nextPartialResult: (_ partialResult: Self.Element, Self.Element) -> Self.Element
+        _ nextPartialResult: (_ partialResult: Self.Element, Self.Element) -> Self.Element,
     ) -> Self.Element {
         guard !isEmpty else { fatalError("Collection is empty") }
         return self[index(after: startIndex)...].reduce(self[startIndex], nextPartialResult)

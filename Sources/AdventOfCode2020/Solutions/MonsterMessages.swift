@@ -32,7 +32,7 @@ struct MonsterMessages: Puzzle {
     private func isMessageValid(
         _ message: some StringProtocol,
         for ruleIds: some Collection<Int>,
-        given rules: [Int: Rule]
+        given rules: [Int: Rule],
     ) -> Bool {
         guard let ruleId = ruleIds.first, !message.isEmpty else {
             return message.isEmpty.exclusiveOr(!ruleIds.isEmpty)
@@ -44,7 +44,7 @@ struct MonsterMessages: Puzzle {
                 return message.first == c && isMessageValid(
                     message.tail,
                     for: ruleIds.tail,
-                    given: rules
+                    given: rules,
                 )
             case let .sequence(r):
                 return isMessageValid(message, for: r + ruleIds.tail, given: rules)

@@ -78,10 +78,10 @@ private extension Character {
 
     var closingCharacter: Self {
         switch self {
-            case "(": return ")"
-            case "[": return "]"
-            case "{": return "}"
-            case "<": return ">"
+            case "(": ")"
+            case "[": "]"
+            case "{": "}"
+            case "<": ">"
             default: fatalError("Unrecognized character: \(self)")
         }
     }

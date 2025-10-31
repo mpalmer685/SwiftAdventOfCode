@@ -29,13 +29,13 @@ struct ArithmeticLogicUnit: Puzzle {
 
 private func findModelNumber(
     using parameters: [(Int, Int, Int)],
-    choosingNextValueWith chooseNextValue: (Int, Int) -> Int
+    choosingNextValueWith chooseNextValue: (Int, Int) -> Int,
 ) -> Int {
     func nextValue(_ params: (Int, Int, Int), z: Int, w: Int) -> Int {
         (z % 26 + params.1 == w) ? z / params.0 : 26 * z / params.0 + w + params.2
     }
 
-    var valuesForZ: [Int: Int] = [0: 0]
+    var valuesForZ = [0: 0]
     for params in parameters {
         var newValuesForZ: [Int: Int] = [:]
         for z in valuesForZ.keys {

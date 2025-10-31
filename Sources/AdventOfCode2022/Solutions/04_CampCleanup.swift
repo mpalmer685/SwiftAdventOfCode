@@ -25,7 +25,7 @@ struct CampCleanup: Puzzle {
 
             return (
                 first: Int(match[1])! ... Int(match[2])!,
-                second: Int(match[3])! ... Int(match[4])!
+                second: Int(match[3])! ... Int(match[4])!,
             )
         }
     }

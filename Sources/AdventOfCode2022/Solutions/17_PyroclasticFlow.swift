@@ -40,7 +40,7 @@ struct PyroclasticFlow: Puzzle {
             let key = Key(
                 skyline: shaft.skyline,
                 windIndex: windIndex % windOrder.count,
-                rockIndex: (r - 1) % Rock.order.count
+                rockIndex: (r - 1) % Rock.order.count,
             )
             guard let (start, height) = seen[key] else {
                 if r % 10000 == 0 { print("No cycles found after \(r) rocks dropped") }

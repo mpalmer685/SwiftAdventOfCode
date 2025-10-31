@@ -15,7 +15,7 @@ public extension PointProtocol {
     static func + (lhs: Self, rhs: Vector) -> Self {
         guard numberOfDimensions == Vector.numberOfDimensions else {
             fatalError(
-                "Cannot add a \(Vector.numberOfDimensions)-dimensional Vector to a \(numberOfDimensions)-dimensional Point."
+                "Cannot add a \(Vector.numberOfDimensions)-dimensional Vector to a \(numberOfDimensions)-dimensional Point.",
             )
         }
         let new = zip(lhs.components, rhs.components).map(+)

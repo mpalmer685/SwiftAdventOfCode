@@ -15,7 +15,7 @@ struct SeatingSystem: Puzzle {
 
     private func settle(
         _ chart: SeatingChart,
-        using strategy: SeatingChart.SeatingStrategy
+        using strategy: SeatingChart.SeatingStrategy,
     ) -> SeatingChart {
         var chart = chart
         var lastState = type(of: chart.seats).init()
@@ -48,7 +48,7 @@ private struct SeatingChart {
     }
 
     var occupiedSeats: Int {
-        seats.flatMap { $0 }.reduce(0) { $0 + ($1 == .taken ? 1 : 0) }
+        seats.flatMap(\.self).reduce(0) { $0 + ($1 == .taken ? 1 : 0) }
     }
 
     func advance(using strategy: SeatingStrategy) -> Self {
@@ -58,7 +58,7 @@ private struct SeatingChart {
                 let neighborCount = count(
                     neighbors: strategy.neighbors,
                     atRow: rowIndex,
-                    column: colIndex
+                    column: colIndex,
                 )
                 if cell == .empty, neighborCount == 0 {
                     copy[rowIndex][colIndex] = .taken

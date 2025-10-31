@@ -72,7 +72,7 @@ struct PulsePropagation: Puzzle {
     @discardableResult
     private func sendPulse(
         to configuration: [String: (Module, [String])],
-        onPulse: ((Pulse, String, String?) -> Void)? = nil
+        onPulse: ((Pulse, String, String?) -> Void)? = nil,
     ) -> [Pulse: Int] {
         var queue: Queue<(Pulse, String, String?)> = [(.low, "broadcaster", nil)]
         var counts: [Pulse: Int] = [:]

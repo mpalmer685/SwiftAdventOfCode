@@ -74,20 +74,20 @@ private struct Program {
         var jumpOffset: Int {
             switch self {
                 case .accumulate, .noOp:
-                    return 1
+                    1
                 case let .jump(offset):
-                    return offset
+                    offset
             }
         }
 
         var repaired: Self {
             switch self {
                 case .accumulate:
-                    return self
+                    self
                 case let .jump(offset):
-                    return .noOp(offset: offset)
+                    .noOp(offset: offset)
                 case let .noOp(offset):
-                    return .jump(offset: offset)
+                    .jump(offset: offset)
             }
         }
     }

@@ -49,7 +49,7 @@ struct LanParty: Puzzle {
             current: Set<String>,
             candidates: Set<String>,
             visited: Set<String>,
-            maxClique: inout Set<String>
+            maxClique: inout Set<String>,
         ) {
             if candidates.isEmpty, visited.isEmpty {
                 if current.count > maxClique.count {
@@ -65,7 +65,7 @@ struct LanParty: Puzzle {
                     current: current.union([computer]),
                     candidates: candidates.intersection(neighbors),
                     visited: visited.intersection(neighbors),
-                    maxClique: &maxClique
+                    maxClique: &maxClique,
                 )
                 candidates.remove(computer)
                 visited.insert(computer)

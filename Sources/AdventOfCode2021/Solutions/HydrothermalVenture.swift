@@ -73,7 +73,7 @@ private struct Line {
         }
         return zip(
             stride(from: start.x, through: end.x, by: dx),
-            stride(from: start.y, through: end.y, by: dy)
+            stride(from: start.y, through: end.y, by: dy),
         ).map { Point2D($0, $1) }
     }
 }

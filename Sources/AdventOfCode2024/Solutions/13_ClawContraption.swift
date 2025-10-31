@@ -38,7 +38,7 @@ private struct ClawMachine {
         // https://developer.apple.com/documentation/accelerate/working_with_matrices#2960597
         let matrix = Matrix(
             (buttonA.x, buttonB.x),
-            (buttonA.y, buttonB.y)
+            (buttonA.y, buttonB.y),
         )
         let vector = Vector(prize.x, prize.y)
         let result = (matrix.inverse * vector).rounded(.toNearestOrEven)
@@ -59,7 +59,7 @@ private struct ClawMachine {
         ClawMachine(
             buttonA: buttonA,
             buttonB: buttonB,
-            prize: Point2D(prize.x + factor, prize.y + factor)
+            prize: Point2D(prize.x + factor, prize.y + factor),
         )
     }
 }

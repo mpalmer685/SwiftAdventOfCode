@@ -35,7 +35,7 @@ struct JurassicJigsaw: Puzzle {
         let grid: Grid<Tile> = Grid(width: gridSize, height: gridSize)
         var neighborsByTile = Dictionary(
             uniqueKeysWithValues: tiles
-                .map { ($0, neighbors(of: $0, in: tiles)) }
+                .map { ($0, neighbors(of: $0, in: tiles)) },
         )
 
         func place(_ tile: Tile, at row: Int, _ col: Int) {
@@ -59,7 +59,7 @@ struct JurassicJigsaw: Puzzle {
             _ row: Int,
             aligning edge: KeyPath<Tile, String>,
             with neighborEdge: KeyPath<Tile, String>,
-            ofNeighborAt offset: (Int, Int)
+            ofNeighborAt offset: (Int, Int),
         ) {
             let colStart = row == 0 ? 1 : 0
             for col in colStart ..< gridSize {
@@ -85,7 +85,7 @@ struct JurassicJigsaw: Puzzle {
         aligning edge: KeyPath<Tile, String>,
         with neighborEdge: KeyPath<Tile, String>,
         of neighbor: Tile,
-        then completion: (Tile) -> Void
+        then completion: (Tile) -> Void,
     ) {
         var tile = tile
         for transform in transformations {
@@ -106,7 +106,7 @@ struct JurassicJigsaw: Puzzle {
                 for col in 0 ..< image.first!.count - 20 where imageContainsSeaMonster(
                     image,
                     at: row,
-                    col
+                    col,
                 ) {
                     matches += 1
                 }
@@ -290,12 +290,12 @@ private extension Dictionary where Value == [Key], Value.Element: Equatable {
 }
 
 @Sendable
-private func flip<T>(_ array: inout [[T]]) {
+private func flip(_ array: inout [[some Any]]) {
     array.reverse()
 }
 
 @Sendable
-private func rotate<T>(_ array: inout [[T]]) {
+private func rotate(_ array: inout [[some Any]]) {
     array.reverse()
     for row in 0 ..< array.count {
         for col in 0 ..< row {

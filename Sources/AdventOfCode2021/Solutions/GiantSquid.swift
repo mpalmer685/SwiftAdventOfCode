@@ -34,8 +34,8 @@ struct GiantSquid: Puzzle {
             }
         }
 
-        guard let lastPlayedNumber = lastPlayedNumber,
-              let lastWinningBoard = lastWinningBoard
+        guard let lastPlayedNumber,
+              let lastWinningBoard
         else {
             fatalError("Didn't find a winner.")
         }

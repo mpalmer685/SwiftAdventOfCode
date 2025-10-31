@@ -1,4 +1,4 @@
-extension Collection where Element == Int {
+extension Collection<Int> {
     func findPair(totaling goal: Int) -> (Int, Int)? {
         let sorted = sorted()
         var low = sorted.startIndex

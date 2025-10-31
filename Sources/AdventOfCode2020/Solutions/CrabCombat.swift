@@ -16,7 +16,7 @@ struct CrabCombat: Puzzle {
     private func getScoreForGame(
         _ player1: [Int],
         against player2: [Int],
-        using playCombat: CombatGame
+        using playCombat: CombatGame,
     ) -> Int {
         let winner = playCombat(player1, player2)
         return calculateScore(for: winner.deck)
@@ -40,8 +40,8 @@ private enum GameResult {
 
     var deck: [Int] {
         switch self {
-            case let .playerOne(deck): return deck
-            case let .playerTwo(deck): return deck
+            case let .playerOne(deck): deck
+            case let .playerTwo(deck): deck
         }
     }
 }
@@ -78,16 +78,15 @@ private func playRecursiveCombat(player1: [Int], player2: [Int]) -> GameResult {
         let player1Card = player1.removeFirst()
         let player2Card = player2.removeFirst()
 
-        let result: GameResult
-        if player1Card <= player1.count, player2Card <= player2.count {
-            result = playRecursiveCombat(
+        let result: GameResult = if player1Card <= player1.count, player2Card <= player2.count {
+            playRecursiveCombat(
                 player1: Array(player1[..<player1Card]),
-                player2: Array(player2[..<player2Card])
+                player2: Array(player2[..<player2Card]),
             )
         } else if player1Card > player2Card {
-            result = .playerOne([])
+            .playerOne([])
         } else {
-            result = .playerTwo([])
+            .playerTwo([])
         }
 
         switch result {

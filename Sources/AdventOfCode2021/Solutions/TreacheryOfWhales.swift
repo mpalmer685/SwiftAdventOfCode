@@ -10,7 +10,7 @@ struct TreacheryOfWhales: Puzzle {
         return getBestDestination(
             for: positions,
             startingAt: median(of: positions),
-            using: identityCost
+            using: identityCost,
         )
     }
 
@@ -19,7 +19,7 @@ struct TreacheryOfWhales: Puzzle {
         return getBestDestination(
             for: positions,
             startingAt: mean(of: positions),
-            using: triangleCost
+            using: triangleCost,
         )
     }
 }
@@ -31,7 +31,7 @@ private func getPositions(from input: Input) -> [Int] {
 private func getBestDestination(
     for positions: [Int],
     startingAt startingPosition: Int,
-    using calculateCost: CostCalculator
+    using calculateCost: CostCalculator,
 ) -> Int {
     var cache = [Int: Int]()
     var destination = startingPosition

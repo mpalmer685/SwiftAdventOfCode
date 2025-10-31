@@ -81,7 +81,7 @@ private struct Game {
     private mutating func rotate(
         _ cups: [Int],
         from current: Int,
-        to destination: Int
+        to destination: Int,
     ) {
         cupRing[current] = cupRing[cups.last!]
         cupRing[cups.last!] = cupRing[destination]

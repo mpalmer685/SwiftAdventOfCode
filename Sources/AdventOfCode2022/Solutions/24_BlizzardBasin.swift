@@ -15,12 +15,12 @@ struct BlizzardBasin: Puzzle {
         let returnTrip = valley.timeToTravel(
             from: valley.end,
             to: valley.start,
-            startTime: firstTrip
+            startTime: firstTrip,
         )
         let finalTrip = valley.timeToTravel(
             from: valley.start,
             to: valley.end,
-            startTime: firstTrip + returnTrip
+            startTime: firstTrip + returnTrip,
         )
 
         return firstTrip + returnTrip + finalTrip

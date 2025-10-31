@@ -20,7 +20,7 @@ struct CustomCustoms: Puzzle {
 
     private func getGroupAnswers(
         from input: Input,
-        using combineAnswers: AnswersCombiner
+        using combineAnswers: AnswersCombiner,
     ) -> [GroupAnswers] {
         input.lines
             .split(whereSeparator: \.isEmpty)

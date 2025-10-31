@@ -35,7 +35,7 @@ extension HistorianHysteria: TestablePuzzle {
             .init(
                 input: .example,
                 part1: 11,
-                part2: 31
+                part2: 31,
             ),
             .init(input: .file("double-digits.example"), part1: 11),
         ]

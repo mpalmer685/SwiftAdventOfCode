@@ -116,7 +116,7 @@ private func getTransforms(toAlign scanners: [Scanner]) -> Transforms {
 
 private func countUniqueBeacons(
     in scanners: [Scanner],
-    using transforms: [[Int: [Transform]]]
+    using transforms: [[Int: [Transform]]],
 ) -> Int {
     var beacons = Set(scanners[0])
     for i in scanners[1...].indices {
@@ -133,7 +133,7 @@ private func countUniqueBeacons(
 
 private func findMaxDistance(
     between scanners: [Scanner],
-    using transforms: [[Int: [Transform]]]
+    using transforms: [[Int: [Transform]]],
 ) -> Int {
     var scannerCoords: [Position] = [.origin]
     for i in scanners[1...].indices {

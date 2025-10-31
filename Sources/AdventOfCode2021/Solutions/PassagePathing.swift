@@ -154,9 +154,9 @@ private struct VisitOnceHistory: History {
 
     func canVisit(cave: Cave) -> Bool {
         switch cave.type {
-            case .start: return false
-            case .big, .end: return true
-            default: return !visited.contains(cave)
+            case .start: false
+            case .big, .end: true
+            default: !visited.contains(cave)
         }
     }
 }
@@ -175,9 +175,9 @@ private struct VisitOneTwiceHistory: History {
 
     func canVisit(cave: Cave) -> Bool {
         switch cave.type {
-            case .start: return false
-            case .big, .end: return true
-            default: return !visited.contains(cave) || revisitedCave == nil
+            case .start: false
+            case .big, .end: true
+            default: !visited.contains(cave) || revisitedCave == nil
         }
     }
 }

@@ -56,7 +56,7 @@ private struct ComponentPathfinder: Graph {
     func visiting(_ path: [String]) -> Self {
         Self(
             graph: graph,
-            traversed: traversed.union(path.adjacentPairs().map { [$0, $1] })
+            traversed: traversed.union(path.adjacentPairs().map { [$0, $1] }),
         )
     }
 }

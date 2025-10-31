@@ -9,7 +9,7 @@ public extension String {
 
     subscript(from start: Int, to end: Int? = nil) -> String {
         let substringStart = index(startIndex, offsetBy: start)
-        let substringEnd = if let end = end {
+        let substringEnd = if let end {
             index(startIndex, offsetBy: end)
         } else {
             endIndex
@@ -30,7 +30,7 @@ public extension String {
         public func pad(
             text: String,
             toLength length: Int,
-            withPad filler: Character = " "
+            withPad filler: Character = " ",
         ) -> String {
             let padding: String = {
                 let byteLength = text.lengthOfBytes(using: String.Encoding.utf32) / 4
@@ -45,7 +45,7 @@ public extension String {
                 case .center:
                     let halfDistance = padding.distance(
                         from: padding.startIndex,
-                        to: padding.endIndex
+                        to: padding.endIndex,
                     ) / 2
                     let halfIndex = padding.index(padding.startIndex, offsetBy: halfDistance)
                     let leftHalf = padding[..<halfIndex]
@@ -58,7 +58,7 @@ public extension String {
     func padded(
         toLength length: Int,
         withPad filler: Character = " ",
-        padding: Padding = .right
+        padding: Padding = .right,
     ) -> String {
         padding.pad(text: self, toLength: length, withPad: filler)
     }
@@ -68,7 +68,7 @@ public extension CustomDebugStringConvertible {
     func padded(
         toLength length: Int,
         withPad filler: Character = " ",
-        padding: String.Padding = .right
+        padding: String.Padding = .right,
     ) -> String {
         debugDescription.padded(toLength: length, withPad: filler, padding: padding)
     }
@@ -78,7 +78,7 @@ public extension CustomStringConvertible {
     func padded(
         toLength length: Int,
         withPad filler: Character = " ",
-        padding: String.Padding = .right
+        padding: String.Padding = .right,
     ) -> String {
         description.padded(toLength: length, withPad: filler, padding: padding)
     }

@@ -27,7 +27,7 @@ struct EncodingError: Puzzle {
     }
 }
 
-private extension Collection where Element == Int {
+private extension Collection<Int> {
     func containsPair(totaling target: Int) -> Bool {
         findPair(totaling: target) != nil
     }

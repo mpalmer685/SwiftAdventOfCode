@@ -71,8 +71,8 @@ private enum Instruction {
 
     var cycleCount: Int {
         switch self {
-            case .noop: return 1
-            case .addx: return 2
+            case .noop: 1
+            case .addx: 2
         }
     }
 }
