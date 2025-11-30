@@ -50,10 +50,18 @@ struct StatsCommand: ParsableCommand {
                 "Cannot specify --slowest or --fastest with multiple build configurations",
             )
         }
+        if case let .specific(year) = eventOptions.year,
+           !AOCCommand.events.contains(where: { $0.year == year })
+        {
+            throw ValidationError("No event defined for year \(year)")
+        }
     }
 
     func run() throws {
         let table = Table<Benchmark> {
+            if case .all = eventOptions.year {
+                Column("Year", content: \.year)
+            }
             Column("Puzzle", content: \.puzzle)
             if buildConfig.contains(.debug) {
                 Column("Debug Time") { $0.debugTime?.formattedForComparison() ?? "" }
@@ -65,7 +73,14 @@ struct StatsCommand: ParsableCommand {
             }
         }
 
-        var benchmarks = benchmarkData(forYear: eventOptions.year).filter { benchmark in
+        let years = switch eventOptions.year {
+            case .all:
+                AOCCommand.events.map(\.year)
+            case let .specific(year):
+                [year]
+        }
+
+        var benchmarks = benchmarkData(forYears: years).filter { benchmark in
             (buildConfig.contains(.release) || benchmark.debugTime != nil)
                 && (buildConfig.contains(.debug) || benchmark.releaseTime != nil)
         }
@@ -74,7 +89,11 @@ struct StatsCommand: ParsableCommand {
 
         switch sort {
             case .puzzle:
-                benchmarks.sort(using: \.puzzle)
+                benchmarks.sort {
+                    $0.year == $1.year
+                        ? $0.puzzle < $1.puzzle
+                        : $0.year < $1.year
+                }
             case .debug:
                 benchmarks.sort(using: \.debugTime)
             case .release:
@@ -88,8 +107,8 @@ struct StatsCommand: ParsableCommand {
         print(table.render(benchmarks))
     }
 
-    private func benchmarkData(forYear year: Int) -> [Benchmark] {
-        var allBenchmarks = Benchmark.loadAll(forYear: year)
+    private func benchmarkData(forYears years: [Int]) -> [Benchmark] {
+        var allBenchmarks = years.flatMap { Benchmark.loadAll(forYear: $0) }
         let getRuntime: (Benchmark) -> Duration? = buildConfig.contains(.debug)
             ? \.debugTime
             : \.releaseTime

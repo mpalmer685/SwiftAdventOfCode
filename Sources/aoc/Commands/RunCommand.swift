@@ -1,5 +1,6 @@
 import AOCKit
 import ArgumentParser
+import Rainbow
 
 struct RunCommand: AsyncParsableCommand {
     static let configuration = CommandConfiguration(
@@ -25,19 +26,54 @@ struct RunCommand: AsyncParsableCommand {
     var test = false
 
     func validate() throws {
+        if day == nil, part != nil {
+            throw ValidationError("Cannot specify --part without --day")
+        }
+        if day != nil, next {
+            throw ValidationError("Cannot specify both --day and --next")
+        }
+        if day != nil, latest {
+            throw ValidationError("Cannot specify both --day and --latest")
+        }
+        if next, latest {
+            throw ValidationError("Cannot specify both --next and --latest")
+        }
         if let day, !(1 ... 25).contains(day) {
             throw ValidationError("Day should be between 1 and 25")
+        }
+        if case let .specific(year) = eventOptions.year,
+           !AOCCommand.events.contains(where: { $0.year == year })
+        {
+            throw ValidationError("No event defined for year \(year)")
+        }
+        if case .all = eventOptions.year, day != nil || part != nil || next || latest {
+            throw ValidationError(
+                "The 'run' command with --year all cannot be combined with --day, --part, --next, or --latest",
+            )
         }
     }
 
     func run() async throws {
-        guard let event = AOCCommand.events.first(where: { $0.year == eventOptions.year }) else {
-            fatalError("No event defined for \(eventOptions.year)")
+        let success = try await events.async.allSatisfy { event in
+            if case .all = eventOptions.year {
+                print(String(describing: event.year).bold.underline)
+            }
+            return try await test ? runTests(for: event) : run(event)
         }
 
-        let success = try await test ? runTests(for: event) : run(event)
-
         throw success ? ExitCode.success : ExitCode.failure
+    }
+
+    private var events: [AdventOfCodeEvent] {
+        switch eventOptions.year {
+            case .all:
+                return AOCCommand.events
+            case let .specific(year):
+                guard let event = AOCCommand.events.first(where: { $0.year == year }) else {
+                    fatalError("No event defined for \(year)")
+                }
+                return [event]
+        }
     }
 
     private func runTests(for event: AdventOfCodeEvent) async throws -> Bool {

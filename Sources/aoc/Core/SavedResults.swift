@@ -179,6 +179,7 @@ extension PuzzleDescriptor: CustomStringConvertible {
 }
 
 struct Benchmark {
+    let year: Int
     let puzzle: PuzzleDescriptor
     let debugTime: Duration?
     let releaseTime: Duration?
@@ -195,11 +196,13 @@ struct Benchmark {
             .flatMap { day in
                 [
                     Benchmark(
+                        year: year,
                         puzzle: PuzzleDescriptor(day: day, part: .partOne),
                         debugTime: debugBenchmarks[day]?.part1,
                         releaseTime: releaseBenchmarks[day]?.part1,
                     ),
                     Benchmark(
+                        year: year,
                         puzzle: PuzzleDescriptor(day: day, part: .partTwo),
                         debugTime: debugBenchmarks[day]?.part2,
                         releaseTime: releaseBenchmarks[day]?.part2,
