@@ -55,14 +55,80 @@ private struct SavedResult<Value: Codable> {
         set { resultsByDay[day] = newValue }
     }
 
+    var days: [Int] {
+        resultsByDay.keys.sorted()
+    }
+
     func save() throws {
         try saveLocation.write(resultsByDay.encoded(using: jsonEncoder))
     }
 }
 
+private let benchmarkWindowSize = 10
+
+private typealias SavedBenchmarks = SavedResult<[Duration]>
+
+private extension SavedBenchmarks {
+    static func load(fromFile fileName: String) -> SavedBenchmarks {
+        load(from: "Benchmarks/\(fileName).json")
+    }
+}
+
+private extension SavedBenchmarks {
+    func benchmark(for day: Int, _ part: PuzzlePart) -> Duration.SavedBenchmark? {
+        let measurements = switch part {
+            case .partOne: self[day]?.part1
+            case .partTwo: self[day]?.part2
+        }
+        guard let measurements, measurements.isNotEmpty else {
+            return nil
+        }
+
+        let measurementsInMilliseconds = measurements.map(\.inMilliseconds)
+        let mean =
+            measurementsInMilliseconds.reduce(0, +) / Double(measurementsInMilliseconds.count)
+        guard measurementsInMilliseconds.count > 1 else {
+            return (.milliseconds(mean), nil)
+        }
+
+        let numerator = measurementsInMilliseconds.reduce(0) { total, duration in
+            total + pow(duration - mean, 2)
+        }
+        let standardDeviation = sqrt(numerator / Double(measurementsInMilliseconds.count))
+
+        return (.milliseconds(mean), standardDeviation)
+    }
+
+    mutating func addMeasurement(
+        _ duration: Duration,
+        for day: Int,
+        _ part: PuzzlePart,
+    ) {
+        var results = self[day] ?? Result()
+        switch part {
+            case .partOne:
+                var measurements = results.part1 ?? []
+                measurements.append(duration)
+                while measurements.count > benchmarkWindowSize {
+                    measurements.removeFirst()
+                }
+                results.part1 = measurements
+            case .partTwo:
+                var measurements = results.part2 ?? []
+                measurements.append(duration)
+                while measurements.count > benchmarkWindowSize {
+                    measurements.removeFirst()
+                }
+                results.part2 = measurements
+        }
+
+        self[day] = results
+    }
+}
+
 public struct SavedResults {
     private var answers: SavedResult<String>
-    private var benchmarks: SavedResult<Duration>
+    private var benchmarks: SavedBenchmarks
 
     init(year: Int) {
         answers = .load(from: "Data/\(year)/Answers.json")
@@ -76,7 +142,7 @@ public struct SavedResults {
     }
 
     var days: [Int] {
-        answers.resultsByDay.keys.sorted()
+        answers.days
     }
 
     var latest: (day: Int, part: PuzzlePart)? {
@@ -105,16 +171,19 @@ public struct SavedResults {
         }
     }
 
-    func savedResult(for day: Int, _ part: PuzzlePart) -> (String, Duration?)? {
+    func savedResult(
+        for day: Int,
+        _ part: PuzzlePart,
+    ) -> (answer: String, Duration.SavedBenchmark?)? {
         guard let answer = answers[day] else { return nil }
-        let benchmark = benchmarks[day]
+        let benchmark = benchmarks.benchmark(for: day, part)
         switch part {
             case .partOne:
                 guard let answer = answer.part1 else { return nil }
-                return (answer, benchmark?.part1)
+                return (answer, benchmark)
             case .partTwo:
                 guard let answer = answer.part2 else { return nil }
-                return (answer, benchmark?.part2)
+                return (answer, benchmark)
         }
     }
 
@@ -125,30 +194,19 @@ public struct SavedResults {
         duration: Duration,
     ) {
         var answers = answers[day] ?? Result()
-        var benchmarks = benchmarks[day] ?? Result()
         switch part {
             case .partOne:
                 answers.part1 = answer
-                benchmarks.part1 = duration
             case .partTwo:
                 answers.part2 = answer
-                benchmarks.part2 = duration
         }
-
         self.answers[day] = answers
-        self.benchmarks[day] = benchmarks
+
+        benchmarks.addMeasurement(duration, for: day, part)
     }
 
-    mutating func update(_ duration: Duration, for day: Int, _ part: PuzzlePart) {
-        var benchmarks = benchmarks[day] ?? Result()
-        switch part {
-            case .partOne:
-                benchmarks.part1 = duration
-            case .partTwo:
-                benchmarks.part2 = duration
-        }
-
-        self.benchmarks[day] = benchmarks
+    mutating func addMeasurement(_ duration: Duration, for day: Int, _ part: PuzzlePart) {
+        benchmarks.addMeasurement(duration, for: day, part)
     }
 
     func save() throws {
@@ -185,11 +243,11 @@ struct Benchmark {
     let releaseTime: Duration?
 
     static func loadAll(forYear year: Int) -> [Self] {
-        let debugBenchmarks = SavedResult<Duration>.load(from: "Benchmarks/\(year)-debug.json")
-        let releaseBenchmarks = SavedResult<Duration>.load(from: "Benchmarks/\(year)-release.json")
+        let debugBenchmarks = SavedBenchmarks.load(fromFile: "\(year)-debug")
+        let releaseBenchmarks = SavedBenchmarks.load(fromFile: "\(year)-release")
 
-        let days = Set(debugBenchmarks.resultsByDay.keys)
-            .union(releaseBenchmarks.resultsByDay.keys)
+        let days = Set(debugBenchmarks.days)
+            .union(releaseBenchmarks.days)
             .sorted()
 
         return days
@@ -198,14 +256,14 @@ struct Benchmark {
                     Benchmark(
                         year: year,
                         puzzle: PuzzleDescriptor(day: day, part: .partOne),
-                        debugTime: debugBenchmarks[day]?.part1,
-                        releaseTime: releaseBenchmarks[day]?.part1,
+                        debugTime: debugBenchmarks.benchmark(for: day, .partOne)?.mean,
+                        releaseTime: releaseBenchmarks.benchmark(for: day, .partOne)?.mean,
                     ),
                     Benchmark(
                         year: year,
                         puzzle: PuzzleDescriptor(day: day, part: .partTwo),
-                        debugTime: debugBenchmarks[day]?.part2,
-                        releaseTime: releaseBenchmarks[day]?.part2,
+                        debugTime: debugBenchmarks.benchmark(for: day, .partTwo)?.mean,
+                        releaseTime: releaseBenchmarks.benchmark(for: day, .partTwo)?.mean,
                     ),
                 ]
             }

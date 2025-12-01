@@ -37,12 +37,20 @@ extension Duration {
 }
 
 extension Duration {
+    var inMilliseconds: Double {
+        Double(components.seconds) * 1000 + Double(components.attoseconds) * 1e-15
+    }
+}
+
+extension Duration {
+    typealias SavedBenchmark = (mean: Duration, standardDeviation: Double?)
+
     enum ComparisonResult: CustomStringConvertible {
-        case faster(Double)
         case muchFaster
+        case faster(Double)
+        case same
         case slower(Double)
         case muchSlower
-        case same
 
         var isImprovement: Bool {
             switch self {
@@ -53,6 +61,8 @@ extension Duration {
 
         var description: String {
             switch self {
+                case .same:
+                    "no change".blue
                 case let .faster(percent):
                     "\(format(percent))% faster".green
                 case let .slower(percent):
@@ -61,8 +71,6 @@ extension Duration {
                     "significantly faster".green.bold
                 case .muchSlower:
                     "significantly slower".red.bold
-                case .same:
-                    "no change".blue
             }
         }
 
@@ -71,18 +79,32 @@ extension Duration {
         }
     }
 
-    func compared(to other: Duration) -> ComparisonResult {
-        if components.seconds > 0, other.components.seconds == 0 {
-            return .muchSlower
-        }
-        if components.seconds == 0, other.components.seconds > 0 {
-            return .muchFaster
+    func compared(to savedBenchmarks: SavedBenchmark) -> ComparisonResult {
+        let (meanDuration, standardDeviation) = savedBenchmarks
+
+        if let standardDeviation {
+            let percentDifference = abs(inMilliseconds - meanDuration.inMilliseconds) / meanDuration
+                .inMilliseconds
+            let zScore = (inMilliseconds - meanDuration.inMilliseconds) / standardDeviation
+
+            switch zScore {
+                case ...(-3):
+                    return .muchFaster
+                case -3 ..< -2:
+                    return .faster(percentDifference)
+                case -2 ... 2:
+                    return .same
+                case 2 ..< 3:
+                    return .slower(percentDifference)
+                default:
+                    return .muchSlower
+            }
         }
 
-        let percentDifference = abs((self - other) / self)
+        let percentDifference = abs((self - meanDuration) / self)
         if percentDifference < 0.05 {
             return .same
-        } else if self < other {
+        } else if self < meanDuration {
             return .faster(percentDifference)
         } else {
             return .slower(percentDifference)

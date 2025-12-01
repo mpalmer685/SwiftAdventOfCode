@@ -140,7 +140,10 @@ struct EventRunner {
 
 private extension EventRunner {
     private mutating func checkOutput(for day: Int, part: PuzzlePart) async throws -> Bool {
-        guard let (savedAnswer, duration) = savedResults.savedResult(for: day, part) else {
+        guard let (savedAnswer, savedBenchmark) = savedResults.savedResult(
+            for: day,
+            part,
+        ) else {
             throw PuzzleError.noSavedResults
         }
 
@@ -159,21 +162,21 @@ private extension EventRunner {
                 return false
             }
 
-            if let oldDuration = duration {
-                let comparison = newDuration.compared(to: oldDuration)
+            if let savedBenchmark {
+                let comparison = newDuration.compared(to: savedBenchmark)
                 spinner
                     .succeed(
                         text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).",
                     )
                 if comparison.isImprovement {
-                    savedResults.update(newDuration, for: day, part)
+                    savedResults.addMeasurement(newDuration, for: day, part)
                 }
             } else {
                 spinner
                     .succeed(
                         text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).",
                     )
-                savedResults.update(newDuration, for: day, part)
+                savedResults.addMeasurement(newDuration, for: day, part)
             }
             return true
         } catch {
