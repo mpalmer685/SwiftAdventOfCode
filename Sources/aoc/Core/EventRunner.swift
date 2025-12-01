@@ -165,21 +165,17 @@ private extension EventRunner {
 
             if let savedBenchmark {
                 let comparison = newDuration.compared(to: savedBenchmark)
-                spinner
-                    .succeed(
-                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).",
-                    )
-                if saveBenchmark {
-                    savedResults.addMeasurement(newDuration, for: day, part)
-                }
+                spinner.succeed(
+                    text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).",
+                )
             } else {
-                spinner
-                    .succeed(
-                        text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).",
-                    )
-                if saveBenchmark {
-                    savedResults.addMeasurement(newDuration, for: day, part)
-                }
+                spinner.succeed(
+                    text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).",
+                )
+            }
+
+            if saveBenchmark {
+                savedResults.addMeasurement(newDuration, for: day, part)
             }
             return true
         } catch {
