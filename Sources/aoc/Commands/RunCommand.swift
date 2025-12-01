@@ -25,6 +25,9 @@ struct RunCommand: AsyncParsableCommand {
     @Flag(name: .long)
     var test = false
 
+    @Flag(name: [.long, .customShort("x")])
+    var experimental = false
+
     func validate() throws {
         if day == nil, part != nil {
             throw ValidationError("Cannot specify --part without --day")
@@ -96,7 +99,7 @@ struct RunCommand: AsyncParsableCommand {
     }
 
     private func run(_ event: AdventOfCodeEvent) async throws -> Bool {
-        var runner = EventRunner(event: event)
+        var runner = EventRunner(event: event, saveBenchmark: !experimental)
         if let day, let part {
             if event.hasSavedResult(for: day, part: part) {
                 return try await runner.checkPuzzleMatchesSavedAnswer(for: day, part: part)

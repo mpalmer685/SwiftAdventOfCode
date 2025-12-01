@@ -52,13 +52,6 @@ extension Duration {
         case slower(Double)
         case muchSlower
 
-        var isImprovement: Bool {
-            switch self {
-                case .faster, .muchFaster: true
-                default: false
-            }
-        }
-
         var description: String {
             switch self {
                 case .same:

@@ -87,10 +87,12 @@ private extension TestEventRunner {
 
 struct EventRunner {
     private let event: AdventOfCodeEvent
+    private let saveBenchmark: Bool
     private var savedResults: SavedResults
 
-    init(event: AdventOfCodeEvent) {
+    init(event: AdventOfCodeEvent, saveBenchmark: Bool) {
         self.event = event
+        self.saveBenchmark = saveBenchmark
         savedResults = event.savedResults
     }
 
@@ -140,10 +142,9 @@ struct EventRunner {
 
 private extension EventRunner {
     private mutating func checkOutput(for day: Int, part: PuzzlePart) async throws -> Bool {
-        guard let (savedAnswer, savedBenchmark) = savedResults.savedResult(
-            for: day,
-            part,
-        ) else {
+        guard let (savedAnswer, savedBenchmark) =
+            savedResults.savedResult(for: day, part)
+        else {
             throw PuzzleError.noSavedResults
         }
 
@@ -168,7 +169,7 @@ private extension EventRunner {
                     .succeed(
                         text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()) (\(comparison)).",
                     )
-                if comparison.isImprovement {
+                if saveBenchmark {
                     savedResults.addMeasurement(newDuration, for: day, part)
                 }
             } else {
@@ -176,7 +177,9 @@ private extension EventRunner {
                     .succeed(
                         text: "Day \(day) part \(part) took \(newDuration.formattedForDisplay()).",
                     )
-                savedResults.addMeasurement(newDuration, for: day, part)
+                if saveBenchmark {
+                    savedResults.addMeasurement(newDuration, for: day, part)
+                }
             }
             return true
         } catch {
