@@ -1,3 +1,9 @@
 import AOCKit
 
-public let aoc2025 = AdventOfCodeEvent(year: 2025, puzzles: [SecretEntrance()])
+public let aoc2025 = AdventOfCodeEvent(
+    year: 2025,
+    puzzles: [
+        SecretEntrance(),
+        GiftShop(),
+    ],
+)
