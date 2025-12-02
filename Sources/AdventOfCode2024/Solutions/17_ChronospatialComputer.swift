@@ -164,12 +164,6 @@ private struct Computer {
     }
 }
 
-private extension Int {
-    func modulo(_ other: Self) -> Self {
-        (self % other + other) % other
-    }
-}
-
 extension ChronospatialComputer: TestablePuzzle {
     var testCases: [TestCase<String, Int>] {
         [

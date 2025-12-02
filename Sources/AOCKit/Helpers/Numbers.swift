@@ -38,6 +38,10 @@ public extension Int {
     var triangle: Self {
         (self * (self + 1)) / 2
     }
+
+    func modulo(_ other: Self) -> Self {
+        (self % other + other) % other
+    }
 }
 
 public func lcm<I: FixedWidthInteger>(_ values: I...) -> I {
