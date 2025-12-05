@@ -6,5 +6,6 @@ public let aoc2025 = AdventOfCodeEvent(
         SecretEntrance(),
         GiftShop(),
         Lobby(),
+        PrintingDepartment(),
     ],
 )
