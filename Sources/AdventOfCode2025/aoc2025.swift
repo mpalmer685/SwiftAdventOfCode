@@ -9,5 +9,6 @@ public let aoc2025 = AdventOfCodeEvent(
         PrintingDepartment(),
         Cafeteria(),
         TrashCompactor(),
+        Laboratories(),
     ],
 )
