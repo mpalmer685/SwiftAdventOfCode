@@ -20,6 +20,35 @@ public extension Puzzle {
     }
 }
 
+private let durationFormatter = Duration.UnitsFormatStyle(
+    allowedUnits: [.seconds, .milliseconds],
+    width: .narrow,
+    zeroValueUnits: .hide,
+    fractionalPart: .show(length: 3),
+)
+
+public extension Puzzle {
+    func measure<T>(label: String, _ work: () throws -> T) rethrows -> T {
+        let clock = ContinuousClock()
+        var result: T!
+        let duration = try clock.measure {
+            result = try work()
+        }
+        print("\(label): \(duration.formatted(durationFormatter))")
+        return result
+    }
+
+    func measure<T>(label: String, _ work: () async throws -> T) async rethrows -> T {
+        let clock = ContinuousClock()
+        var result: T!
+        let duration = try await clock.measure {
+            result = try await work()
+        }
+        print("\(label): \(duration.formatted(durationFormatter))")
+        return result
+    }
+}
+
 public protocol TestablePuzzle: Puzzle {
     var testCases: [TestCase<Part1Result, Part2Result>] { get }
 }
