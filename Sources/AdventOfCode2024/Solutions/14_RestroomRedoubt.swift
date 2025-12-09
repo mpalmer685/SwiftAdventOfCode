@@ -100,7 +100,7 @@ private extension Int {
 extension RestroomRedoubt: TestablePuzzleWithConfig {
     var testCases: [TestCaseWithConfig<Int, Int, (width: Int, height: Int)>] {
         [
-            .init(input: .example, config: (11, 7), part1: 12),
+            .given(.example, config: (11, 7)).expects(part1: 12),
         ]
     }
 }

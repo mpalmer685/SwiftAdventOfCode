@@ -79,7 +79,7 @@ extension TopographicRatingMap: Graph {
 extension HoofIt: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 36, part2: 81),
+            .given(.example).expects(part1: 36, part2: 81),
         ]
     }
 }

@@ -116,8 +116,8 @@ private extension Vector2D {
 extension ReindeerMaze: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example(1), part1: 7036, part2: 45),
-            .init(input: .example(2), part1: 11048, part2: 64),
+            .given(.example(1)).expects(part1: 7036, part2: 45),
+            .given(.example(2)).expects(part1: 11048, part2: 64),
         ]
     }
 }

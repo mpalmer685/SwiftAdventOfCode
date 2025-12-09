@@ -54,7 +54,7 @@ private extension Vector2D {
 extension CeresSearch: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 18, part2: 9),
+            .given(.example).expects(part1: 18, part2: 9),
         ]
     }
 }

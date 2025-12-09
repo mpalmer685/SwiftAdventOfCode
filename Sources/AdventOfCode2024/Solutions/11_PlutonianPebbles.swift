@@ -65,7 +65,7 @@ private struct Simulation {
 extension PlutonianPebbles: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .raw("125 17"), part1: 55312),
+            .given(.raw("125 17")).expects(part1: 55312),
         ]
     }
 }

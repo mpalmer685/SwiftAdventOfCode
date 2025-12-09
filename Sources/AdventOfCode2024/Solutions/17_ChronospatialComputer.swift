@@ -167,8 +167,8 @@ private struct Computer {
 extension ChronospatialComputer: TestablePuzzle {
     var testCases: [TestCase<String, Int>] {
         [
-            .init(input: .example(1), part1: "4,6,3,5,6,3,5,2,1,0"),
-            .init(input: .example(2), part2: 117_440),
+            .given(.example(1)).expects(part1: "4,6,3,5,6,3,5,2,1,0"),
+            .given(.example(2)).expects(part2: 117_440),
         ]
     }
 }

@@ -55,7 +55,7 @@ struct GiftShop: Puzzle {
 extension GiftShop: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 1_227_775_554, part2: 4_174_379_265),
+            .given(.example).expects(part1: 1_227_775_554, part2: 4_174_379_265),
         ]
     }
 }

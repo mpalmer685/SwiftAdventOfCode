@@ -135,7 +135,7 @@ private extension Vector2D {
 extension KeypadConundrum: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 126_384),
+            .given(.example).expects(part1: 126_384),
         ]
     }
 }

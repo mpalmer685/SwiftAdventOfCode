@@ -160,12 +160,8 @@ private extension [FileSystem.Block] {
 extension DiskFragmenter: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .raw("12345"), part1: 60),
-            .init(
-                input: .raw("2333133121414131402"),
-                part1: 1928,
-                part2: 2858,
-            ),
+            .given(.raw("12345")).expects(part1: 60),
+            .given(.raw("2333133121414131402")).expects(part1: 1928, part2: 2858),
         ]
     }
 }

@@ -63,8 +63,8 @@ struct ResonantCollinearity: Puzzle {
 extension ResonantCollinearity: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 14),
-            .init(input: .file("harmonic-example"), part2: 9),
+            .given(.example).expects(part1: 14),
+            .given(.file("harmonic-example")).expects(part2: 9),
         ]
     }
 }

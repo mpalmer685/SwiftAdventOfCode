@@ -71,8 +71,8 @@ private enum Instruction {
 extension SecretEntrance: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 3, part2: 6),
-            .init(input: .raw("""
+            .given(.example).expects(part1: 3, part2: 6),
+            .given(.raw("""
             R50
             R50
             L50
@@ -82,18 +82,18 @@ extension SecretEntrance: TestablePuzzle {
             L25
             L75
             R50
-            """), part2: 6),
+            """)).expects(part2: 6),
 
             // Simple cases to verify wrapping logic
-            .init(input: .raw("L50\nR50\n"), part2: 1),
-            .init(input: .raw("L50\nL50\n"), part2: 1),
-            .init(input: .raw("R50\nL50\n"), part2: 1),
-            .init(input: .raw("R50\nR50\n"), part2: 1),
-            .init(input: .raw("L150\nL50\n"), part2: 2),
-            .init(input: .raw("L150\nR50\n"), part2: 2),
-            .init(input: .raw("R150\nL50\n"), part2: 2),
-            .init(input: .raw("R150\nR50\n"), part2: 2),
-            .init(input: .raw("R50\nL101\n"), part2: 2),
+            .given(.raw("L50\nR50\n")).expects(part2: 1),
+            .given(.raw("L50\nL50\n")).expects(part2: 1),
+            .given(.raw("R50\nL50\n")).expects(part2: 1),
+            .given(.raw("R50\nR50\n")).expects(part2: 1),
+            .given(.raw("L150\nL50\n")).expects(part2: 2),
+            .given(.raw("L150\nR50\n")).expects(part2: 2),
+            .given(.raw("R150\nL50\n")).expects(part2: 2),
+            .given(.raw("R150\nR50\n")).expects(part2: 2),
+            .given(.raw("R50\nL101\n")).expects(part2: 2),
         ]
     }
 }

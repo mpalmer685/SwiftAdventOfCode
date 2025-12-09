@@ -107,11 +107,11 @@ private extension Vector2D {
 extension GardenGroups: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .file("example1"), part1: 140, part2: 80),
-            .init(input: .file("example2"), part1: 772, part2: 436),
-            .init(input: .file("example3"), part1: 1930, part2: 1206),
-            .init(input: .file("example4"), part2: 236),
-            .init(input: .file("example5"), part2: 368),
+            .given(.file("example1")).expects(part1: 140, part2: 80),
+            .given(.file("example2")).expects(part1: 772, part2: 436),
+            .given(.file("example3")).expects(part1: 1930, part2: 1206),
+            .given(.file("example4")).expects(part2: 236),
+            .given(.file("example5")).expects(part2: 368),
         ]
     }
 }

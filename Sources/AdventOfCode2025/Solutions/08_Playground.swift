@@ -157,7 +157,7 @@ private extension Point3D {
 extension Playground: TestablePuzzleWithConfig {
     var testCases: [TestCaseWithConfig<Int, Int, Int>] {
         [
-            .init(input: .example, config: 10, part1: 40, part2: 25272),
+            .given(.example, config: 10).expects(part1: 40, part2: 25272),
         ]
     }
 }

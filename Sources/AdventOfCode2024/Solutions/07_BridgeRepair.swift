@@ -55,7 +55,7 @@ private struct CalibrationEquation {
 extension BridgeRepair: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 3749, part2: 11387),
+            .given(.example).expects(part1: 3749, part2: 11387),
         ]
     }
 }

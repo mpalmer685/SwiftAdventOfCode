@@ -74,7 +74,7 @@ struct Laboratories: Puzzle {
 extension Laboratories: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 21, part2: 40),
+            .given(.example).expects(part1: 21, part2: 40),
         ]
     }
 }

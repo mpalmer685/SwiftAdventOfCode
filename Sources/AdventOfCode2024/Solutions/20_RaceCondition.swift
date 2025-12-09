@@ -90,8 +90,8 @@ struct RaceCondition: Puzzle {
 extension RaceCondition: TestablePuzzleWithConfig {
     var testCases: [TestCaseWithConfig<Int, Int, Int>] {
         [
-            .init(input: .example, config: 10, part1: 10),
-            .init(input: .example, config: 50, part2: 285),
+            .given(.example, config: 10).expects(part1: 10),
+            .given(.example, config: 50).expects(part2: 285),
         ]
     }
 }

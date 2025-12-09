@@ -35,7 +35,7 @@ struct Lobby: Puzzle {
 extension Lobby: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 357, part2: 3_121_910_778_619),
+            .given(.example).expects(part1: 357, part2: 3_121_910_778_619),
         ]
     }
 }

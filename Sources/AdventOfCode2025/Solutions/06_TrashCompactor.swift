@@ -70,7 +70,7 @@ private extension Collection where Iterator.Element: RandomAccessCollection {
 extension TrashCompactor: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 4_277_556, part2: 3_263_827),
+            .given(.example).expects(part1: 4_277_556, part2: 3_263_827),
         ]
     }
 }

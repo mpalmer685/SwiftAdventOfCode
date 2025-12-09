@@ -57,7 +57,7 @@ private extension [Point2D: Int] {
 extension PrintingDepartment: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 13, part2: 43),
+            .given(.example).expects(part1: 13, part2: 43),
         ]
     }
 }

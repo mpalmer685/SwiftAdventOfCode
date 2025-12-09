@@ -1,15 +1,9 @@
 import AOCKit
 
 struct Trebuchet: TestablePuzzle {
-    let testCases = [
-        TestCase(
-            input: .file("example1"),
-            part1: 142,
-        ),
-        TestCase(
-            input: .file("example2"),
-            part2: 281,
-        ),
+    let testCases: [TestCase<Int, Int>] = [
+        .given(.file("example1")).expects(part1: 142),
+        .given(.file("example2")).expects(part2: 281),
     ]
 
     static let day = 1

@@ -32,12 +32,8 @@ struct HistorianHysteria: Puzzle {
 extension HistorianHysteria: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(
-                input: .example,
-                part1: 11,
-                part2: 31,
-            ),
-            .init(input: .file("double-digits.example"), part1: 11),
+            .given(.example).expects(part1: 11, part2: 31),
+            .given(.file("double-digits.example")).expects(part1: 11),
         ]
     }
 }

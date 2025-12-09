@@ -66,8 +66,8 @@ private extension Int {
 extension MonkeyMarket: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example(1), part1: 37_327_623),
-            .init(input: .example(2), part2: 23),
+            .given(.example(1)).expects(part1: 37_327_623),
+            .given(.example(2)).expects(part2: 23),
         ]
     }
 }

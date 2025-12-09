@@ -6,13 +6,8 @@ private let rangeMax = 400_000_000_000_000
 struct NeverTellMeTheOdds: TestablePuzzleWithConfig {
     static let day = 24
 
-    let testCases = [
-        TestCaseWithConfig(
-            input: .example,
-            config: (7, 27),
-            part1: 2,
-            part2: 44,
-        ),
+    let testCases: [TestCaseWithConfig<Int, Int, (Int, Int)>] = [
+        .given(.example, config: (7, 27)).expects(part1: 2, part2: 44),
     ]
 
     func part1(input: Input) throws -> Int {

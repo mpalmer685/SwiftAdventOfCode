@@ -128,7 +128,7 @@ private extension Vector2D {
 extension GuardGallivant: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 41, part2: 6),
+            .given(.example).expects(part1: 41, part2: 6),
         ]
     }
 }

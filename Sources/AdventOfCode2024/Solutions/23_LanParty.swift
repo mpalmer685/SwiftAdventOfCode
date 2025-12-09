@@ -89,7 +89,7 @@ private extension Collection {
 extension LanParty: TestablePuzzle {
     var testCases: [TestCase<Int, String>] {
         [
-            .init(input: .example, part1: 7, part2: "co,de,ka,ta"),
+            .given(.example).expects(part1: 7, part2: "co,de,ka,ta"),
         ]
     }
 }

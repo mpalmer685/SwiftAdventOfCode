@@ -58,7 +58,7 @@ private extension String {
 extension LinenLayout: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 6, part2: 16),
+            .given(.example).expects(part1: 6, part2: 16),
         ]
     }
 }

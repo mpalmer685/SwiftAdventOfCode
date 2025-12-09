@@ -47,7 +47,7 @@ private extension ClosedRange<Int> {
 extension Cafeteria: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 3, part2: 14),
+            .given(.example).expects(part1: 3, part2: 14),
         ]
     }
 }

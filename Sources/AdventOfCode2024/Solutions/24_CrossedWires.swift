@@ -179,8 +179,8 @@ private struct Gate: Hashable {
 extension CrossedWires: TestablePuzzle {
     var testCases: [TestCase<Int, String>] {
         [
-            .init(input: .example("small"), part1: 4),
-            .init(input: .example("large"), part1: 2024),
+            .given(.example("small")).expects(part1: 4),
+            .given(.example("large")).expects(part1: 2024),
         ]
     }
 }

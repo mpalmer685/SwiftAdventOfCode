@@ -70,7 +70,7 @@ extension MemorySpace: Graph {
 extension RamRun: TestablePuzzleWithConfig {
     var testCases: [TestCaseWithConfig<Int, String, Config>] {
         [
-            .init(input: .example, config: (6, 12), part1: 22, part2: "6,1"),
+            .given(.example, config: (6, 12)).expects(part1: 22, part2: "6,1"),
         ]
     }
 }

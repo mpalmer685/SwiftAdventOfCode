@@ -85,7 +85,7 @@ private extension Vector {
 extension ClawContraption: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 480),
+            .given(.example).expects(part1: 480),
         ]
     }
 }

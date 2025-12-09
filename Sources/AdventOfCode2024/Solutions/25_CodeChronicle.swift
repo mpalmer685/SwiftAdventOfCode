@@ -51,7 +51,7 @@ private extension Collection where Element: Hashable {
 extension CodeChronicle: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 3),
+            .given(.example).expects(part1: 3),
         ]
     }
 }

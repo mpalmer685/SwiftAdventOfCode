@@ -236,8 +236,8 @@ private extension Vector2D {
 extension WarehouseWoes: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example("small"), part1: 2028),
-            .init(input: .example("large"), part1: 10092, part2: 9021),
+            .given(.example("small")).expects(part1: 2028),
+            .given(.example("large")).expects(part1: 10092, part2: 9021),
         ]
     }
 }

@@ -69,7 +69,7 @@ private extension [Int] {
 extension PrintQueue: TestablePuzzle {
     var testCases: [TestCase<Int, Int>] {
         [
-            .init(input: .example, part1: 143, part2: 123),
+            .given(.example).expects(part1: 143, part2: 123),
         ]
     }
 }
