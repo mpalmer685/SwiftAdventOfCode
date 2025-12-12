@@ -99,6 +99,23 @@ public extension Graph {
         )
         return pair
     }
+
+    func countPaths(from start: Node, to end: Node) -> Int {
+        // need to memoize paths to avoid exponential blowup
+        var memoizedPaths: [Node: Int] = [:]
+        func countPathsHelper(from node: Node) -> Int {
+            if let memoized = memoizedPaths[node] {
+                return memoized
+            }
+            if node == end {
+                return 1
+            }
+            let pathCount = neighbors(of: node).reduce(0) { $0 + countPathsHelper(from: $1) }
+            memoizedPaths[node] = pathCount
+            return pathCount
+        }
+        return countPathsHelper(from: start)
+    }
 }
 
 private final class Path<Value: Hashable>: LinkedPath {
