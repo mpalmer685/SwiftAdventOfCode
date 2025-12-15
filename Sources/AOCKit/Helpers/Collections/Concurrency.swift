@@ -223,3 +223,27 @@ public extension Sequence where Element: Sendable {
         }
     }
 }
+
+// MARK: - Sum
+
+public extension Sequence where Element: Sendable {
+    func concurrentSum<N: Numeric & Sendable>(
+        withPriority priority: TaskPriority? = nil,
+        of element: @Sendable @escaping (Element) async -> N,
+    ) async -> N {
+        await withTaskGroup(of: N.self) { group in
+            for item in self {
+                group.addTask(priority: priority) {
+                    await element(item)
+                }
+            }
+
+            // var sum: N = 0
+            // for await partialSum in group {
+            //     sum += partialSum
+            // }
+            // return sum
+            return await group.reduce(.zero, +)
+        }
+    }
+}
