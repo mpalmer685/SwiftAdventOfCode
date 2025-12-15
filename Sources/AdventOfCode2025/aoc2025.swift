@@ -12,6 +12,7 @@ public let aoc2025 = AdventOfCodeEvent(
         Laboratories(),
         Playground(),
         MovieTheater(),
+        Factory(),
         Reactor(),
         ChristmasTreeFarm(),
     ],
