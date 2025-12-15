@@ -4,7 +4,7 @@ struct GiftShop: Puzzle {
     static let day = 2
 
     func part1(input: Input) async throws -> Int {
-        sumOfInvalidIds(in: input) { id in
+        await sumOfInvalidIds(in: input) { id in
             let idString = String(id)
             guard idString.count.isMultiple(of: 2) else {
                 return false
@@ -30,7 +30,7 @@ struct GiftShop: Puzzle {
             10: [101_010_101, 100_001],
         ]
 
-        return sumOfInvalidIds(in: input) { id in
+        return await sumOfInvalidIds(in: input) { id in
             let idLength = Int(log10(Double(id))) + 1
             guard let targetMultiples = multiples[idLength] else {
                 fatalError("No multiples defined for id length \(idLength)")
@@ -39,7 +39,10 @@ struct GiftShop: Puzzle {
         }
     }
 
-    private func sumOfInvalidIds(in input: Input, using isInvalidId: (Int) -> Bool) -> Int {
+    private func sumOfInvalidIds(
+        in input: Input,
+        using isInvalidId: @Sendable @escaping (Int) -> Bool,
+    ) async -> Int {
         let ranges = input.csvWords.map { word in
             let parts = word.words(separatedBy: "-")
             guard let lower = parts[0].integer, let upper = parts[1].integer else {
@@ -48,7 +51,7 @@ struct GiftShop: Puzzle {
             return lower ... upper
         }
 
-        return ranges.sum { $0.filter(isInvalidId).sum }
+        return await ranges.concurrentSum { $0.filter(isInvalidId).sum }
     }
 }
 
