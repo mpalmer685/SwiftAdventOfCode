@@ -13,6 +13,10 @@ let package = Package(
             targets: ["AOCKit"],
         ),
         .library(
+            name: "AdventOfCode2015",
+            targets: ["AdventOfCode2015"],
+        ),
+        .library(
             name: "AdventOfCode2020",
             targets: ["AdventOfCode2020"],
         ),
@@ -69,6 +73,10 @@ let package = Package(
             dependencies: ["AOCKit"],
         ),
         .target(
+            name: "AdventOfCode2015",
+            dependencies: ["AOCKit"],
+        ),
+        .target(
             name: "AdventOfCode2020",
             dependencies: ["AOCKit"],
         ),
@@ -96,6 +104,7 @@ let package = Package(
             name: "aoc",
             dependencies: [
                 "AOCKit",
+                "AdventOfCode2015",
                 "AdventOfCode2020",
                 "AdventOfCode2021",
                 "AdventOfCode2022",
