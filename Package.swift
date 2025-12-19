@@ -57,6 +57,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-collections", from: "1.0.0"),
         .package(url: "https://github.com/mpalmer685/swift-ascii-table", exact: "0.2.0"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-parsing", from: "0.14.1"),
     ],
     targets: [
         .target(
@@ -66,6 +67,7 @@ let package = Package(
                 .product(name: "AsyncAlgorithms", package: "swift-async-algorithms"),
                 .product(name: "Collections", package: "swift-collections"),
                 .product(name: "Files", package: "Files"),
+                .product(name: "Parsing", package: "swift-parsing"),
             ],
         ),
         .testTarget(

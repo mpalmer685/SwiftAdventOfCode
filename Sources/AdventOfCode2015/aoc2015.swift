@@ -13,5 +13,12 @@ public let aoc2015 = AdventOfCodeEvent(
         Matchsticks(),
         AllInASingleNight(),
         ElvesLookElvesSay(),
+        CorporatePolicy(),
+        JSAbacusFramework(),
+        KnightsOfTheDinnerTable(),
+        ReindeerOlympics(),
+        ScienceForHungryPeople(),
+        AuntSue(),
+        NoSuchThingAsTooMuch(),
     ],
 )
