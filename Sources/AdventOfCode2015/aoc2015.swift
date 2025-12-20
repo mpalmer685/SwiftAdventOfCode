@@ -20,5 +20,8 @@ public let aoc2015 = AdventOfCodeEvent(
         ScienceForHungryPeople(),
         AuntSue(),
         NoSuchThingAsTooMuch(),
+        LikeAGifForYourYard(),
+        MedicineForRudolph(),
+        InfiniteElvesAndInfiniteHouses(),
     ],
 )
