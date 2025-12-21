@@ -23,5 +23,7 @@ public let aoc2015 = AdventOfCodeEvent(
         LikeAGifForYourYard(),
         MedicineForRudolph(),
         InfiniteElvesAndInfiniteHouses(),
+        RPGSimulator(),
+        WizardSimulator(),
     ],
 )
