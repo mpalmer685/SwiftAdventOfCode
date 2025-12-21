@@ -25,5 +25,8 @@ public let aoc2015 = AdventOfCodeEvent(
         InfiniteElvesAndInfiniteHouses(),
         RPGSimulator(),
         WizardSimulator(),
+        OpeningTheTuringLock(),
+        ItHangsInTheBalance(),
+        LetItSnow(),
     ],
 )
